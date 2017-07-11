@@ -13,8 +13,8 @@ ofstream initFile;
 int turn = 0;
 Player playerOne;
 Player playerTwo;
-Player* activePlayer;
-Player* nonActivePlayer;
+Player* activePlayer = playerOne;
+Player* nonActivePlayer = playerTwo;
 
 int main()
 {
@@ -42,9 +42,12 @@ takeTurn(Player player)
 {
  ++turn;
  if (turn > 1){
-  player.incrementHealth();
-  player.drawCard();
- }
- activateTriggers(TriggerType::TURN_START);
- //unfinished
+ player.incrementHealth();
+ player.drawCard();
+	}
+	activateTriggers(1);
+	
+	//While loop to take input until end command
+	
+	activateTriggers(4);
 }
