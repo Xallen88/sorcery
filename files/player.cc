@@ -1,5 +1,5 @@
-#include "player.h"
 #include <string>
+#include "player.h"
 
 using std::string;
 
@@ -27,7 +27,7 @@ void Player::incrementLife(int i)
  life += i;
 }
 
-void decrementMagic(int i)
+void Player::decrementMagic(int i)
 {
  if (life > i)
   life -= i;

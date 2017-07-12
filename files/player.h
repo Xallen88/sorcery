@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PlAYER_H
 #include <string>
+#include "card.h"
 
 using std::string;
 
@@ -22,16 +23,27 @@ class Player
   void incrementLife(int i = 1);
   void decrementLife(int i = 1);
   void drawCard();
-  //adds a card to hand if deck is nonempty and hand is not full
-  bool isHandFull();
+  // adds a card to hand if deck is nonempty and hand is not full
+  bool isHandFull() const;
   void discardCard(int i);
-  bool playCard();
 
   string getName() const;
-  int getLife();
-  int getMagic();
-  //(Minion*)* getMinions()
-  //Ritual* getRitual()
+  int getLife() const;
+  int getMagic() const;
+  Card* getMinion(int m) const;
+  Card* getRitual() const;
+
+  void minionAttack(int minion, Player* otherPlayer);
+  // direct attack to opponent's life, calls minion's attack function
+  void minionAttack(int minion, int otherminion, Player* otherPlayer);
+  // gets pointer for attacking and defending minion and then
+  // calls minion's attacking function
+  void playCard(int card);
+  // plays a card, including minions
+  void playCard(int card, int targetPlayer, int targetCard);
+  void useAbility(int minion);
+  // uses a minions ability, calls the minions ability function
+  void useAbility(int minion, int targetPlayer, int targetCard);
 }
 
 #endif
