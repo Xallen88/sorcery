@@ -42,6 +42,6 @@ void endTurn(Player *activePlayer, Player *nonActivePlayer);
 //  activates start of turn trigger
 
 
-static vector<Card> shuffleDeck(vector<Card>);
+void shuffleDeck(vector<Card>);
 
 #endif

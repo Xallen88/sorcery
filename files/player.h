@@ -1,9 +1,11 @@
 #ifndef PLAYER_H
 #define PlAYER_H
 #include <string>
+#include <vector>
 #include "card.h"
 
 using std::string;
+using std::vector;
 
 class Player 
 {
@@ -11,11 +13,11 @@ class Player
   const string name;
   int life = 20;
   int magic = 3;
-  //vector<Card*> deck
-  //vector<Card*> hand
-  //Minion *minions[5]
-  //vector<Card*> graveyard
-  //Ritual ritual
+  vector<Card*> deck;
+  vector<Card*> hand;
+  vector<Card*> graveyard;
+  Minion *minions[5];
+  Ritual *ritual;
  public:
   Player(const string name /*, vector<Card*> deck*/): name(name);
   void incrementMagic(int i = 1);
@@ -31,7 +33,11 @@ class Player
   int getLife() const;
   int getMagic() const;
   Card* getMinion(int m) const;
-  Card* getRitual() const;
+  Card* getRitual() const
+
+  void constructDeck(string deckFile);
+  // builds a deck from a file, uses default.deck if
+  // deckfile is blank.
 
   void minionAttack(int minion, Player* otherPlayer);
   // direct attack to opponent's life, calls minion's attack function

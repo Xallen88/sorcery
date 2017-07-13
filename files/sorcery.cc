@@ -23,6 +23,9 @@ Player* nonActivePlayer = playerTwo;
 int main(int argc, char* argv[])
 {
 	// take in command line args
+	string deckFile1, deckFile2;
+	deckFile1=deckFile2="";
+
 	for(int i=1; i<argc; ++i){			// needs serious error handling
 		if(argv[i]=="-deck1"){
 			++i;
@@ -36,6 +39,9 @@ int main(int argc, char* argv[])
 			initFile.open(argv[i]);
 		}
 	}
+
+	playerOne.constructDeck(deckFile1);
+	playerTwo.constructDeck(deckFile2);
 
 	// read input or initfile until EOF or quit
 	string commandLine = read();	
