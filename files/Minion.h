@@ -14,6 +14,8 @@ Class Minion {
   void Activate(Card *target) override;
   void Attack(Card *c);
   void Attack(Player *p);
+  void decrementLife(int i = 1);
+  void incrementLife(int i = 1);
 };
 
 
