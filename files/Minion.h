@@ -4,13 +4,16 @@
 
 Class Minion {
   int atk;
-  int def;
+  int hp;
+  int maxHp;
  public:
   Minion(int a, int d);
   ~Minion() override;
   void Play() override;
   void Activate() override;
   void Activate(Card *target) override;
+  void Attack(Card *c);
+  void Attack(Player *p);
 };
 
 
