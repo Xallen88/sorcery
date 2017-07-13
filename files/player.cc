@@ -31,8 +31,7 @@ void Player::decrementMagic(int i)
 {
  if (life > i)
   life -= i;
- else
+ else{
   end(getOtherPlayer(this));
-}
-
+ }
 }
