@@ -3,8 +3,10 @@
 
 
 Class Minion {
-  int atk;
-  int hp;
+  int baseAtk;
+  int baseHp;
+  int curAtk;
+  int curHp;
   int maxHp;
  public:
   Minion(int a, int d);
