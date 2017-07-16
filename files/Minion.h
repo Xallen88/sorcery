@@ -2,7 +2,7 @@
 #define MINION_H
 
 
-Class Minion : public Card {
+class Minion : public Card {
   //Attributes
   int curAtk;
   int curHp;
