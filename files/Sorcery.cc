@@ -2,8 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "sorcery.h"
-#include "player.h"
+#include "Sorcery.h"
+#include "Player.h"
 
 using std::string;
 using std::cout;
