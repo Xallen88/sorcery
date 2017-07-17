@@ -1,5 +1,5 @@
 #include <string>
-#include "player.h"
+#include "Player.h"
 
 using std::string;
 
