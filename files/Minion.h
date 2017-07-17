@@ -8,6 +8,8 @@ class Minion : public Card {
   int curHp;
   int maxHp;
   int maxAtk;
+  const int base_atk;
+  const int base_hp;
   //Enchantments;
   vector <Enchantment *> enchantments;
   int numEnch;
