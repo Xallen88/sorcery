@@ -28,3 +28,6 @@ void Minion::clearAllEnchants() {
   numEnch = 0;
   //Take away stats from echantments
 }
+
+void Minion::getHp() { return curHp; }
+void Minion::getAtk() { return curAtk; }
