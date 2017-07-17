@@ -3,6 +3,7 @@
 #include "Card.h"
 class Ritual: public Card {
   int charges;
+  int chargeCost;
   //bunch of different Ritual functions
  public:
   void Play() override;
