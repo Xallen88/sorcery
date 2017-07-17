@@ -18,7 +18,8 @@ class Enchantment : public Card {
   void Activate(Card *c) override;
   int getAVal();
   int getHVal();
-  char getOp();
+  char getAOp();
+  char getHOp();
 
 
 
