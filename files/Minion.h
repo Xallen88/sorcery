@@ -12,6 +12,8 @@ class Minion : public Card {
   vector <Enchantment *> enchantments;
   int numEnch;
   
+  void applyChange(char op, char c, int val);
+  
  public:
   Minion(std::string name, int a, int d);
   ~Minion() override;
