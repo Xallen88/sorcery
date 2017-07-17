@@ -2,7 +2,7 @@
 #define PlAYER_H
 #include <string>
 #include <vector>
-#include "card.h"
+#include "Card.h"
 
 using std::string;
 using std::vector;
