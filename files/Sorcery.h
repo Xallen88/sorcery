@@ -2,8 +2,8 @@
 #define “SORCERY.H”
 #include <string>
 #include <vector>
-#include "player.h"
-#include "card.h"
+#include "Player.h"
+#include "Card.h"
 
 using std::string;
 using std::vector;
