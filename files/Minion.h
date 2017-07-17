@@ -25,6 +25,8 @@ class Minion : public Card {
   void incrementLife(int i = 1);
   bool isDead();
   
+  void getAtk();
+  void getHp();
   
   void addEnchant(Enchantment *e);
   void clearAllEnchants();
