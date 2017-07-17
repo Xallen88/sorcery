@@ -9,10 +9,11 @@ using namespace std;
 
 class Enchantment : public Card {
   int atkVal;
+  char atkOp;
   int hpVal;
-  char op;
+  char HpOp;
  public:
-  Enchantment(string name, int atkVal, int hpVal, char op);
+  Enchantment(string name, int atkVal, int hpVal, char AtkOp, char HpOp);
   ~Enchantment();
   void Activate(Card *c) override;
   int getAVal();
