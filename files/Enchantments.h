@@ -13,7 +13,7 @@ class Enchantment : public Card {
   int hpVal;
   char hpOp;
  public:
-  Enchantment(string name, int atkVal, int hpVal, char AtkOp, char hpOp);
+  Enchantment(string name, int atkVal, int hpVal, char atkOp, char hpOp);
   ~Enchantment();
   void Activate(Card *c) override;
   int getAVal();
