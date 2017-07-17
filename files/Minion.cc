@@ -92,5 +92,5 @@ void Minion::clearAllEnchants() {
   numEnch = 0;
 }
 
-void Minion::getHp() { return curHp; }
-void Minion::getAtk() { return curAtk; }
+int Minion::getHp() { return curHp; }
+int Minion::getAtk() { return curAtk; }
