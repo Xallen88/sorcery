@@ -8,6 +8,7 @@
 using std::string;
 using std::cout;
 using std::cin;
+using std::cerr;
 using std::endl;
 using std::stringstream;
 
@@ -19,6 +20,9 @@ Player playerOne;
 Player playerTwo;
 Player* activePlayer = playerOne;
 Player* nonActivePlayer = playerTwo;
+
+Card* triggerCard;
+// this is the card that triggered an event (spell or minion)
 
 int main(int argc, char* argv[])
 {
@@ -42,6 +46,8 @@ int main(int argc, char* argv[])
 
 	playerOne.constructDeck(deckFile1);
 	playerTwo.constructDeck(deckFile2);
+	playerOne.shuffleDeck();
+	playerTwo.shuffleDeck();
 
 	// read input or initfile until EOF or quit
 	string commandLine = read();	
@@ -153,5 +159,97 @@ string read()
   }
  }
  return result;
+}
+
+void printHelp(){
+	cout <<
+	"help -- Display this message." << endl <<
+	"end -- End the current player's turn." << endl <<
+	"quit -- End the game." << endl <<
+	"attack minion other-minion -- Orders minion to attack other-minion." << endl <<
+	"attack minion -- Orders minion to attack opponent." << endl <<
+	"play card [target-player target-card] -- Play card, optionally targeting target-card owned by target-player." << endl <<
+	"use minion [target-player target-card] -- Use minion's special ability, optionally targeting target-card owned by target-player." << endl <<
+	"inspect minion -- View a minion's card and all enchantments on that minion." << endl <<
+	"hand -- Describe all cards in your hand." << endl <<
+	"board -- Describe all cards on the board." << endl;
+}
+
+void printError(string err){
+	cerr << err << endl;
+}
+
+void printBoard(){
+	// graphical stuff goes here (Steven)
+}
+
+void inspectMinion(){
+	// code goes here (Steven)
+}
+
+void activateTrigger(int triggerType){
+	// APNAP: Active minion's (l to r), active ritual, non-active minions, non-active ritual
+	// Active Player
+	for(int m=1; m<=5; ++m){
+		minionPtr=activePlayer->getMinion(m);
+		if(!minionPtr){break;}
+		if(minionPtr->getTrigger()=triggerType){
+			if(triggerType==1 || triggerType==4){
+				minionPtr->Activate();
+			}else{
+				minionPtr->Activate(triggerCard);
+			}
+		}
+	}
+	ritualPtr=activePlayer->getRitual();
+	if(ritualPtr){
+		if(ritualPtr->getTrigger()==triggerType){
+			if(triggerType==1 || triggerType==4){
+				ritualPtr->Activate();
+			}else{
+				ritualPtr->Activate(triggerCard);
+			}
+		}
+	}
+
+// Non-active Player
+	for(int m=1; m<=5; ++m){
+		minionPtr=nonActivePlayer->getMinion(m);
+		if(!minionPtr){break;}
+		if(minionPtr->getTrigger()=triggerType){
+			if(triggerType==1 || triggerType==4){
+				minionPtr->Activate();
+			}else{
+				minionPtr->Activate(triggerCard);
+			}
+		}
+	}
+	ritualPtr=nonActivePlayer->getRitual();
+	if(ritualPtr){
+		if(ritualPtr->getTrigger()==triggerType){
+			if(triggerType==1 || triggerType==4){
+				ritualPtr->Activate();
+			}else{
+				ritualPtr->Activate(triggerCard);
+			}
+		}
+	}
+}
+
+void endTurn(Player* active, Player* nonactive){
+	// end of turn trigger
+	activateTrigger(4);
+
+ // swap active and non-active player pointers
+ Player* temp = active;
+ active = nonactive;
+ nonactive = temp;
+
+ // active player's turn begins
+ activePlayer->incrementMagic();
+ activePlayer->drawCard();
+
+ // start of turn trigger
+ activateTrigger(1);
 }
 

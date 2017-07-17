@@ -26,7 +26,7 @@ void printHelp();
 void inspectMinon(int m, Player* p);
 // inspect minion #m of player p
 
-static void activateTrigger(int triggerType);
+void activateTrigger(int triggerType);
 //	calls triggers for:
 // 	1: beggining of turn
 //  2: monster summon
@@ -41,7 +41,5 @@ void endTurn(Player *activePlayer, Player *nonActivePlayer);
 //  active player draws a card
 //  activates start of turn trigger
 
-
-void shuffleDeck(vector<Card>);
 
 #endif

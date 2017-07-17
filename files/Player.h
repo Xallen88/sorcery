@@ -24,8 +24,8 @@ class Player
   bool decrementMagic(int i = 1);
   void incrementLife(int i = 1);
   void decrementLife(int i = 1);
+ 
   void drawCard();
-  // adds a card to hand if deck is nonempty and hand is not full
   bool isHandFull() const;
   void discardCard(int i);
 
@@ -36,8 +36,7 @@ class Player
   Card* getRitual() const
 
   void constructDeck(string deckFile);
-  // builds a deck from a file, uses default.deck if
-  // deckfile is blank.
+  void shuffleDeck();
 
   void minionAttack(int minion, Player* otherPlayer);
   // direct attack to opponent's life, calls minion's attack function

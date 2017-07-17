@@ -14,6 +14,18 @@ protected:
 	int cost;
 	int trigger;			//0 = no trigger. [1,2,3,4] = [start, end, on summon, on spell]
 
+public:
+	Card();
+	virtual Card(string name);
+	virtual ~Card()=0;
+
+	const int getTrigger();
+	const int getCost();
+	const int getOwner();
+	const string getName();
+	const string getDescription();
+	const string getType();
+
 	virtual Play();
 	// play the card	
 	//  minion: summon
@@ -23,10 +35,6 @@ protected:
 	virtual Activate();
 	// use the card's ability
 	virtual Activate(Card* target);
-public:
-	Card();
-	virtual Card(string name);
-	virtual ~Card()=0;
 };
 
 #endif
