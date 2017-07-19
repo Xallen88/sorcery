@@ -16,6 +16,7 @@ protected:
 
 public:
 	Card();
+	virtual Card();
 	virtual Card(string name);
 	virtual ~Card()=0;
 
@@ -27,6 +28,7 @@ public:
 	const string getType();
 
 	virtual Play();
+	virtual Play(Card* target);
 	// play the card	
 	//  minion: summon
 	//  ritual: place on field

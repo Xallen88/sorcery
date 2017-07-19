@@ -14,7 +14,7 @@ string read();
 // reads from initFile if an initFile was specified and has not
 // been exhausted. Otherwise reads from stdin
 
-void printError(string err);
+extern void printError(string err);
 // prints an error message and handles any other error related issues
 
 void printBoard();
@@ -26,7 +26,7 @@ void printHelp();
 void inspectMinon(int m, Player* p);
 // inspect minion #m of player p
 
-void activateTrigger(int triggerType);
+extern void activateTrigger(int triggerType);
 //	calls triggers for:
 // 	1: beggining of turn
 //  2: monster summon

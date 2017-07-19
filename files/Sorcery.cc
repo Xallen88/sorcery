@@ -18,10 +18,10 @@ ofstream initFile;
 int turn = 0;
 Player playerOne;
 Player playerTwo;
-Player* activePlayer = playerOne;
-Player* nonActivePlayer = playerTwo;
+extern Player* activePlayer = playerOne;
+extern Player* nonActivePlayer = playerTwo;
 
-Card* triggerCard;
+extern Card* triggerCard;
 // this is the card that triggered an event (spell or minion)
 
 int main(int argc, char* argv[])
@@ -87,7 +87,15 @@ int main(int argc, char* argv[])
 			if(!ss.EOF()){
 				int targetPlayer, targetCard;
 				ss >> targetPlayer >> targetCard;
-				activePlayer->playCard(card, targetPlayer, targetCard);
+				if(targetPlayer==1){
+					activePlayer->playCard(card, targetCard, playerOne);
+				}
+				else if(targetPlayer==2){
+					activePlayer->playCard(card, targetCard, playerTwo);
+				}
+				else{
+					printError("Not a valid target player.")
+				}
 			}else{
 				activePlayer->playCard(card);
 			}
@@ -99,7 +107,15 @@ int main(int argc, char* argv[])
 			if(!ss.EOF()){
 				int targetPlayer, targetCard;
 				ss >> targetPlayer >> targetCard;
-				activePlayer->useAbility(minion, targetPlayer, targetCard);
+				if(targetPlayer==1){
+					activePlayer->useAbility(minion, targetCard, playerOne);
+				}
+				else if(targetPlayer==2){
+					activePlayer->useAbility(minion, targetCard, playerTwo);
+				}
+				else{
+					printError("Not a valid target player.")
+				}
 			}else{
 				activePlayer->useAbility(minion);
 			}
@@ -175,8 +191,8 @@ void printHelp(){
 	"board -- Describe all cards on the board." << endl;
 }
 
-void printError(string err){
-	cerr << err << endl;
+extern void printError(string err){
+	cout << err << endl;
 }
 
 void printBoard(){
@@ -187,7 +203,7 @@ void inspectMinion(){
 	// code goes here (Steven)
 }
 
-void activateTrigger(int triggerType){
+extern void activateTrigger(int triggerType){
 	// APNAP: Active minion's (l to r), active ritual, non-active minions, non-active ritual
 	// Active Player
 	for(int m=1; m<=5; ++m){
