@@ -4,7 +4,9 @@
 #include <vector>
 #include "Card.h"
 #include "Minion.h"
+#include "Enchantment.h"
 #include "Ritual.h"
+#include "Spell.h"
 
 using std::string;
 using std::vector;
@@ -21,7 +23,7 @@ class Player
   Minion *minions[5];
   Ritual *ritual;
  public:
-  Player(const string name /*, vector<Card*> deck*/): name(name);
+  Player(const string name);
   void incrementMagic(int i = 1);
   bool decrementMagic(int i = 1);
   void incrementLife(int i = 1);
@@ -41,7 +43,8 @@ class Player
   void constructDeck(string deckFile);
   void shuffleDeck();
 
-  void summonMinion(Card* minion);
+  void summonMinion(Minion* minion);
+  void setRitual(Ritual* r);
 
   void minionAttack(int minion, Player* otherPlayer);
   // direct attack to opponent's life, calls minion's attack function

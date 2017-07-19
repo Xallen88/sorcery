@@ -1,18 +1,20 @@
-#include "Spell.h"
-#include "Minion.h"
-#include "Player.h"
 #include <string>
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include "Spell.h"
+#include "Minion.h"
+#include "Player.h"
 
 using std::string;
 using std::ifstream;
 using std::stringstream;
 
-printError(string err);
-Player* activePlayer, nonActivePlayer;
-Card* triggerCard;
+extern printError(string err);
+extern activateTrigger(int t);
+extern Player* activePlayer;
+extern Player* nonActivePlayer;
+extern Card* triggerCard;
 
 Spell::Spell(){
 	// nothing here, just a safety net
@@ -55,9 +57,6 @@ void Spell::Activate(Card* c){}
 // unused functions
 
 void Spell::Play(){
-	if(!acticePlayer->decrementMagic(cost)){
-		printError("Insuffienct magic to cast spell.");
-	}
 	switch(name){
 		case "Recharge": Recharge(); break;
 		case "Raise Dead": RaiseDead(); break;
@@ -65,9 +64,6 @@ void Spell::Play(){
 	}
 }
 void Spell::Play(Card* c){
-	if(!acticePlayer->decrementMagic(cost)){
-		printError("Insuffienct magic to cast spell.");
-	}
 	switch(name){
 		case "Banish": Banish(c); break;
 		case "Unsummon": Unsummon(c); break;
@@ -93,7 +89,6 @@ void Spell::RaiseDead(){
 	for(auto it=graveyard.rbegin(); it!=graveyard.rend(); ++it){
 		if(*it->getType=="Minion"){
 			activatePlayer->summonMinion(*it);
-			*it=nullptr;
 			graveyard.erase(it);
 			triggerCard=activePlayer->getMinion(activePlayer->numMinions);
 			activateTrigger(2);

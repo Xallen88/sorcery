@@ -1,8 +1,8 @@
 #ifndef _SPELL_H_
 #define _SPELL_H_
 
-#include "Card.h"
 #include <string>
+#include "Card.h"
 
 using std::string;
 

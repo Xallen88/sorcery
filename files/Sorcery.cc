@@ -18,10 +18,9 @@ ofstream initFile;
 int turn = 0;
 Player playerOne;
 Player playerTwo;
-extern Player* activePlayer = playerOne;
-extern Player* nonActivePlayer = playerTwo;
-
-extern Card* triggerCard;
+Player* activePlayer = playerOne;
+Player* nonActivePlayer = playerTwo;
+Card* triggerCard;
 // this is the card that triggered an event (spell or minion)
 
 int main(int argc, char* argv[])
