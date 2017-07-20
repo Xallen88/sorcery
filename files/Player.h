@@ -5,8 +5,8 @@
 #include "Card.h"
 #include "Minion.h"
 #include "Enchantments.h"
-#include "Ritual.h"
-#include "Spell.h"
+
+class Ritual;
 
 class Player 
 {

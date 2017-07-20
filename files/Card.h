@@ -17,6 +17,7 @@ protected:
 
 public:
 	Card();
+	Card(string name);
 	virtual ~Card()=0;
 
 	int getTrigger() const;

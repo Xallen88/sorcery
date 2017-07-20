@@ -1,10 +1,13 @@
+#include <string>
 #include "Minion.h"
 #include "Enchantments.h"
+#include "Player.h"
+
 using namespace std;
 
-Minion::Minion(string name, int a, int h): Card{name}, curAtk{a}, curHp{h},
-                                                       maxAtk{a}, maxHp{h},
-                                                       base_atk{a}, base_hp{h}{}
+Minion::Minion(){}
+Minion::Minion(string name): Card(name){}
+
 void Minion::applyChange(char op, char c, int val) {
   if (c == 'a') {
     //doing attack stats
@@ -38,20 +41,20 @@ void Minion::applyChange(char op, char c, int val) {
     }
   }
 }
-void Minion::Attack(Player *p) { /*Check if can attack then */ p->decrementLife(atk); }
-void Minion::Attack(Minion *m) { /*Check if can attack then */ m->decrementLife(atk); }
+void Minion::Attack(Player *p) { /*Check if can attack then */ p->decrementLife(curAtk); }
+void Minion::Attack(Minion *m) { /*Check if can attack then */ m->decrementLife(curAtk); }
 void Minion::decrementLife(int i) { 
- hp -= i;
- if (hp < 0) hp = 0;
+ curHp -= i;
+ if (curHp < 0) curHp = 0;
 }
 void Minion::incrementLife(int i) {
- hp += i;
- if (hp > maxHp) hp = maxHp;
+ curHp += i;
+ if (curHp > maxHp) curHp = maxHp;
 }
-bool Minion::isDead {
- return hp <= 0;
+bool Minion::isDead() {
+ return curHp <= 0;
 }
-void Minion::addEnchant(Enchantments *e) {//Supports * and + on attack and *, +, - on hp
+void Minion::addEnchant(Enchantment *e) {//Supports * and + on attack and *, +, - on hp
   //remove from vector
   enchantments.emplace_back(e);
   numEnch++;
@@ -61,16 +64,17 @@ void Minion::addEnchant(Enchantments *e) {//Supports * and + on attack and *, +,
   
 }
 void Minion::clearAllEnchants() {
- int aOp = enchantment[v.size() - 1]->getAOp();
- int hOp = enchantment[v.size() - 1]->getHOp();
+ int aOp = enchantments.back()->getAOp();
+ int hOp = enchantments.back()->getHOp();
+ Enchantment *e = enchantments.back();
  
  //Take away stats from enchantment
  // for atk stats
  if (aOp == '*') {
    applyChange('/', 'a', e->getAVal());
- } else if (aOp = '/') {
+ } else if (aOp == '/') {
    applyChange('*', 'a', e->getAVal());
- } else if (aOp = '+') {
+ } else if (aOp == '+') {
    applyChange('-', 'a', e->getAVal());
  } else {//the subtract case
    applyChange('+', 'a', e->getAVal());
@@ -78,16 +82,16 @@ void Minion::clearAllEnchants() {
  //For hp stats
  if (hOp == '*') {
    applyChange('/', 'h', e->getHVal());
- } else if (hOp = '/') {
+ } else if (hOp == '/') {
    applyChange('*', 'h', e->getHVal());
- } else if (hOp = '+') {
+ } else if (hOp == '+') {
    applyChange('-', 'h', e->getHVal());
  } else {//the subtract case
    applyChange('+', 'h', e->getHVal());
  }
  //popping enchantment
-  for (int k = 0; k < numEnch; k++) 
-    enchantments.popback()
+  for (int k = 0; k < numEnch; ++k){
+    enchantments.pop_back();
   }
   numEnch = 0;
 }

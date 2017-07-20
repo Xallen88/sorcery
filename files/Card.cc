@@ -2,21 +2,24 @@
 #include <string>
 using std::string;
 
-const int Card::getOwner(){
+Card::Card(){}
+Card::Card(string name):name(name){}
+
+int Card::getOwner() const {
 	return owner;
 }
-const int Card::getTrigger(){
+int Card::getTrigger() const {
 	return trigger;
 }
-const int Card::getCost(){
+int Card::getCost() const {
 	return cost;
 }
-const string Card::getName(){
+string Card::getName() const {
 	return name;
 }
-const string Card::getDescription(){
+string Card::getDescription() const {
 	return description;
 }
-const string Card::getType(){
+string Card::getType() const {
 	return type;
 }

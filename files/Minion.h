@@ -13,8 +13,8 @@ class Minion : public Card {
   int curHp;
   int maxHp;
   int maxAtk;
-  const int base_atk;
-  const int base_hp;
+  int base_atk;
+  int base_hp;
   //Enchantments;
   vector <Enchantment *> enchantments;
   int numEnch;
@@ -22,13 +22,14 @@ class Minion : public Card {
   void applyChange(char op, char c, int val);
   
  public:
-  Minion(std::string name, int a, int d);
+  Minion();
+  Minion(std::string name);
   ~Minion() override;
   
   void Play() override;
   void Activate() override;
   void Activate(Card *target) override;
-  void Attack(Card *c);
+  void Attack(Minion* m);
   void Attack(Player *p);
   void decrementLife(int i = 1);
   void incrementLife(int i = 1);

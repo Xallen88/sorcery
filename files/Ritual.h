@@ -3,13 +3,13 @@
 
 #include "Card.h"
 
-class Ritual: public Card {
+class Ritual : public Card {
   int charges;
   int chargeCost;
   void DarkRitual();
-  void Standstill();
-  void AuraOfPower();
-  void AuraOfSilence();
+  void Standstill(Card* c);
+  void AuraOfPower(Card* c);
+  void AuraOfSilence(Card* c);
  public:
  	Ritual();
  	Ritual(string name);

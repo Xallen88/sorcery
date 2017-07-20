@@ -2,12 +2,19 @@
 #include <vector>
 #include <sstream>
 #include <fstream>
+#include "Card.h"
 #include "Ritual.h"
+#include "Player.h"
 
-extern printError(string err);
-extern Player* activePlayer;
-extern Player* nonActivePlayer;
-extern Card* triggerCard;
+using std::stringstream;
+using std::ifstream;
+
+class Player;
+
+void printError(string err);
+Player* activePlayer;
+Player* nonActivePlayer;
+Card* triggerCard;
 
 Ritual::Ritual(){
 	// catchall
@@ -16,15 +23,15 @@ Ritual::~Ritual(){
 	// no ptrs
 }
 
-Ritual::Ritual(string name) : name(name) {
+Ritual::Ritual(string name) : Card(name) {
  type="Ritual";
  stringstream ss;
 	string line;
 	string fileName=name;
 
-	for(int i=0; i<name.length();++i){
-		if(fileName.at(i)==" "){
-			fileName.erase(i);
+	for(auto it=fileName.begin();it!=fileName.end();++it){
+		if(*it==" "){
+			it = fileName.erase(it);
 		}
 	}
 	fileName="rituals/"+fileName+".info";
@@ -44,7 +51,7 @@ Ritual::Ritual(string name) : name(name) {
 void Ritual::Play(){
 	Card* ritualPtr = activePlayer->getRitual();
 	if(ritualPtr){
- 	graveyard.push_back(ritualPtr);
+ 	//graveyard.push_back(ritualPtr);
  }
  activePlayer->setRitual(this);
 }
@@ -54,19 +61,21 @@ void Ritual::Play(Card* c){
 }
 
 void Ritual::Activate(){
-	if(charges >= chargesCost){
-		switch(name){
-			case "Dark Ritual": DarkRitual(); break;
+	if(charges >= chargeCost){
+		if(name=="Dark Ritual"){
+			DarkRitual();
 		}
 	}
 }
 
 void Ritual::Activate(Card* c){
 	if(charges >= chargeCost){
-		switch(name){
-			case "Aura of Power": AuraOfPower(c); break;
-			case "Standstill": Standstill(c); break;
-			case "Aura of Silence": AuraOfSilence(c); break;
+		if(name=="Aura of Power"){
+			AuraOfPower(c);
+		}else if(name=="Standstill"){
+			Standstill(c);
+		}else if(name=="Aura of Silence"){
+			AuraOfSilence(c);
 		}
 	}
 }
@@ -76,7 +85,8 @@ void Ritual::DarkRitual(){
 }
 
 void Ritual::Standstill(Card* c){
-	c->decrementLife(c->getHp());
+	Minion* m = c;
+	m->decrementLife(m->getHp());
 }
 
 void Ritual::AuraOfPower(Card* c){

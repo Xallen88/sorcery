@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include "Card.h"
 #include "Spell.h"
 #include "Minion.h"
 #include "Player.h"
@@ -22,16 +23,16 @@ Spell::Spell(){
 Spell::~Spell(){
 	// no ptrs
 }
-Spell::Spell(string name) : name(name) {
+Spell::Spell(string name) : Card(name) {
 	type="Spell";
 	trigger=0;
 	stringstream ss;
 	string line;
 	string fileName=name;
 
-	for(int i=0; i<name.length();++i){
-		if(fileName.at(i)==" "){
-			fileName.erase(i);
+	for(auto it=fileName.begin();it!=fileName.end();++it){
+		if(*it==" "){
+			it = fileName.erase(it);
 		}
 	}
 	fileName="spells/"+fileName+".info";

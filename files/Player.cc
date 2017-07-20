@@ -8,7 +8,6 @@
 #include "Minion.h"
 #include "Enchantments.h"
 #include "Ritual.h"
-#include "Spell.h"
 
 void activateTrigger(int triggerType);
 // Player needs to know about this function (but cannot include sorcery.h)

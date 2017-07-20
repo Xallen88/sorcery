@@ -1,11 +1,14 @@
+#include <string>
 #include "Enchantments.h"
 
+using std::string;
+
 Enchantment::Enchantment(string name, int atkVal, int hpVal, char atkOp, char hpOp): 
-                                                                            Card{name}, 
-                                                                            atkVal{atkVal},
-                                                                            hpVal{hpVal},
-                                                                            atkOp{atkOp},
-                                                                            hpOp{hpOp} {}
+                                                                            Card(name), 
+                                                                            atkVal(atkVal),
+                                                                            hpVal(hpVal),
+                                                                            atkOp(atkOp),
+                                                                            hpOp(hpOp) {}
                                            
 
 Enchantment::~Enchantment() {}
@@ -19,7 +22,7 @@ void Enchantment::Activate(Card *c) {
      //Display error message for using enchantment on a non-minion
      return;
   }
-  c->addEnchant(this);//not sure if this is * or & or none
+  //c->addEnchant(this);//not sure if this is * or & or none
   //Doing enchantment stats in the minion class
 }
                          

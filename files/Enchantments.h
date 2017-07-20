@@ -5,16 +5,17 @@
 
 using namespace std;
 
-
-
 class Enchantment : public Card {
-  int atkVal;
-  char atkOp;
+  int atkVal;  
   int hpVal;
+  char atkOp;
   char hpOp;
  public:
   Enchantment(string name, int atkVal, int hpVal, char atkOp, char hpOp);
   ~Enchantment();
+  void Play() override;
+  void Play(Card *c) override;
+  void Activate() override;
   void Activate(Card *c) override;
   int getAVal();
   int getHVal();
