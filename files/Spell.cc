@@ -10,11 +10,11 @@ using std::string;
 using std::ifstream;
 using std::stringstream;
 
-extern printError(string err);
-extern activateTrigger(int t);
-extern Player* activePlayer;
-extern Player* nonActivePlayer;
-extern Card* triggerCard;
+void printError(string err);
+void activateTrigger(int t);
+Player* activePlayer;
+Player* nonActivePlayer;
+Card* triggerCard;
 
 Spell::Spell(){
 	// nothing here, just a safety net
@@ -88,7 +88,7 @@ void Spell::RaiseDead(){
 
 	for(auto it=graveyard.rbegin(); it!=graveyard.rend(); ++it){
 		if(*it->getType=="Minion"){
-			activatePlayer->summonMinion(*it);
+			activePlayer->summonMinion(*it);
 			graveyard.erase(it);
 			triggerCard=activePlayer->getMinion(activePlayer->numMinions);
 			activateTrigger(2);

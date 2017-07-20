@@ -11,6 +11,7 @@ using std::cin;
 using std::cerr;
 using std::endl;
 using std::stringstream;
+using std::vector;
 
 bool init = false;
 ofstream initFile;
@@ -18,9 +19,9 @@ ofstream initFile;
 int turn = 0;
 Player playerOne;
 Player playerTwo;
-Player* activePlayer = playerOne;
-Player* nonActivePlayer = playerTwo;
-Card* triggerCard;
+extern Player* activePlayer = playerOne;
+extern Player* nonActivePlayer = playerTwo;
+extern Card* triggerCard;
 // this is the card that triggered an event (spell or minion)
 
 int main(int argc, char* argv[])

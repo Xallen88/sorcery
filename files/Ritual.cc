@@ -80,9 +80,10 @@ void Ritual::Standstill(Card* c){
 }
 
 void Ritual::AuraOfPower(Card* c){
-
+	// +1/+1 enchantment
+	// attach to minion
 }
 
 void Ritual::AuraOfSilence(Card* c){
-
+	// destroy spell
 }

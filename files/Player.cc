@@ -6,18 +6,18 @@
 #include "Player.h"
 #include "Card.h"
 #include "Minion.h"
-#include "Enchantment.h"
+#include "Enchantments.h"
 #include "Ritual.h"
 #include "Spell.h"
 
-using std::string;
-using std::cout;
-using std::endl;
-
-extern void activateTrigger(int triggerType);
+void activateTrigger(int triggerType);
 // Player needs to know about this function (but cannot include sorcery.h)
-extern void printError(string err);
+void printError(string err);
 // Error printing as defined in sorcery.cc
+Player* activePlayer;
+Player* nonActivePlayer;
+Card* triggerCard;
+// Forward declaration for global vars
 
 void Player::incrementMagic(int i)
 {
@@ -60,9 +60,9 @@ void Player::drawCard(){
 		deck.pop_back();
 }
 
-void Player::discardCard(int i){
+void Player::discardCard(unsigned int i){
 	if(hand.size()<i){
-		printError("Card " + i + " does not exist in your hand.");
+		printError("Card " + std::to_string(i) + " does not exist in your hand.");
 	}
 	else{
 		graveyard.push_back(hand.at(i-1));
@@ -70,22 +70,22 @@ void Player::discardCard(int i){
 	}
 }
 
-const string Player::getName(){
+string Player::getName() const {
 	return name;
 }
-const int Player::getLife(){
-	return Life;
+int Player::getLife() const {
+	return life;
 }
-const int Player::getMagic(){
-	return Magic;
+int Player::getMagic() const {
+	return magic;
 }
-const Card* Player::getMinion(int m){
+Minion* Player::getMinion(int m) const {
 	return minions.at(m-1);
 }
-const Card* Player::getRitual(){
+Ritual* Player::getRitual() const {
 	return ritual;
 }
-const int Player::numMinions(){
+int Player::numMinions() const {
 	return minions.size();
 }
 
@@ -121,14 +121,14 @@ void Player::useAbility(int minion, int targetCard, Player& targetPlayer){
 	// Steven code
 }
 
-void Player::playCard(int i){
+void Player::playCard(unsigned int i){
  // errors and shit
  if(hand.size()<i){
  	printError("Invalid card number.");
  	return;
  }
 
- cardType = hand.at(i-1)->getType;
+ string cardType = hand.at(i-1)->getType();
  if(cardType=="Minion"){
  	if(numMinions()==5){
  		printError("Cannot summon another minion, there is no room on the field.");
@@ -147,7 +147,7 @@ void Player::playCard(int i){
  }
 
  // magic cost
-	if(!activePlayer->decrementMagic(cost)){
+	if(!activePlayer->decrementMagic(hand.at(i-1)->getCost())){
 		printError("Insuffienct magic to cast spell.");
 		return;
 	}
@@ -171,14 +171,14 @@ void Player::playCard(int i){
 	} 
 }
 
-void Player::playCard(int i, int targetCard, Player& targetPlayer){
+void Player::playCard(unsigned int i, int targetCard, Player& targetPlayer){
 	// errors and shit
 	if(hand.size()<i){
  	printError("Invalid card number.");
  	return;
  }
 
- cardType = hand.at(i-1)->getType;
+ string cardType = hand.at(i-1)->getType();
  if(cardType=="Minion"){
  	printError("Minions do not have targets.");
  	return;
@@ -195,7 +195,7 @@ void Player::playCard(int i, int targetCard, Player& targetPlayer){
  }
 
  // magic cost
- if(!activePlayer->decrementMagic(cost)){
+ if(!activePlayer->decrementMagic(hand.at(i-1)->getCost())){
 		printError("Insuffienct magic to cast spell.");
 		return;
 	}

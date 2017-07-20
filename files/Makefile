@@ -1,7 +1,7 @@
 NAME := sorcery
 CXX := g++-5
 CXXFLAGS := -Wall -Werror=vla -std=c++14 -MMD
-SRC := $(find *.cc)
+SRC := $(shell find $(SOURCEDIR) -name '*.cc')
 OBJ := $(SRC:.cc=.o)
 DEP := $(OBJ:.o=.d)
 

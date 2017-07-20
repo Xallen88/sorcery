@@ -4,8 +4,6 @@
 #include <string>
 #include "Card.h"
 
-using std::string;
-
 class Spell : public Card {
   bool targetable;
   void Recharge();
@@ -16,7 +14,7 @@ class Spell : public Card {
   void Disenchant(Card *c);
  public:
   Spell();
-  Spell(string name)
+  Spell(string name);
   ~Spell();
   void Activate(Card *c) override;
   void Activate() override;

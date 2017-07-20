@@ -1,15 +1,12 @@
-#ifndef PLAYER_H
-#define PlAYER_H
+#ifndef _PLAYER_H_
+#define _PlAYER_H_
 #include <string>
 #include <vector>
 #include "Card.h"
 #include "Minion.h"
-#include "Enchantment.h"
+#include "Enchantments.h"
 #include "Ritual.h"
 #include "Spell.h"
-
-using std::string;
-using std::vector;
 
 class Player 
 {
@@ -20,7 +17,7 @@ class Player
   vector<Card*> deck; //deck.back() is top card
   vector<Card*> hand;
   vector<Card*> graveyard;
-  Minion *minions[5];
+  vector<Minion*> minions;
   Ritual *ritual;
  public:
   Player(const string name);
@@ -31,13 +28,13 @@ class Player
  
   void drawCard();
   //bool isHandFull() const;
-  void discardCard(int i);
+  void discardCard(unsigned int i);
 
   string getName() const;
   int getLife() const;
   int getMagic() const;
-  Card* getMinion(int m) const;
-  Card* getRitual() const;
+  Minion* getMinion(int m) const;
+  Ritual* getRitual() const;
   int numMinions() const;
 
   void constructDeck(string deckFile);
@@ -51,12 +48,12 @@ class Player
   void minionAttack(int minion, int otherminion, Player* otherPlayer);
   // gets pointer for attacking and defending minion and then
   // calls minion's attacking function
-  void playCard(int i);
+  void playCard(unsigned int i);
   // plays a card, including minions
-  void playCard(int i, int targetCard, Player& targetPlayer);
+  void playCard(unsigned int i, int targetCard, Player& targetPlayer);
   void useAbility(int minion);
   // uses a minions ability, calls the minions ability function
   void useAbility(int minion, int targetCard, Player& targetPlayer);
-}
+};
 
 #endif

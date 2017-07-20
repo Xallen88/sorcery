@@ -1,6 +1,11 @@
 #ifndef MINION_H
 #define MINION_H
 
+#include <vector>
+#include "Card.h"
+#include "Enchantments.h"
+
+class Player;
 
 class Minion : public Card {
   //Attributes

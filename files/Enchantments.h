@@ -20,7 +20,6 @@ class Enchantment : public Card {
   int getHVal();
   char getAOp();
   char getHOp();
-
-
+};
 
 #endif
