@@ -26,4 +26,15 @@ void Enchantment::Activate(Card *c) {
   //Doing enchantment stats in the minion class
 }
                          
-                        
+void Enchantment::Play(){
+
+}   
+
+void Enchantment::Play(Card* c){
+
+}    
+
+void Enchantment::Activate(){
+
+}     
+            

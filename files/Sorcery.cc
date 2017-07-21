@@ -4,43 +4,52 @@
 #include <sstream>
 #include "Sorcery.h"
 #include "Player.h"
+#include "Card.h"
+#include "Minion.h"
+#include "Spell.h"
+#include "Ritual.h"
+#include "Enchantments.h"
 
-using std::string;
 using std::cout;
 using std::cin;
 using std::cerr;
 using std::endl;
 using std::stringstream;
 using std::vector;
+using std::ifstream;
 
 bool init = false;
-ofstream initFile;
+ifstream initFile;
+
+bool testing = false;
 
 int turn = 0;
 Player playerOne;
 Player playerTwo;
-extern Player* activePlayer = playerOne;
-extern Player* nonActivePlayer = playerTwo;
-extern Card* triggerCard;
+Player* activePlayer = &playerOne;
+Player* nonActivePlayer = &playerTwo;
+Card* triggerCard=nullptr;
 // this is the card that triggered an event (spell or minion)
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]){
 	// take in command line args
 	string deckFile1, deckFile2;
 	deckFile1=deckFile2="";
 
 	for(int i=1; i<argc; ++i){			// needs serious error handling
-		if(argv[i]=="-deck1"){
+		string strArg = argv[i];
+		if(strArg=="-deck1"){
 			++i;
 			deckFile1=argv[i];
-		}else if(argv[i]=="-deck2"){
+		}else if(strArg=="-deck2"){
 			++i;
 			deckFile2=argv[i];
-		}else if(argv[i]=="-init"){
+		}else if(strArg=="-init"){
 			++i;
 			init=true;
-			initFile.open(argv[i]);
+			initFile.open(strArg);
+		}else if(strArg=="-testing"){
+			testing=true;
 		}
 	}
 
@@ -50,10 +59,23 @@ int main(int argc, char* argv[])
 	playerTwo.shuffleDeck();
 
 	// read input or initfile until EOF or quit
-	string commandLine = read();	
-	while(commandLine){
+	string commandLine;	
+	while(true){
 
-		stringstream ss (commandArg);
+	 if (init){
+	  getline(initFile, commandLine);
+	  if (!initFile.good()) {
+	   init = false;
+	  }
+	 }
+	 if (!init){
+	 	getline(cin, commandLine);
+	 	if(!cin.good()){
+	 		break;
+	 	}
+	 }
+
+		stringstream ss (commandLine);
 		string commandArg;
 		ss >> commandArg;
 
@@ -72,7 +94,7 @@ int main(int argc, char* argv[])
 		else if(commandArg=="attack"){ // need error handling
 			int minion;
 			ss >> minion;
-			if(!ss.EOF()){
+			if(ss.good()){
 				int otherminion;
 				ss >> otherminion;
 				activePlayer->minionAttack(minion, otherminion, nonActivePlayer);
@@ -84,7 +106,7 @@ int main(int argc, char* argv[])
 		else if(commandArg=="play"){ // need error handling
 			int card;
 			ss >> card;
-			if(!ss.EOF()){
+			if(ss.good()){
 				int targetPlayer, targetCard;
 				ss >> targetPlayer >> targetCard;
 				if(targetPlayer==1){
@@ -94,7 +116,7 @@ int main(int argc, char* argv[])
 					activePlayer->playCard(card, targetCard, playerTwo);
 				}
 				else{
-					printError("Not a valid target player.")
+					printError("Not a valid target player.");
 				}
 			}else{
 				activePlayer->playCard(card);
@@ -104,7 +126,7 @@ int main(int argc, char* argv[])
 		else if(commandArg=="use"){ // need error handling (FOR RITUALS????)
 			int minion;
 			ss >> minion;
-			if(!ss.EOF()){
+			if(ss.good()){
 				int targetPlayer, targetCard;
 				ss >> targetPlayer >> targetCard;
 				if(targetPlayer==1){
@@ -114,7 +136,7 @@ int main(int argc, char* argv[])
 					activePlayer->useAbility(minion, targetCard, playerTwo);
 				}
 				else{
-					printError("Not a valid target player.")
+					printError("Not a valid target player.");
 				}
 			}else{
 				activePlayer->useAbility(minion);
@@ -152,9 +174,8 @@ int main(int argc, char* argv[])
 				printError("This command can only be used in testing mode");
 			}
 		}else{
-			printError("Not a valid command. Type help for a list of commands.")
+			printError("Not a valid command. Type help for a list of commands.");
 		}
-		commandLine=read();
 	}
 
 	// cleanup, delete ptrs, etc
@@ -162,19 +183,6 @@ int main(int argc, char* argv[])
  // end game
 
  return 0;
-}
-
-string read()
-{
- string result;
- if (init){
-  getline(initfile, result);
-  if (!initFile.good()) {
-  	getline(cin, result);
-   init = false;
-  }
- }
- return result;
 }
 
 void printHelp(){
@@ -199,17 +207,19 @@ void printBoard(){
 	// graphical stuff goes here (Steven)
 }
 
-void inspectMinion(){
+void inspectMinion(int m, Player* p){
 	// code goes here (Steven)
 }
 
 extern void activateTrigger(int triggerType){
 	// APNAP: Active minion's (l to r), active ritual, non-active minions, non-active ritual
 	// Active Player
+	Minion* minionPtr;
+	Ritual* ritualPtr;
 	for(int m=1; m<=5; ++m){
 		minionPtr=activePlayer->getMinion(m);
 		if(!minionPtr){break;}
-		if(minionPtr->getTrigger()=triggerType){
+		if(minionPtr->getTrigger()==triggerType){
 			if(triggerType==1 || triggerType==4){
 				minionPtr->Activate();
 			}else{
@@ -232,7 +242,7 @@ extern void activateTrigger(int triggerType){
 	for(int m=1; m<=5; ++m){
 		minionPtr=nonActivePlayer->getMinion(m);
 		if(!minionPtr){break;}
-		if(minionPtr->getTrigger()=triggerType){
+		if(minionPtr->getTrigger()==triggerType){
 			if(triggerType==1 || triggerType==4){
 				minionPtr->Activate();
 			}else{

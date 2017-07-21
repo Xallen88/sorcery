@@ -18,7 +18,7 @@ protected:
 public:
 	Card();
 	Card(string name);
-	virtual ~Card()=0;
+	virtual ~Card();
 
 	int getTrigger() const;
 	int getCost() const;
@@ -28,16 +28,16 @@ public:
 	string getType() const;
 	bool requiresTarget() const;
 
-	virtual void Play();
-	virtual void Play(Card* target);
+	virtual void Play()=0;
+	virtual void Play(Card* target)=0;
 	// play the card	
 	//  minion: summon
 	//  ritual: place on field
 	//  enchantment: attach to minion
 	//  spell: activate effect
-	virtual void Activate();
+	virtual void Activate()=0;
 	// use the card's ability
-	virtual void Activate(Card* target);
+	virtual void Activate(Card* target)=0;
 };
 
 #endif

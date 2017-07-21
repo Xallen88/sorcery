@@ -2,11 +2,11 @@
 #include "Minion.h"
 #include "Enchantments.h"
 #include "Player.h"
-
-using namespace std;
+#include "Sorcery.h"
 
 Minion::Minion(){}
 Minion::Minion(string name): Card(name){}
+Minion::~Minion(){}
 
 void Minion::applyChange(char op, char c, int val) {
   if (c == 'a') {
@@ -98,3 +98,19 @@ void Minion::clearAllEnchants() {
 
 int Minion::getHp() { return curHp; }
 int Minion::getAtk() { return curAtk; }
+
+void Minion::Play(){
+
+}
+
+void Minion::Play(Card* c){
+
+}
+
+void Minion::Activate(){
+
+}
+
+void Minion::Activate(Card* c){
+
+}

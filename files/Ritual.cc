@@ -2,19 +2,18 @@
 #include <vector>
 #include <sstream>
 #include <fstream>
+#include <cctype>
+#include <algorithm>
 #include "Card.h"
 #include "Ritual.h"
 #include "Player.h"
+#include "Minion.h"
+#include "Sorcery.h"
 
 using std::stringstream;
 using std::ifstream;
 
 class Player;
-
-void printError(string err);
-Player* activePlayer;
-Player* nonActivePlayer;
-Card* triggerCard;
 
 Ritual::Ritual(){
 	// catchall
@@ -29,11 +28,15 @@ Ritual::Ritual(string name) : Card(name) {
 	string line;
 	string fileName=name;
 
-	for(auto it=fileName.begin();it!=fileName.end();++it){
-		if(*it==" "){
-			it = fileName.erase(it);
+	int len=fileName.length();
+	for(int i=0;i<len;++i){
+		if(fileName[i]==' '){
+			fileName.erase(i);
+			--i;
+			--len;
 		}
 	}
+
 	fileName="rituals/"+fileName+".info";
  ifstream infoFile (fileName);
  getline(infoFile, line);
@@ -85,7 +88,7 @@ void Ritual::DarkRitual(){
 }
 
 void Ritual::Standstill(Card* c){
-	Minion* m = c;
+	Minion* m = (Minion*) c;
 	m->decrementLife(m->getHp());
 }
 
@@ -96,4 +99,8 @@ void Ritual::AuraOfPower(Card* c){
 
 void Ritual::AuraOfSilence(Card* c){
 	// destroy spell
+}
+
+void Ritual::incrementCharges(int i){
+	charges+=i;
 }

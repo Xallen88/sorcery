@@ -4,18 +4,14 @@
 #include <sstream>
 #include "Card.h"
 #include "Spell.h"
+#include "Ritual.h"
 #include "Minion.h"
 #include "Player.h"
+#include "Sorcery.h"
 
 using std::string;
 using std::ifstream;
 using std::stringstream;
-
-void printError(string err);
-void activateTrigger(int t);
-Player* activePlayer;
-Player* nonActivePlayer;
-Card* triggerCard;
 
 Spell::Spell(){
 	// nothing here, just a safety net
@@ -30,11 +26,15 @@ Spell::Spell(string name) : Card(name) {
 	string line;
 	string fileName=name;
 
-	for(auto it=fileName.begin();it!=fileName.end();++it){
-		if(*it==" "){
-			it = fileName.erase(it);
+	int len=fileName.length();
+	for(int i=0;i<len;++i){
+		if(fileName[i]==' '){
+			fileName.erase(i);
+			--i;
+			--len;
 		}
 	}
+
 	fileName="spells/"+fileName+".info";
  ifstream infoFile (fileName);
  getline(infoFile, line);
@@ -58,22 +58,26 @@ void Spell::Activate(Card* c){}
 // unused functions
 
 void Spell::Play(){
-	switch(name){
-		case "Recharge": Recharge(); break;
-		case "Raise Dead": RaiseDead(); break;
-		case "Blizzard": Blizzard(); break;
+	if(name=="Recharge"){
+		Recharge();
+	}else if(name=="Raise Dead"){
+		RaiseDead();
+	}else	if(name=="Blizzard"){
+		Blizzard();
 	}
 }
 void Spell::Play(Card* c){
-	switch(name){
-		case "Banish": Banish(c); break;
-		case "Unsummon": Unsummon(c); break;
-		case "Disenchant": Disenchant(c); break;
+	if(name=="Banish"){
+		Banish(c); 
+	}else if(name=="Unsummon"){
+		Unsummon(c);
+	}else if(name=="Disenchant"){
+		Disenchant(c);
 	}
 }
 
 void Spell::Recharge(){
-	Ritual* ritualPtr = activePlayer->getRitual;
+	Ritual* ritualPtr = activePlayer->getRitual();
 	if(ritualPtr){
 		ritualPtr->incrementCharges(3);
 	}
@@ -87,21 +91,13 @@ void Spell::RaiseDead(){
 		printError("There are already 5 minions on the field.");
 	}
 
-	for(auto it=graveyard.rbegin(); it!=graveyard.rend(); ++it){
-		if(*it->getType=="Minion"){
-			activePlayer->summonMinion(*it);
-			graveyard.erase(it);
-			triggerCard=activePlayer->getMinion(activePlayer->numMinions);
-			activateTrigger(2);
-			return;
-		}
+	if(!activePlayer->summonFromGraveyard()){
+		printError("There are no minions in your graveyard");
 	}
-
-	printError("There are no minions in your graveyard");
 }
 
 void Spell::Blizzard(){
-	Minon* currMinion;
+	Minion* currMinion;
 	for(int i=1; i<activePlayer->numMinions(); ++i){
 		currMinion=activePlayer->getMinion(i);
 		currMinion->decrementLife(2);

@@ -15,7 +15,7 @@ class Spell : public Card {
  public:
   Spell();
   Spell(string name);
-  ~Spell();
+  ~Spell() override;
   void Activate(Card *c) override;
   void Activate() override;
   void Play() override;

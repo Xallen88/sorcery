@@ -27,6 +27,7 @@ class Minion : public Card {
   ~Minion() override;
   
   void Play() override;
+  void Play(Card *c) override;
   void Activate() override;
   void Activate(Card *target) override;
   void Attack(Minion* m);

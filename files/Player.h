@@ -2,16 +2,19 @@
 #define _PlAYER_H_
 #include <string>
 #include <vector>
-#include "Card.h"
-#include "Minion.h"
-#include "Enchantments.h"
 
+using std::vector;
+using std::string;
+
+class Card;
 class Ritual;
+class Minion;
+class Enchantment;
 
 class Player 
 {
  private:
-  const string name;
+  string name;
   int life = 20;
   int magic = 3;
   vector<Card*> deck; //deck.back() is top card
@@ -20,15 +23,17 @@ class Player
   vector<Minion*> minions;
   Ritual *ritual;
  public:
+  Player();
   Player(const string name);
+  ~Player();
   void incrementMagic(int i = 1);
   bool decrementMagic(int i = 1);
   void incrementLife(int i = 1);
   void decrementLife(int i = 1);
  
   void drawCard();
-  //bool isHandFull() const;
   void discardCard(unsigned int i);
+  void printHand();
 
   string getName() const;
   int getLife() const;
@@ -42,6 +47,8 @@ class Player
 
   void summonMinion(Minion* minion);
   void setRitual(Ritual* r);
+  void toGraveyard(Card* c);
+  bool summonFromGraveyard();
 
   void minionAttack(int minion, Player* otherPlayer);
   // direct attack to opponent's life, calls minion's attack function

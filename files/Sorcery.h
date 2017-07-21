@@ -1,15 +1,15 @@
 #ifndef _SORCERY_H_
 #define _SORCERY_H_
 #include <string>
-#include "Player.h"
 
 using std::string;
 
-extern bool testing = false;
+class Player;
+class Card;
 
-string read();
-// reads from initFile if an initFile was specified and has not
-// been exhausted. Otherwise reads from stdin
+extern Player* activePlayer;
+extern Player* nonActivePlayer;
+extern Card* triggerCard;
 
 extern void printError(string err);
 // prints an error message and handles any other error related issues
@@ -20,7 +20,7 @@ void printBoard();
 void printHelp();
 // displays all commands available when help command is invoked
 
-void inspectMinon(int m, Player* p);
+void inspectMinion(int m, Player* p);
 // inspect minion #m of player p
 
 extern void activateTrigger(int triggerType);

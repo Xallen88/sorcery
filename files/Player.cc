@@ -8,15 +8,31 @@
 #include "Minion.h"
 #include "Enchantments.h"
 #include "Ritual.h"
+#include "Sorcery.h"
 
-void activateTrigger(int triggerType);
-// Player needs to know about this function (but cannot include sorcery.h)
-void printError(string err);
-// Error printing as defined in sorcery.cc
-Player* activePlayer;
-Player* nonActivePlayer;
-Card* triggerCard;
-// Forward declaration for global vars
+
+Player::Player(){
+
+}
+Player::Player(const string name) : name(name) {
+
+}
+Player::~Player(){
+	for(unsigned int i=0;i<deck.size();++i){
+		delete deck.at(i);
+	} deck.clear();
+	for(unsigned int i=0;i<graveyard.size();++i){
+		delete graveyard.at(i);
+	}	graveyard.clear();
+	for(unsigned int i=0;i<hand.size();++i){
+		delete hand.at(i);
+	} hand.clear();
+	for(unsigned int i=0;i<minions.size();++i){
+		delete minions.at(i);
+	} minions.clear();
+	delete ritual;
+}
+
 
 void Player::incrementMagic(int i)
 {
@@ -69,6 +85,10 @@ void Player::discardCard(unsigned int i){
 	}
 }
 
+void Player::printHand(){
+	// Steven code here
+}
+
 string Player::getName() const {
 	return name;
 }
@@ -89,7 +109,7 @@ int Player::numMinions() const {
 }
 
 void Player::constructDeck(string deckFile){
-
+	// code this shit
 }
 
 void Player::shuffleDeck(){
@@ -102,6 +122,23 @@ void Player::summonMinion(Minion* minion){
 
 void Player::setRitual(Ritual* r){
 	ritual = r;
+}
+
+void Player::toGraveyard(Card* c){
+	graveyard.push_back(c);
+}
+
+bool Player::summonFromGraveyard(){
+	for(unsigned int i=0;i<graveyard.size();++i){
+		if(graveyard.at(i)->getType()=="Minion"){
+			summonMinion((Minion*) graveyard.at(i));
+			graveyard.erase(graveyard.begin()+i-1);
+			triggerCard=getMinion(numMinions());
+			activateTrigger(2);
+			return true;
+		}
+	}
+		return false;
 }
 
 void Player::minionAttack(int minion, Player* otherPlayer){

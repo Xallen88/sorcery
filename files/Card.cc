@@ -1,9 +1,10 @@
-#include "Card.h"
 #include <string>
-using std::string;
+#include "Card.h"
+#include "Sorcery.h"
 
 Card::Card(){}
 Card::Card(string name):name(name){}
+Card::~Card(){}
 
 int Card::getOwner() const {
 	return owner;
@@ -22,4 +23,8 @@ string Card::getDescription() const {
 }
 string Card::getType() const {
 	return type;
+}
+
+bool Card::requiresTarget() const {
+	return targetable;
 }
