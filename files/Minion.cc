@@ -3,9 +3,37 @@
 #include "Enchantments.h"
 #include "Player.h"
 #include "Sorcery.h"
+#include "Card.h"
 
 Minion::Minion(){}
-Minion::Minion(string name): Card(name){}
+Minion::Minion(string name): {
+  type="Minion";
+  stringstream ss;
+  string line;
+  string fileName = name;
+
+	int len = fileName.length();
+	for (int i = 0; i < len; ++i) {
+		if (fileName[i] == ' ') {
+			fileName.erase(i);
+			--i;
+			--len;
+		}
+	}
+
+  fileName="minions/"+fileName+".info";
+  ifstream infoFile (fileName);
+  getline(infoFile, line);
+ 
+  ss >> cost;
+  ss >> charges;
+  ss >> chargeCost;
+  ss >> trigger;
+  // take ints from file
+
+  getline(ss, description);	
+  // feed remaining line into description
+}
 Minion::~Minion(){}
 
 void Minion::applyChange(char op, char c, int val) {
@@ -100,7 +128,11 @@ int Minion::getHp() { return curHp; }
 int Minion::getAtk() { return curAtk; }
 
 void Minion::Play(){
-
+  Card* ritualPtr = activePlayer->getRitual();
+  if (ritualPtr) {
+    //graveyard.push_back(ritualPtr);
+  }
+  activePlayer->setRitual(this);
 }
 
 void Minion::Play(Card* c){
