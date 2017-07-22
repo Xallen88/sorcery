@@ -24,18 +24,19 @@ Minion::Minion(string name): {
   fileName = "minions/" + fileName + ".info";
   ifstream infoFile (fileName);
   getline(infoFile, line);
- 
+  //Adding cost, atk, hp
   ss >> cost;
   ss >> curAtk;
-	maxAtk = curAtk;
   ss >> curHp;
   maxHp = curHp;
+  maxAtk = curAtk;
+  //Determining if any active/triggered ability
   ss >> trigger;
-  // take ints from file
+  //5 signifying a activateable ability reads the cost of activation
   if (trigger == 5) { 
     ss >> tCost;  
   }
-  if (trigger == 0) return;
+  if (trigger == 0) return;//no trigger thus no desc
   getline(ss, description);	
   // feed remaining line into description
 }
