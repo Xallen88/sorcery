@@ -13,11 +13,11 @@ class Minion : public Card {
   int curHp;
   int maxHp;
   int maxAtk;
-  int base_atk;
-  int base_hp;
   //Enchantments;
   vector <Enchantment *> enchantments;
   int numEnch;
+  //Trigger ability cost
+  int tCost;
   
   void applyChange(char op, char c, int val);
   
