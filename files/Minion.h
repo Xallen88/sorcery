@@ -18,6 +18,8 @@ class Minion : public Card {
   int numEnch;
   //Trigger ability cost
   int tCost;
+  //Actions
+  int actions;
   
   void applyChange(char op, char c, int val);
   
@@ -39,6 +41,10 @@ class Minion : public Card {
   int getAtk();
   int getHp();
   
+  void resetActions();
+  bool hasActionLeft();
+  bool useAction();
+    
   void addEnchant(Enchantment *e);
   void clearAllEnchants();
 };
