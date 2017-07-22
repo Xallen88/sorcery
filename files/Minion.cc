@@ -7,7 +7,7 @@
 
 Minion::Minion(){}
 Minion::Minion(string name): {
-  type="Minion";
+  type = "Minion";
   stringstream ss;
   string line;
   string fileName = name;
@@ -21,16 +21,21 @@ Minion::Minion(string name): {
 		}
 	}
 
-  fileName="minions/"+fileName+".info";
+  fileName = "minions/" + fileName + ".info";
   ifstream infoFile (fileName);
   getline(infoFile, line);
  
   ss >> cost;
-  ss >> charges;
-  ss >> chargeCost;
+  ss >> curAtk;
+	maxAtk = curAtk;
+  ss >> curHp;
+  maxHp = curHp;
   ss >> trigger;
   // take ints from file
-
+  if (trigger == 5) { 
+    ss >> tCost;  
+  }
+  if (trigger == 0) return;
   getline(ss, description);	
   // feed remaining line into description
 }
