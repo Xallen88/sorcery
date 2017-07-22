@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Sorcery.h"
 #include "Card.h"
+#include "Sorcery.h"
 
 Minion::Minion(){}
 Minion::Minion(string name): {
@@ -12,14 +13,14 @@ Minion::Minion(string name): {
   string line;
   string fileName = name;
 
-	int len = fileName.length();
-	for (int i = 0; i < len; ++i) {
-		if (fileName[i] == ' ') {
-			fileName.erase(i);
-			--i;
-			--len;
-		}
-	}
+  int len = fileName.length();
+  for (int i = 0; i < len; ++i) {
+    if (fileName[i] == ' ') {
+      fileName.erase(i);
+      --i;
+      --len;
+    }
+  }
 
   fileName = "minions/" + fileName + ".info";
   ifstream infoFile (fileName);
@@ -134,8 +135,8 @@ int Minion::getHp() { return curHp; }
 int Minion::getAtk() { return curAtk; }
 
 void Minion::Play(){
-  Card* ritualPtr = activePlayer->getRitual();
-  if (ritualPtr) {
+  Card* minionPtr = activePlayer->getMinion(//add an integer here);
+  if (minionPtr) {
     //graveyard.push_back(ritualPtr);
   }
   activePlayer->setRitual(this);
