@@ -145,6 +145,9 @@ void Minion::Play(){
 void Minion::Play(Card* c){
 
 }
+void Minion::resetActions() { actions = 1; }
+bool hasActionLeft() { return actions == 1; }
+void useAction() { actions--; }
 
 void Minion::Activate(){
 
