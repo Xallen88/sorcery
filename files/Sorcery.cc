@@ -24,11 +24,9 @@ ifstream initFile;
 bool testing = false;
 
 int turn = 0;
-Player playerOne;
-Player playerTwo;
-Player* activePlayer = &playerOne;
-Player* nonActivePlayer = &playerTwo;
-Card* triggerCard=nullptr;
+activePlayer = &playerOne;
+nonActivePlayer = &playerTwo;
+triggerCard=nullptr;
 // this is the card that triggered an event (spell or minion)
 
 int main(int argc, char* argv[]){

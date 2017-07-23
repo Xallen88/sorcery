@@ -7,6 +7,8 @@ using std::string;
 class Player;
 class Card;
 
+extern Player playerOne;
+extern Player playerTwo;
 extern Player* activePlayer;
 extern Player* nonActivePlayer;
 extern Card* triggerCard;
