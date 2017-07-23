@@ -5,6 +5,8 @@
 #include "Sorcery.h"
 #include "Card.h"
 #include "Sorcery.h"
+#include <sstream>
+#include <fstream>
 
 using namespace std;
 
@@ -92,8 +94,7 @@ void Minion::decrementAtk(int i) {
 }
 void Minion::decrementLife(int i) { 
  curHp -= i;
- if (isDead()) 
-	
+ // if (isDead()) 	
 }
 void Minion::incrementLife(int i) {
  curHp += i;
@@ -153,8 +154,8 @@ void Minion::Play(Card* c){
  //Nothing
 }
 void Minion::resetActions() { actions = 1; }
-bool hasActionLeft() { return actions == 1; }
-void useAction() { actions--; }
+bool Minion::hasActionLeft() { return actions == 1; }
+void Minion::useAction() { actions--; }
 
 void Minion::FireElemental(Card *c) {
 	if(c->getOwner() != owner){
@@ -166,12 +167,12 @@ void Minion::PotionSeller() {
   int m = activePlayer->numMinions();
   for (int k = 1; k <= m; k++) {
     Minion *m = activePlayer->getMinion(k);
-    m->applyChange('+', h, 1);
+    m->applyChange('+', 'h', 1);
   }
 }
 void Minion::NovicePyromancer(Card *c) {
   if (c->getType() != "Minion") return;
-  Minion *m = c;
+  Minion *m = (Minion*) c;
   m->decrementLife(1);
 }
 void Minion::ApprenticeSummoner() {

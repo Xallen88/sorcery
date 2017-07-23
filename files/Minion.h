@@ -23,9 +23,9 @@ class Minion : public Card {
   
   void applyChange(char op, char c, int val);
   //Will be covered by triggers
-  //void FireElemental(); 
-  //void PotionSeller();
-  void NovicePyromancer();
+  void FireElemental(Card *c); 
+  void PotionSeller();
+  void NovicePyromancer(Card *c);
   void ApprenticeSummoner();
   void MasterSummoner();
   
@@ -51,7 +51,7 @@ class Minion : public Card {
   
   void resetActions();
   bool hasActionLeft();
-  bool useAction();
+  void useAction();
     
   void addEnchant(Enchantment *e);
   void clearAllEnchants();
