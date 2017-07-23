@@ -11,8 +11,8 @@ protected:
 	string description;
 	string type; 			//One of "Enchantment", "Minion", "Spell", "Ritual"
 	int owner;			//owner of the card
-	int cost;
-	int trigger;			//0 = no trigger. [1,2,3,4,5] = [start, end, on summon, on spell, minion active]
+	int cost;				
+	int trigger;			//0 = no trigger. [1,2,3,4,5] = [start, summon, spell, End, minion active]
 	bool targetable;
 
 public:
