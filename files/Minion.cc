@@ -12,6 +12,7 @@ Minion::Minion(string name): {
   stringstream ss;
   string line;
   string fileName = name;
+  actions = 1;
 
   int len = fileName.length();
   for (int i = 0; i < len; ++i) {
