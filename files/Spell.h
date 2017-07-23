@@ -5,7 +5,7 @@
 #include "Card.h"
 
 class Spell : public Card {
-  bool targetable;
+  bool destroyed;
   void Recharge();
   void RaiseDead();
   void Blizzard();
@@ -20,6 +20,7 @@ class Spell : public Card {
   void Activate() override;
   void Play() override;
   void Play(Card* c) override;
-  bool requiresTarget();
+  bool isDestroyed();
+  void Destroy();
 };
 #endif

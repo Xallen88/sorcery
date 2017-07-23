@@ -22,6 +22,7 @@ Spell::~Spell(){
 Spell::Spell(string name) : Card(name) {
 	type="Spell";
 	trigger=0;
+	destroyed=false;
 	stringstream ss;
 	string line;
 	string fileName=name;
@@ -49,8 +50,12 @@ Spell::Spell(string name) : Card(name) {
  // feed remaining line into description
 }
 
-bool Spell::requiresTarget(){
-	return targetable;
+bool Spell::isDestroyed(){
+	return destroyed;
+}
+
+void Spell::Destroy(){
+	destroyed=true;
 }
 
 void Spell::Activate(){}

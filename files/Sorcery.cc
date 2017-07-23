@@ -214,16 +214,31 @@ void inspectMinion(int m, Player* p){
 extern void activateTrigger(int triggerType){
 	// APNAP: Active minion's (l to r), active ritual, non-active minions, non-active ritual
 	// Active Player
-	Minion* minionPtr;
+	Minion* minionPtr, minionPtrTwo;
 	Ritual* ritualPtr;
+	Spell* spellPtr;
+	if(triggerType==2){
+		minionPtrTwo = (Minion*) triggerCard;
+	}else if(triggerType==3){
+		spellPtr = (Spell*) triggerCard;
+	}
+
 	for(int m=1; m<=5; ++m){
 		minionPtr=activePlayer->getMinion(m);
 		if(!minionPtr){break;}
 		if(minionPtr->getTrigger()==triggerType){
 			if(triggerType==1 || triggerType==4){
 				minionPtr->Activate();
+			}else if (triggerType==2){
+				minionPtr->Activate(triggerCard);
+				if(minionPtrTwo->isDead()){
+					return;
+				}
 			}else{
 				minionPtr->Activate(triggerCard);
+				if(spellPtr->isDestroyed()){
+					return;
+				}
 			}
 		}
 	}
@@ -232,8 +247,16 @@ extern void activateTrigger(int triggerType){
 		if(ritualPtr->getTrigger()==triggerType){
 			if(triggerType==1 || triggerType==4){
 				ritualPtr->Activate();
+			}else if (triggerType==2){
+				ritualPtr->Activate(triggerCard);
+				if(minionPtrTwo->isDead()){
+					return;
+				}
 			}else{
 				ritualPtr->Activate(triggerCard);
+				if(spellPtr->isDestroyed()){
+					return;
+				}
 			}
 		}
 	}
@@ -245,8 +268,16 @@ extern void activateTrigger(int triggerType){
 		if(minionPtr->getTrigger()==triggerType){
 			if(triggerType==1 || triggerType==4){
 				minionPtr->Activate();
+			}else if (triggerType==2){
+				minionPtr->Activate(triggerCard);
+				if(minionPtrTwo->isDead()){
+					return;
+				}
 			}else{
 				minionPtr->Activate(triggerCard);
+				if(spellPtr->isDestroyed()){
+					return;
+				}
 			}
 		}
 	}
@@ -255,8 +286,16 @@ extern void activateTrigger(int triggerType){
 		if(ritualPtr->getTrigger()==triggerType){
 			if(triggerType==1 || triggerType==4){
 				ritualPtr->Activate();
+			}else if (triggerType==2){
+				ritualPtr->Activate(triggerCard);
+				if(minionPtrTwo->isDead()){
+					return;
+				}
 			}else{
 				ritualPtr->Activate(triggerCard);
+				if(spellPtr->isDestroyed()){
+					return;
+				}
 			}
 		}
 	}
