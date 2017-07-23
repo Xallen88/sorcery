@@ -154,8 +154,10 @@ bool hasActionLeft() { return actions == 1; }
 void useAction() { actions--; }
 
 void Minion::FireElemental(Card *c) {
-  Minion* minionPtr = (Minion*) c;
-	minionPtr->decrementLife(1);
+	if(c->getOwner() != owner){
+        	Minion* minionPtr = (Minion*) c;
+		minionPtr->decrementLife(1);
+	}
 }
 void Minion::PotionSeller() {
   int m = activePlayer->numMinions();
