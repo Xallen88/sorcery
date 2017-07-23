@@ -120,6 +120,18 @@ void Player::summonMinion(Minion* minion){
 	minions.push_back(minion);
 }
 
+void Player::unsummonMinion(Minion* minion){
+	// remove from hand
+	for(unsigned int i=0;i<minions.size();++i){
+		if(minions.at(i)==minion){
+			minions.erase(i);
+			break;
+		}
+	}
+	// add to front of deck
+	deck.insert(minions.begin(), minion)
+}
+
 void Player::setRitual(Ritual* r){
 	ritual = r;
 }
@@ -132,7 +144,7 @@ bool Player::summonFromGraveyard(){
 	for(unsigned int i=0;i<graveyard.size();++i){
 		if(graveyard.at(i)->getType()=="Minion"){
 			summonMinion((Minion*) graveyard.at(i));
-			graveyard.erase(graveyard.begin()+i-1);
+			graveyard.erase(graveyard.begin()+i);
 			triggerCard=getMinion(numMinions());
 			activateTrigger(2);
 			return true;

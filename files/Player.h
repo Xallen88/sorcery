@@ -46,6 +46,7 @@ class Player
   void shuffleDeck();
 
   void summonMinion(Minion* minion);
+  void unsummonMinion(Minion* minion);
   void setRitual(Ritual* r);
   void toGraveyard(Card* c);
   bool summonFromGraveyard();
