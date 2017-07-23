@@ -6,8 +6,10 @@
 #include "Card.h"
 #include "Sorcery.h"
 
+using namespace std;
+
 Minion::Minion(){}
-Minion::Minion(string name): {
+Minion::Minion(string name) {
   type = "Minion";
   stringstream ss;
   string line;
@@ -90,7 +92,8 @@ void Minion::decrementAtk(int i) {
 }
 void Minion::decrementLife(int i) { 
  curHp -= i;
- if (curHp < 0) curHp = 0;
+ if (isDead()) 
+	
 }
 void Minion::incrementLife(int i) {
  curHp += i;
