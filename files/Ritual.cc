@@ -98,9 +98,11 @@ void Ritual::Standstill(Card* c){
 }
 
 void Ritual::AuraOfPower(Card* c){
-	Minion* minionPtr = (Minion*) c;
-	minionPtr->incrementLife(1);
-	minionPtr->incrementAtk(1);
+	if(c->getOwner()==owner){
+		Minion* minionPtr = (Minion*) c;
+		minionPtr->incrementLife(1);
+		minionPtr->incrementAtk(1);
+	}
 }
 
 void Ritual::AuraOfSilence(Card* c){
