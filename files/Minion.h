@@ -22,8 +22,9 @@ class Minion : public Card {
   int actions;
   
   void applyChange(char op, char c, int val);
-  void FireElemental();
-  void PotionSeller();
+  //Will be covered by triggers
+  //void FireElemental(); 
+  //void PotionSeller();
   void NovicePyromancer();
   void ApprenticeSummoner();
   void MasterSummoner();
