@@ -142,15 +142,46 @@ bool Player::summonFromGraveyard(){
 }
 
 void Player::minionAttack(int minion, Player* otherPlayer){
- // Steven code 
+	if (minion > numMinions()) {
+		//give error message
+		return;
+	}
+	//Get minion and check if it has actions left
+	Minion *m = getMinion(minion);
+	if (!m->hasActionLeft()) return;
+	m->useAction();
+	
+  	int damage = m->getAtk();
+	otherPlayer->decrementLife(damage);
+	//Check if other player is dead after this function
 }
 
 void Player::minionAttack(int minion, int otherminion, Player* otherPlayer){
-	// Steven code
+	//Checks if both minion index's exist
+	if (minion > numMinions() || otherminion > numMinions()) {
+		//Give error message
+		return;
+	}
+	//Pulling minion cards
+	Minion *attacker = getMinion(minion);
+	Minion *victim = getMinion(otherminion);
+	//Checking if attacker has any actions left
+	if (!attacker->hasActionLeft()) return;
+	attacker->useAction();
+	//pulling attack values of both minions
+	int aDmg = attacker->getAtk();
+	int vDmg = victim->getAtk();
+	//decrement both minions
+	attacker->decrementLife(vDmg);
+	victim->decrementLife(aDmg);
+	//Checking if any of the minions are dead
+	if (attacker->isDead()) toGraveyard(attacker);
+	if (victim->isDead()) otherPlayer->toGraveyard(victim);	
 }
 
 void Player::useAbility(int minion){
-	// Steven code
+	Minion *m = getMinion(minion);
+	
 }
 
 void Player::useAbility(int minion, int targetCard, Player& targetPlayer){
