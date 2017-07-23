@@ -153,8 +153,9 @@ void Minion::resetActions() { actions = 1; }
 bool hasActionLeft() { return actions == 1; }
 void useAction() { actions--; }
 
-void Minion::FireElemental() {
-  
+void Minion::FireElemental(Card *c) {
+  Minion* minionPtr = (Minion*) c;
+	minionPtr->decrementLife(1);
 }
 void Minion::PotionSeller() {
   int m = activePlayer->numMinions();
@@ -191,4 +192,5 @@ void Minion::Activate(){
 
 void Minion::Activate(Card* c){
   if (name == "Novice Pyromancer") NovicePyromancer(c);
+  else if (name == "Fire Elemental") FireElemental(c);
 }
