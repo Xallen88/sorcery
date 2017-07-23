@@ -22,11 +22,16 @@ Ritual::~Ritual(){
 	// no ptrs
 }
 
-Ritual::Ritual(string name) : Card(name) {
- type="Ritual";
+Ritual::Ritual(string name) : Card(name), type("Ritual") {
  stringstream ss;
 	string line;
 	string fileName=name;
+
+	if(activePlayer==&playerOne){
+		owner=1;
+	}else{
+		owner=2;
+	}
 
 	int len=fileName.length();
 	for(int i=0;i<len;++i){
@@ -52,9 +57,9 @@ Ritual::Ritual(string name) : Card(name) {
 }
 
 void Ritual::Play(){
-	Card* ritualPtr = activePlayer->getRitual();
+	Ritual* ritualPtr = activePlayer->getRitual();
 	if(ritualPtr){
- 	//graveyard.push_back(ritualPtr);
+ 	activePlayer->toGraveyard(ritualPtr);
  }
  activePlayer->setRitual(this);
 }
@@ -88,17 +93,19 @@ void Ritual::DarkRitual(){
 }
 
 void Ritual::Standstill(Card* c){
-	Minion* m = (Minion*) c;
-	m->decrementLife(m->getHp());
+	Minion* minionPtr = (Minion*) c;
+	minionPtr->decrementLife(minionPtr->getHp());
 }
 
 void Ritual::AuraOfPower(Card* c){
-	// +1/+1 enchantment
-	// attach to minion
+	Minion* minionPtr = (Minion*) c;
+	minionPtr->incrementLife(1);
+	minionPtr->incrementAtk(1);
 }
 
 void Ritual::AuraOfSilence(Card* c){
-	// destroy spell
+	Spell* spellPtr = (Spell*) c;
+	spellPtr->Destroy();
 }
 
 void Ritual::incrementCharges(int i){

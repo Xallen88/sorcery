@@ -19,9 +19,7 @@ Spell::Spell(){
 Spell::~Spell(){
 	// no ptrs
 }
-Spell::Spell(string name) : Card(name) {
-	type="Spell";
-	trigger=0;
+Spell::Spell(string name) : Card(name), type("Spell"), trigger(0) {
 	destroyed=false;
 	stringstream ss;
 	string line;
@@ -63,21 +61,25 @@ void Spell::Activate(Card* c){}
 // unused functions
 
 void Spell::Play(){
-	if(name=="Recharge"){
-		Recharge();
-	}else if(name=="Raise Dead"){
-		RaiseDead();
-	}else	if(name=="Blizzard"){
-		Blizzard();
+	if(!isDestroyed()){
+		if(name=="Recharge"){
+			Recharge();
+		}else if(name=="Raise Dead"){
+			RaiseDead();
+		}else	if(name=="Blizzard"){
+			Blizzard();
+		}
 	}
 }
 void Spell::Play(Card* c){
-	if(name=="Banish"){
-		Banish(c); 
-	}else if(name=="Unsummon"){
-		Unsummon(c);
-	}else if(name=="Disenchant"){
-		Disenchant(c);
+	if(!isDestroyed()){
+		if(name=="Banish"){
+			Banish(c); 
+		}else if(name=="Unsummon"){
+			Unsummon(c);
+		}else if(name=="Disenchant"){
+			Disenchant(c);
+		}
 	}
 }
 
@@ -115,13 +117,32 @@ void Spell::Blizzard(){
 }
 
 void Spell::Banish(Card *c){
- 
+ if(c->getType=="ritual"){
+ 	Player* playerPtr;
+		if(c->getOwner()==1){
+	 	playerPtr=&playerOne;
+	 }else{
+	 	playerPtr=&playerTwo;
+	 }
+		playerPtr->toGraveyard(c);
+	 playerPtr->setRitual(nullptr);
+ }else{ //minions
+ 	Minion* minionPtr = (Minion*) c;
+ 	minionPtr->decrementLife(minionPtr->getHp());
+ }
 }
 
-void Spell::Unsummon(Card *c){
- 
+void Spell::Unsummon(Card *c){ 
+	Player* playerPtr;
+	if(c->getOwner()==1){
+ 	playerPtr=&playerOne;
+ }else{
+ 	playerPtr=&playerTwo;
+ }
+ playerPtr->unsummonMinion((Minion*) c);
 }
 
 void Spell::Disenchant(Card *c){
- 
+ Minion* minionPtr = (Minion*) c;
+ minionPtr->removeTopEnchant();
 }
