@@ -153,14 +153,42 @@ void Minion::resetActions() { actions = 1; }
 bool hasActionLeft() { return actions == 1; }
 void useAction() { actions--; }
 
-
 void Minion::FireElemental() {
   
 }
+void Minion::PotionSeller() {
+  int m = activePlayer->numMinions();
+  for (int k = 1; k <= m; k++) {
+    Minion *m = activePlayer->getMinion(k);
+    m->applyChange('+', h, 1);
+  }
+}
+void Minion::NovicePyromancer(Card *c) {
+  if (c->getType() != "Minion") return;
+  Minion *m = c;
+  m->decrementLife(1);
+}
+void Minion::ApprenticeSummoner() {
+  int num = activePlayer->numMinions();
+  if (num == 5) return;
+  Minion *m = new Minion("AirElemental");
+  activePlayer->summonMinion(m);
+}
+void Minion::MasterSummoner() {
+  int num = activePlayer->numMinions();
+  if (num < 5) {
+    for (int k = 0; k < 5-num; k++) {
+      Minion *m = new Minion("AirElemental");
+      activePlayer->summonMinion(m);
+    }
+  }
+}
 void Minion::Activate(){
-
+  if (name == "Potion Seller") PotionSeller();
+  else if (name == "Apprentice Summoner") ApprenticeSummoner();
+  else if (name == "Master Summoner") MasterSummoner();
 }
 
 void Minion::Activate(Card* c){
-
+  if (name == "Novice Pyromancer") NovicePyromancer(c);
 }
