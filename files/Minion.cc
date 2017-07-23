@@ -79,6 +79,15 @@ void Minion::applyChange(char op, char c, int val) {
 }
 void Minion::Attack(Player *p) { /*Check if can attack then */ p->decrementLife(curAtk); }
 void Minion::Attack(Minion *m) { /*Check if can attack then */ m->decrementLife(curAtk); }
+void Minion::incrementAtk(int i) {
+  curAtk += i;
+  maxAtk += i;
+}
+
+void Minion::decrementAtk(int i) {
+  curAtk -= i;
+  maxAtk -= i;
+}
 void Minion::decrementLife(int i) { 
  curHp -= i;
  if (curHp < 0) curHp = 0;
@@ -135,21 +144,19 @@ void Minion::clearAllEnchants() {
 int Minion::getHp() { return curHp; }
 int Minion::getAtk() { return curAtk; }
 
-void Minion::Play(){
-  Card* minionPtr = activePlayer->getMinion(//add an integer here);
-  if (minionPtr) {
-    //graveyard.push_back(ritualPtr);
-  }
-  activePlayer->setRitual(this);
-}
+void Minion::Play(){ activePlayer->summonMinion(this); }
 
 void Minion::Play(Card* c){
-
+ //Nothing
 }
 void Minion::resetActions() { actions = 1; }
 bool hasActionLeft() { return actions == 1; }
 void useAction() { actions--; }
 
+
+void Minion::FireElemental() {
+  
+}
 void Minion::Activate(){
 
 }
