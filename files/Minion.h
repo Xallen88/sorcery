@@ -22,6 +22,12 @@ class Minion : public Card {
   int actions;
   
   void applyChange(char op, char c, int val);
+  //Will be covered by triggers
+  //void FireElemental(); 
+  //void PotionSeller();
+  void NovicePyromancer();
+  void ApprenticeSummoner();
+  void MasterSummoner();
   
  public:
   Minion();
@@ -34,6 +40,8 @@ class Minion : public Card {
   void Activate(Card *target) override;
   void Attack(Minion* m);
   void Attack(Player *p);
+  void incrementAtk(int i = 1);
+  void decrementAtk(int i = 1);
   void decrementLife(int i = 1);
   void incrementLife(int i = 1);
   bool isDead();
