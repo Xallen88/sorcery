@@ -36,9 +36,12 @@ Enchantment::Enchantment(string name) {
   //Adding cost, atk, hp
   ss >> cost;
   ss >> normalEnch;
-  if (normalEnch == 0) ss >> atkVal >> hpVal >> atkOp >> hpOp; 
-  getline(ss, description);	
-  // feed remaining line into description
+  if (normalEnch == 0) {
+    ss >> atkVal >> hpVal >> atkOp >> hpOp; 
+  } else {//Only not normal Enchants have desc
+    getline(ss, description);	
+    // feed remaining line into description
+  }
 }
 Enchantment::~Enchantment() {}
 int Enchantment::getAVal() { return atkVal; }
