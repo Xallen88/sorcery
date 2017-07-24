@@ -143,8 +143,16 @@ int main(int argc, char* argv[]){
 				ss >> targetPlayer >> targetChar;
 				if(targetChar=='r'){
 					targetCard=6;
-				}else if(targetChar=='1'||targetChar=='2'||targetChar=='3'||targetChar=='4'||targetChar=='5'){
-					targetCard = (int) targetChar;
+				}else if(targetChar=='1'){
+					targetCard = 1;
+				}else if(targetChar=='2'){
+					targetCard = 2;
+				}else if(targetChar=='3'){
+					targetCard = 3;
+				}else if(targetChar=='4'){
+					targetCard = 4;
+				}else if(targetChar=='5'){
+					targetCard = 5;
 				}else{
 					printError("Invalid target card.");
 				}
@@ -171,8 +179,16 @@ int main(int argc, char* argv[]){
 				ss >> targetPlayer >> targetChar;
 				if(targetChar=='r'){
 					targetCard=6;
-				}else if(targetChar=='1'||targetChar=='2'||targetChar=='3'||targetChar=='4'||targetChar=='5'){
-					targetCard = (int) targetChar;
+				}else if(targetChar=='1'){
+					targetCard = 1;
+				}else if(targetChar=='2'){
+					targetCard = 2;
+				}else if(targetChar=='3'){
+					targetCard = 3;
+				}else if(targetChar=='4'){
+					targetCard = 4;
+				}else if(targetChar=='5'){
+					targetCard = 5;
 				}else{
 					printError("Invalid target card.");
 				}
