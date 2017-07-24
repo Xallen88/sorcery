@@ -84,6 +84,7 @@ void Ritual::Activate(){
 
 void Ritual::Activate(Card* c){
 	if(charges >= chargeCost){
+		charges-=chargeCost;
 		if(name=="Aura of Power"){
 			AuraOfPower(c);
 		}else if(name=="Standstill"){
@@ -95,7 +96,9 @@ void Ritual::Activate(Card* c){
 }
 
 void Ritual::DarkRitual(){
-	activePlayer->incrementMagic();
+	if((activePlayer == &playerOne && owner == 1) || (activePlayer == &playerTwo && owner == 2)){
+		activePlayer->incrementMagic();
+	}
 }
 
 void Ritual::Standstill(Card* c){

@@ -193,10 +193,12 @@ void Minion::FireElemental(Card *c) {
 	}
 }
 void Minion::PotionSeller() {
-  int m = activePlayer->numMinions();
-  for (int k = 1; k <= m; k++) {
-    Minion *m = activePlayer->getMinion(k);
-    m->applyChange('+', 'h', 1);
+  if((activePlayer == &playerOne && owner == 1) || (activePlayer == &playerTwo && owner == 2)){
+    int m = activePlayer->numMinions();
+    for (int k = 1; k <= m; k++) {
+      Minion *m = activePlayer->getMinion(k);
+      m->applyChange('+', 'h', 1);
+    }
   }
 }
 void Minion::NovicePyromancer(Card *c) {
