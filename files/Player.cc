@@ -110,11 +110,10 @@ void Player::printHand(){
                         if (hand[k]->getTrigger() == 0) {
                                 message = display_minion_no_ability(name, cost, atk, hp);
                         } else if (hand[k]->getTrigger() == 5) {
-                                message = display_minion_triggered_ability(name, cost, atk, hp, desc);
-                        } else {//Case of 1-4 triggers
                                 int aCost = m->getACost();
-                                message = display_minion_activated_ability(name, cost, atk, hp, aCost,
-                                                                            desc);
+                                message = display_minion_activated_ability(name, cost, atk, hp, aCost, desc);
+                        } else {//Case of 1-4 triggers
+                                message = display_minion_triggered_ability(name, cost, atk, hp, desc);;
                         }
                 } else if (hand[k]->getType() == "Ritual") {
                         Ritual *r = (Ritual *) hand[k];

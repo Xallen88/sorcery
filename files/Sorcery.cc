@@ -253,7 +253,7 @@ void printBoard(){
 	vector <string> text = display_minion_no_ability("Spongebob", 3, 5, 5);
   	vector <string> text2 = display_minion_activated_ability("Patrick Star", 5, 3, 3, 5, "Burns Spongebob");
  	vector <string> text3 = CENTRE_GRAPHIC;// prints sorcery in middle 
-	//variable for first line of player
+	//DOING FIRST LINE OF PLAYER ONE
 	vector <vector<string>> field;
   	//Check if it has a ritual otherwise use the empty one
         Card *c = (Card *) playerOne.getRitual();
@@ -266,7 +266,19 @@ void printBoard(){
  	field.emplace_back(display_player_card(1, playerOne.getName(), playerOne.getLife(), playerOne.getMagic()));
 	field.emplace_back(CARD_TEMPLATE_EMPTY);
 	field.emplace_back(text);//TODO PRINT TOP OF GRAVEYARD INSTEAD OF THIS.
- 	//determines what to print for minion field
+	//DOING FIRST LINE OF PLAYER TWO
+	vector <vector<string>> field2;
+	c = (Card *) playerTwo.getRitual();
+	r = (Ritual *) c;
+	vector<string> ritual2;
+	if (c == nullptr) ritual2 = CARD_TEMPLATE_BORDER;
+	else ritual2 = display_ritual(c->getName(), c->getCost(), r->getChargeCost(), c->getDescription(), r->getCharges());
+        field2.emplace_back(ritual2);
+        field2.emplace_back(CARD_TEMPLATE_EMPTY);
+        field2.emplace_back(display_player_card(1, playerOne.getName(), playerOne.getLife(), playerOne.getMagic()));
+        field2.emplace_back(CARD_TEMPLATE_EMPTY);
+        field2.emplace_back(text);//TODO PRINT TOP OF GRAVEYARD INSTEAD OF THIS.
+ 	//determines what to print for minion field FOR PLAYERONE
 	int minNum = playerOne.numMinions();
 	vector<vector<string>> minions;
 	vector<string> minion;
@@ -280,8 +292,24 @@ void printBoard(){
 	}
 	//if there isnt enough minions add the empty card template
 	for (int k = minNum+1; k <= 5; k++) {
-		minions.emplace_back(CARD_TEMPLATE_EMPTY);
+		minions.emplace_back(CARD_TEMPLATE_BORDER);
 	}
+        //determines what to print for minion field FOR PLAYERTWO
+        int minNum2 = playerTwo.numMinions();
+        vector<vector<string>> minions2;
+        vector<string> minion2;
+        for (int j = 1; j <= minNum2; j++) {
+                Minion *m = playerTwo.getMinion(j);
+                c = (Card *) m;
+                if (c->getTrigger() == 0) minion2 = display_minion_no_ability(c->getName(), c->getCost(), m->getAtk(), m->getHp());
+                else if (c->getTrigger() == 5) minion2 = display_minion_activated_ability(c->getName(), c->getCost(), m->getAtk(), m->getHp(), m->getACost(), c->getDescription());
+                else minion2 = display_minion_triggered_ability(c->getName(), c->getCost(), m->getAtk(), m->getHp(), c->getDescription());
+                minions2.emplace_back(minion2);
+        }
+        //if there isnt enough minions add the empty card template
+        for (int k = minNum+1; k <= 5; k++) {
+                minions2.emplace_back(CARD_TEMPLATE_BORDER);
+        }
   	//Prints out top of Sorcery
   	cout << EXTERNAL_BORDER_CHAR_TOP_LEFT;
  	for (int k = 0; k < 165; k++)  cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
@@ -309,15 +337,20 @@ void printBoard(){
   	for (unsigned int k = 0; k < sorceryLogo.size(); k++) {
    		cout << sorceryLogo[k] << endl;
   	}
+	
 	//printing minion line 
-  	for (unsigned int k = 0; k < minions[0].size(); k++) {
+  	
+   	for (unsigned int k = 0; k < minions2[0].size(); k++) {
    		cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
-    		for (int j = 0; j < 5; j++) {
-      			cout  << minions[j][k];
+    		/*
+		for (int j = 0; j < 5; j++) {
+      			cout  << minions2[j][k];
    		 }
+		*/
 		cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
    		 cout << endl;
   	}
+	
   	//printing first ine 
   	for (unsigned int k = 0; k < field[0].size(); k++) {
    		 cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
