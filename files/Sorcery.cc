@@ -251,9 +251,7 @@ extern void printError(string err){
 
 void printBoard(){
 	vector <string> text = display_minion_no_ability("Spongebob", 3, 5, 5);
-  	vector <string> text2 = display_minion_activated_ability("Patrick Star", 5, 3, 3, 5, "Burns Spongebob");
- 	vector <string> text3 = CENTRE_GRAPHIC;// prints sorcery in middle 
-	//DOING FIRST LINE OF PLAYER ONE
+  	//DOING FIRST LINE OF PLAYER ONE
 	vector <vector<string>> field;
   	//Check if it has a ritual otherwise use the empty one
         Card *c = (Card *) playerOne.getRitual();
