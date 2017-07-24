@@ -93,8 +93,17 @@ void Minion::decrementAtk(int i) {
   maxAtk -= i;
 }
 void Minion::decrementLife(int i) { 
- curHp -= i;
- // if (isDead()) 	
+  curHp -= i;
+  if (isDead()) {
+    //Check who the minion belongs to and send to respective graveyard
+    if (owner == 1) {
+      playerTwo.unSummonMinion(this);
+      playerOne.toGraveyard(this);
+    } else {//Player2
+      playerTwo.unsummonMinion(this);
+      playerTwo.toGraveyard(this);
+    }
+  }	
 }
 void Minion::incrementLife(int i) {
  curHp += i;
@@ -112,37 +121,40 @@ void Minion::addEnchant(Enchantment *e) {//Supports * and + on attack and *, +, 
   applyChange(e->getHOp(), 'h', e->getHVal());
   
 }
-void Minion::clearAllEnchants() {
- int aOp = enchantments.back()->getAOp();
- int hOp = enchantments.back()->getHOp();
- Enchantment *e = enchantments.back();
- 
- //Take away stats from enchantment
- // for atk stats
- if (aOp == '*') {
-   applyChange('/', 'a', e->getAVal());
- } else if (aOp == '/') {
-   applyChange('*', 'a', e->getAVal());
- } else if (aOp == '+') {
-   applyChange('-', 'a', e->getAVal());
- } else {//the subtract case
-   applyChange('+', 'a', e->getAVal());
- }
- //For hp stats
- if (hOp == '*') {
-   applyChange('/', 'h', e->getHVal());
- } else if (hOp == '/') {
-   applyChange('*', 'h', e->getHVal());
- } else if (hOp == '+') {
-   applyChange('-', 'h', e->getHVal());
- } else {//the subtract case
-   applyChange('+', 'h', e->getHVal());
- }
- //popping enchantment
-  for (int k = 0; k < numEnch; ++k){
-    enchantments.pop_back();
+void Minion::removeTopEnch() {
+  int aOp = enchantments.back()->getAOp();
+  int hOp = enchantments.back()->getHOp();
+  Enchantment *e = enchantments.back();
+  numEnch -= 1;
+  //Take away stats from enchantment
+  // for atk stats
+  if (aOp == '*') {
+    applyChange('/', 'a', e->getAVal());
+  } else if (aOp == '/') {
+    applyChange('*', 'a', e->getAVal());
+  } else if (aOp == '+') {
+    applyChange('-', 'a', e->getAVal());
+  } else {//the subtract case
+    applyChange('+', 'a', e->getAVal());
   }
-  numEnch = 0;
+  //For hp stats
+  if (hOp == '*') {
+    applyChange('/', 'h', e->getHVal());
+  } else if (hOp == '/') {
+    applyChange('*', 'h', e->getHVal());
+  } else if (hOp == '+') {
+    applyChange('-', 'h', e->getHVal());
+  } else {//the subtract case
+    applyChange('+', 'h', e->getHVal());
+  }
+  enchantments.pop_back();
+}
+
+void Minion::clearAllEnchants() {
+ //popping enchantment
+  for (int k = numEnch; k > 0; --k){
+    removeTopEnch();
+  }
 }
 
 int Minion::getHp() { return curHp; }
