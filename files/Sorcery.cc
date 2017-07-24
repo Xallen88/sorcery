@@ -66,6 +66,10 @@ int main(int argc, char* argv[]){
 		playerOne.shuffleDeck();
 		playerTwo.shuffleDeck();
 	}
+	for(int i=0;i<4;++i){
+		playerOne.drawCard();
+		playerTwo.drawCard();
+	}
 
 	// read input or initfile until EOF or quit
 	if(init){initFile.open(initFileName);}
