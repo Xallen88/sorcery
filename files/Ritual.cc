@@ -76,9 +76,11 @@ void Ritual::Play(Card* c){
 
 void Ritual::Activate(){
 	if(charges >= chargeCost){
-		charges-=chargeCost;
 		if(name=="Dark Ritual"){
-			DarkRitual();
+			if((activePlayer == &playerOne && owner == 1) || (activePlayer == &playerTwo && owner == 2)){
+				DarkRitual();
+				charges-=chargeCost;
+			}
 		}
 	}
 }
@@ -97,9 +99,7 @@ void Ritual::Activate(Card* c){
 }
 
 void Ritual::DarkRitual(){
-	if((activePlayer == &playerOne && owner == 1) || (activePlayer == &playerTwo && owner == 2)){
 		activePlayer->incrementMagic();
-	}
 }
 
 void Ritual::Standstill(Card* c){
