@@ -75,7 +75,7 @@ void Spell::Play(){
 		}else	if(name=="Blizzard"){
 			Blizzard(); Destroy();
 		}else if(name=="Find Minions"){
-			FindMinions(); 
+			FindMinions(); Destroy();
 		}
 	}
 }
@@ -121,9 +121,8 @@ void Spell::Blizzard(){
 }
 
 void Spell::FindMinions(){
-	activePlayer->toGraveyard(this);
 	for(int i=0; i<3; ++i){
-		if(activePlayer->handSize()<5){
+		if(activePlayer->handSize()<6){
 			if(activePlayer->topDeck()->getType()!="Minion"){
 				activePlayer->drawCard();
 				activePlayer->discardCard(activePlayer->handSize());

@@ -76,10 +76,6 @@ void Player::drawCard(){
 		printError("There are no more cards in your deck.");
 		return;
 	}
-	if(hand.size()==5){
-			printError("Your hand is full.");
-			return;
-	}
 		hand.push_back(deck.back());
 		deck.pop_back();
 }
