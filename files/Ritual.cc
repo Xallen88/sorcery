@@ -26,7 +26,7 @@ Ritual::~Ritual(){
 }
 
 Ritual::Ritual(string name) : Card(name) {
- type="ritual";
+ type="Ritual";
  stringstream ss;
 	string line;
 	string fileName=name;
@@ -40,7 +40,7 @@ Ritual::Ritual(string name) : Card(name) {
 	int len=fileName.length();
 	for(int i=0;i<len;++i){
 		if(fileName[i]==' '){
-			fileName.erase(i);
+			fileName.erase(fileName.begin()+i);
 			--i;
 			--len;
 		}
@@ -49,7 +49,8 @@ Ritual::Ritual(string name) : Card(name) {
 	fileName="rituals/"+fileName+".info";
  ifstream infoFile (fileName);
  getline(infoFile, line);
- 
+ ss.str(line);
+
  ss >> cost;
  ss >> charges;
  ss >> chargeCost;

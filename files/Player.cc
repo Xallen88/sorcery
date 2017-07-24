@@ -145,9 +145,9 @@ int Player::numMinions() const {
 }
 
 void Player::constructDeck(string deckFile){
-	ifstream fs("deckFile");
+	ifstream fs(deckFile);
 	string cardName;
-	while(fs.good()){
+	while(!fs.eof()){
 		getline(fs, cardName);
 		if(find(minionList.begin(), minionList.end(), cardName) != minionList.end()){
 			Minion* minionPtr = new Minion(cardName);

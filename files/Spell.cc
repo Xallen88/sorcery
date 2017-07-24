@@ -32,7 +32,7 @@ Spell::Spell(string name) : Card(name){
 	int len=fileName.length();
 	for(int i=0;i<len;++i){
 		if(fileName[i]==' '){
-			fileName.erase(i);
+			fileName.erase(fileName.begin()+i);
 			--i;
 			--len;
 		}
@@ -41,6 +41,7 @@ Spell::Spell(string name) : Card(name){
 	fileName="spells/"+fileName+".info";
  ifstream infoFile (fileName);
  getline(infoFile, line);
+ ss.str(line);
  
  ss >> cost;
  // take int from file

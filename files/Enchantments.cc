@@ -10,7 +10,7 @@ vector<string> enchList = {"Giant Strength", "Magic Fatigue", "Silence"};
 
 
 Enchantment::Enchantment(){}
-Enchantment::Enchantment(string name) {
+Enchantment::Enchantment(string name) : Card(name){
   type = "Enchantment";
   stringstream ss;
   string line;
@@ -24,7 +24,7 @@ Enchantment::Enchantment(string name) {
   int len = fileName.length();
   for (int i = 0; i < len; ++i) {
     if (fileName[i] == ' ') {
-      fileName.erase(i);
+      fileName.erase(fileName.begin()+i);
       --i;
       --len;
     }
@@ -33,6 +33,7 @@ Enchantment::Enchantment(string name) {
   fileName = "minions/" + fileName + ".info";
   ifstream infoFile (fileName);
   getline(infoFile, line);
+  ss.str(line);
   //Adding cost, atk, hp
   ss >> cost;
   ss >> normalEnch;

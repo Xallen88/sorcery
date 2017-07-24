@@ -35,7 +35,7 @@ Card* triggerCard=nullptr;
 int main(int argc, char* argv[]){
 	// command line args
 	string deckFile1, deckFile2, name, initFileName;
-	deckFile1=deckFile2="default.deck";
+	deckFile1=deckFile2="decks/default.deck";
 
 	for(int i=1; i<argc; ++i){			// needs serious error handling
 		string strArg = argv[i];
@@ -233,7 +233,7 @@ extern void activateTrigger(int triggerType){
 		spellPtr = (Spell*) triggerCard;
 	}
 
-	for(int m=1; m<=5; ++m){
+	for(int m=1; m<=activePlayer->numMinions(); ++m){
 		minionPtr=activePlayer->getMinion(m);
 		if(!minionPtr){break;}
 		if(minionPtr->getTrigger()==triggerType){
@@ -272,7 +272,7 @@ extern void activateTrigger(int triggerType){
 	}
 
 // Non-active Player
-	for(int m=1; m<=5; ++m){
+	for(int m=1; m<=nonActivePlayer->numMinions(); ++m){
 		minionPtr=nonActivePlayer->getMinion(m);
 		if(!minionPtr){break;}
 		if(minionPtr->getTrigger()==triggerType){

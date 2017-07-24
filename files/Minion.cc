@@ -13,7 +13,7 @@ using namespace std;
 vector<string> minionList={"Air Elemental", "Earth Elemental", "Fire Elemental", "Potion Seller", "Novice Pyromancer", "Apprentice Summoner", "Master Summoner"};;
 
 Minion::Minion(){}
-Minion::Minion(string name) {
+Minion::Minion(string name) : Card (name){
   type = "Minion";
   stringstream ss;
   string line;
@@ -23,7 +23,7 @@ Minion::Minion(string name) {
   int len = fileName.length();
   for (int i = 0; i < len; ++i) {
     if (fileName[i] == ' ') {
-      fileName.erase(i);
+      fileName.erase(fileName.begin()+i);
       --i;
       --len;
     }
@@ -32,6 +32,7 @@ Minion::Minion(string name) {
   fileName = "minions/" + fileName + ".info";
   ifstream infoFile (fileName);
   getline(infoFile, line);
+  ss.str(line);
   //Adding cost, atk, hp
   ss >> cost;
   ss >> curAtk;

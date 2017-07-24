@@ -21,7 +21,7 @@ class Player
   vector<Card*> hand;
   vector<Card*> graveyard;
   vector<Minion*> minions;
-  Ritual *ritual;
+  Ritual *ritual=nullptr;
  public:
   Player();
   Player(const string name);
