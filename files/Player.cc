@@ -190,6 +190,14 @@ void Player::constructDeck(string deckFile){
 	}
 }
 
+int Player::handSize(){
+	return hand.size();
+}
+
+Card* Player::topDeck(){
+	return deck.back();
+}
+
 void Player::shuffleDeck(){
  std::random_shuffle(deck.begin(), deck.end());
 }
@@ -233,6 +241,14 @@ bool Player::summonFromGraveyard(){
 		}
 	}
 		return false;
+}
+
+void Player::damageAllMinions(int i){
+	Minion* currMinion;
+	for(int i=numMinions(); i>=1; --i){
+		currMinion=getMinion(i);
+		currMinion->decrementLife(2);
+	}
 }
 
 void Player::minionAttack(int minion, Player* otherPlayer){

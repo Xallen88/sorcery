@@ -46,6 +46,8 @@ class Player
 
   void constructDeck(string deckFile);
   void shuffleDeck();
+  int handSize();
+  Card* topDeck();
 
   void summonMinion(Minion* minion);
   void unsummonMinion(Minion* minion);
@@ -53,6 +55,7 @@ class Player
   void toGraveyard(Card* c);
   void toBottomDeck(Card* c);
   bool summonFromGraveyard();
+  void damageAllMinions(int i);
 
   void minionAttack(int minion, Player* otherPlayer);
   // direct attack to opponent's life, calls minion's attack function

@@ -14,6 +14,7 @@ class Spell : public Card {
   void Recharge();
   void RaiseDead();
   void Blizzard();
+  void FindMinions();
   void Banish(Card *c);
   void Unsummon(Card *c);
   void Disenchant(Card *c);

@@ -13,7 +13,7 @@ using std::string;
 using std::ifstream;
 using std::stringstream;
 
-vector<string> spellList = {"Recharge", "Raise Dead", "Blizzard", "Banish", "Unsummon", "Disenchant"};
+vector<string> spellList = {"Recharge", "Raise Dead", "Blizzard", "Banish", "Unsummon", "Disenchant", "Find Minions"};
 
 Spell::Spell(){
 	// nothing here, just a safety net
@@ -74,6 +74,8 @@ void Spell::Play(){
 			RaiseDead();
 		}else	if(name=="Blizzard"){
 			Blizzard(); Destroy();
+		}else if(name=="Find Minions"){
+			FindMinions(); 
 		}
 	}
 }
@@ -114,15 +116,21 @@ void Spell::RaiseDead(){
 }
 
 void Spell::Blizzard(){
-	Minion* currMinion;
-	for(int i=1; i<=activePlayer->numMinions(); ++i){
-		currMinion=activePlayer->getMinion(i);
-		currMinion->decrementLife(2);
-		// minion will be killed if life <= 0 (handled by decrementLife)
-	}
-	for(int i=1; i<=nonActivePlayer->numMinions(); ++i){
-		currMinion=nonActivePlayer->getMinion(i);
-		currMinion->decrementLife(2);
+	activePlayer->damageAllMinions(2);
+	nonActivePlayer->damageAllMinions(2);
+}
+
+void Spell::FindMinions(){
+	activePlayer->toGraveyard(this);
+	for(int i=0; i<3; ++i){
+		if(activePlayer->handSize()<5){
+			if(activePlayer->topDeck()->getType()!="Minion"){
+				activePlayer->drawCard();
+				activePlayer->discardCard(activePlayer->handSize());
+			}else{
+				activePlayer->drawCard();
+			}
+		}
 	}
 }
 
