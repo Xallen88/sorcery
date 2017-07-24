@@ -121,7 +121,7 @@ void Minion::addEnchant(Enchantment *e) {//Supports * and + on attack and *, +, 
   applyChange(e->getHOp(), 'h', e->getHVal());
   
 }
-void Minion::removeTopEnch() {
+void Minion::removeTopEnchant() {
   int aOp = enchantments.back()->getAOp();
   int hOp = enchantments.back()->getHOp();
   Enchantment *e = enchantments.back();
@@ -153,7 +153,7 @@ void Minion::removeTopEnch() {
 void Minion::clearAllEnchants() {
  //popping enchantment
   for (int k = numEnch; k > 0; --k){
-    removeTopEnch();
+    removeTopEnchant();
   }
 }
 

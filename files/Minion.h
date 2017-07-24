@@ -54,7 +54,7 @@ class Minion : public Card {
   void useAction();
     
   void addEnchant(Enchantment *e);
-  void removeTopEnch();
+  void removeTopEnchant();
   void clearAllEnchants();
 };
 
