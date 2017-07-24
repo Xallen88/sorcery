@@ -62,7 +62,10 @@ void Enchantment::Activate(Card *c) {
   Minion *m = (Minion *) c;
   m->addEnchant(this);
 }
-                         
+void Enchantment::SilenceEnchantment(Card *c) {
+  Minion *m = (Minion *) c;
+  m->Silence();
+}                        
 void Enchantment::Play(){
  //Does nothing -> needs target
 }   

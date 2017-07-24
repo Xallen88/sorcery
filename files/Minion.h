@@ -48,6 +48,9 @@ class Minion : public Card {
   void decrementLife(int i = 1);
   void incrementLife(int i = 1);
   bool isDead();
+
+  void Silence();
+  void UnSilence();
   
   int getAtk();
   int getHp();

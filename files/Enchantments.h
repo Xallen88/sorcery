@@ -16,6 +16,7 @@ class Enchantment : public Card {
   char hpOp;
   char costOp;
   int enchType;
+  void SilenceEnchantment(Card *c);
  public:
   Enchantment();
   Enchantment(string name);
@@ -30,6 +31,7 @@ class Enchantment : public Card {
   char getAOp();
   char getHOp();
   char getCOp();
+  int getEnchType();
 };
 
 #endif
