@@ -73,16 +73,16 @@ void Spell::Play(){
 		}else if(name=="Raise Dead"){
 			RaiseDead();
 		}else	if(name=="Blizzard"){
-			Blizzard();
+			Blizzard(); Destroy();
 		}
 	}
 }
 void Spell::Play(Card* c){
 	if(!isDestroyed()){
 		if(name=="Banish"){
-			Banish(c); 
+			Banish(c); Destroy();
 		}else if(name=="Unsummon"){
-			Unsummon(c);
+			Unsummon(c); Destroy();
 		}else if(name=="Disenchant"){
 			Disenchant(c);
 		}
@@ -93,6 +93,7 @@ void Spell::Recharge(){
 	Ritual* ritualPtr = activePlayer->getRitual();
 	if(ritualPtr){
 		ritualPtr->incrementCharges(3);
+		Destroy();
 	}
 	else{
 		printError("You don't have a ritual.");
@@ -102,11 +103,14 @@ void Spell::Recharge(){
 void Spell::RaiseDead(){
 	if(activePlayer->numMinions()==5){
 		printError("There are already 5 minions on the field.");
+		return;
 	}
 
 	if(!activePlayer->summonFromGraveyard()){
 		printError("There are no minions in your graveyard");
+		return;
 	}
+	Destroy();
 }
 
 void Spell::Blizzard(){
@@ -151,5 +155,10 @@ void Spell::Unsummon(Card *c){
 
 void Spell::Disenchant(Card *c){
  Minion* minionPtr = (Minion*) c;
- minionPtr->removeTopEnch();
+ if(minionPtr->getEnchNum()==0){
+ 	printError("No enchantments on target minion");
+ }else{
+ 	minionPtr->removeTopEnch();
+ 	Destroy();
+ }
 }

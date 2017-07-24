@@ -227,6 +227,8 @@ bool Player::summonFromGraveyard(){
 			summonMinion((Minion*) graveyard.at(i));
 			graveyard.erase(graveyard.begin()+i);
 			triggerCard=getMinion(numMinions());
+			Minion* minionPtr = (Minion*) triggerCard;
+			minionPtr->resetStats();
 			activateTrigger(2);
 			return true;
 		}
@@ -314,13 +316,16 @@ void Player::playCard(unsigned int i){
 	triggerCard=hand.at(i-1);	
 	if(cardType=="Minion"){
 		hand.at(i-1)->Play();
-		activateTrigger(2);
+		activateTrigger(2);		
 		hand.erase(hand.begin()+i-1);
 	}
 	else if(cardType=="Spell"){
 		activateTrigger(3);
 		hand.at(i-1)->Play();
-		discardCard(i);
+		Spell* spellPtr = (Spell*) hand.at(i-1);
+		if(spellPtr->isDestroyed()){
+			discardCard(i);
+		}
 	}else{
 		hand.at(i-1)->Play();
 		hand.erase(hand.begin()+i-1);
@@ -357,18 +362,20 @@ void Player::playCard(unsigned int i, int targetCard, Player& targetPlayer){
 		return;
 	}
 
-	// triggers
-	triggerCard=hand.at(i-1);	
+	// spells
 	if(cardType=="Spell"){
+		triggerCard=hand.at(i-1);	
 		activateTrigger(3);
+		hand.at(i-1)->Play(targetPlayer.getMinion(targetCard));
+		Spell* spellPtr = (Spell*) hand.at(i-1);
+		if(spellPtr->isDestroyed()){
+			discardCard(i);
+		}		
+		triggerCard=nullptr;
 	}
-	triggerCard=nullptr;
-
-	// play the card
-	hand.at(i-1)->Play(targetPlayer.getMinion(targetCard)); // handle triggers
-	if(cardType=="Spell"){
-		discardCard(i);
-	}else{ 
+	else{
+		// play enchantment
+		hand.at(i-1)->Play(targetPlayer.getMinion(targetCard)); // handle triggers
 		hand.erase(hand.begin()+i-1);
 	}
 }

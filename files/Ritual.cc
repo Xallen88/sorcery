@@ -76,6 +76,7 @@ void Ritual::Play(Card* c){
 
 void Ritual::Activate(){
 	if(charges >= chargeCost){
+		charges-=chargeCost;
 		if(name=="Dark Ritual"){
 			DarkRitual();
 		}

@@ -107,6 +107,7 @@ void Minion::decrementAtk(int i) {
 void Minion::decrementLife(int i) { 
   curHp -= i;
   if (isDead()) {
+    clearAllEnchants();
     //Check who the minion belongs to and send to respective graveyard
     if (owner == 1) {
       playerOne.unsummonMinion(this);
@@ -118,8 +119,7 @@ void Minion::decrementLife(int i) {
   }	
 }
 void Minion::incrementLife(int i) {
- curHp += i;
- if (curHp > maxHp) curHp = maxHp;
+ applyChange('+', 'h', i);
 }
 bool Minion::isDead() {
  return curHp <= 0;
@@ -159,6 +159,9 @@ void Minion::removeTopEnch() {
   } else {//the subtract case
     applyChange('+', 'h', e->getHVal());
   }
+  if(owner==1) playerOne.toGraveyard(e);
+  else playerTwo.toGraveyard(e);
+
   enchantments.pop_back();
 }
 
@@ -182,6 +185,31 @@ void Minion::Play(){ activePlayer->summonMinion(this); }
 void Minion::Play(Card* c){
  //Nothing
 }
+
+void Minion::resetStats(){
+  // read in the atk and hp stats again
+  string line;
+  string fileName = name;
+  int len = fileName.length();
+  for (int i = 0; i < len; ++i) {
+    if (fileName[i] == ' ') {
+      fileName.erase(fileName.begin()+i);
+      --i;
+      --len;
+    }
+  }
+  fileName = "minions/" + fileName + ".info";
+  ifstream infoFile (fileName);
+  getline(infoFile, line);
+  stringstream ss(line);
+  ss >> cost;
+  ss >> curAtk;
+  ss >> curHp;
+  maxHp = curHp;
+  maxAtk = curAtk;
+  infoFile.close();
+}
+
 void Minion::resetActions() { actions = 1; }
 bool Minion::hasActionLeft() { return actions == 1; }
 void Minion::useAction() { actions--; }

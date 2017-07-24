@@ -61,6 +61,8 @@ class Minion : public Card {
   void resetActions();
   bool hasActionLeft();
   void useAction();
+
+  void resetStats();
     
   void addEnchant(Enchantment *e);
   void removeTopEnch();
