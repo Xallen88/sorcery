@@ -10,9 +10,12 @@
 #include "Ritual.h"
 #include "Spell.h"
 #include "Sorcery.h"
-
+#include <iostream>
+#include "ascii_graphics.h"
 using std::find;
 using std::ifstream;
+
+using namespace std;
 
 Player::Player(){
 
