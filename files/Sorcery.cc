@@ -222,7 +222,9 @@ void printBoard(){
 }
 
 void inspectMinion(int m, Player* p){
-	// code goes here (Steven)
+	//TODO
+//	Minion *m = p->getMinion(m);
+	
 }
 
 extern void activateTrigger(int triggerType){

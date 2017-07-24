@@ -96,9 +96,10 @@ void Player::discardCard(unsigned int i){
 
 void Player::printHand(){
 	int size = hand.size();
-        cout << size << endl;
-        vector <string> message;
+        vector <vector<string>> handString;
+	int rows;
         for (int k = 0; k < size; k++) {
+  		vector<string> message;
                 string name = hand[k]->getName();
                 int cost = hand[k]->getCost();
                 string desc = hand[k]->getDescription();
@@ -135,9 +136,14 @@ void Player::printHand(){
 				message = display_enchantment(name, cost, desc);
 			}
 		}
-                for (unsigned int k = 0; k < message.size(); k++) {
-                        cout << message[k] << "-" <<endl;;
-                }
+		row = message.size();
+  		handString.emplace_back(message);
+        }
+        for (int k = 0; k < row; k++) {//for every row to print
+		for (int j = 0; j < size; j++) {//loop through size cards
+			cout << handString[j][k];
+		}
+		cout << endl;
         }
 }
 
