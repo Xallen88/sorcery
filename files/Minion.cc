@@ -97,7 +97,7 @@ void Minion::decrementLife(int i) {
   if (isDead()) {
     //Check who the minion belongs to and send to respective graveyard
     if (owner == 1) {
-      playerTwo.unSummonMinion(this);
+      playerTwo.unsummonMinion(this);
       playerOne.toGraveyard(this);
     } else {//Player2
       playerTwo.unsummonMinion(this);
