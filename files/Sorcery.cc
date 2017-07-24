@@ -314,11 +314,11 @@ void inspectMinion(int m, Player* p){
 		return;
 	}
 	Minion *min = p->getMinion(m);
-	 Card *c = (Card *) min;
-	 string name = c->getName();
+	Card *c = (Card *) min;
+	string name = c->getName();
 	int cost = c->getCost();
 	string desc = c->getDescription();
-	 int atk = min->getAtk();
+	int atk = min->getAtk();
 	int hp = min->getHp();
 	//variables to use
 	vector<vector<string>> print;
@@ -358,7 +358,6 @@ extern void printSeries(vector<vector<string>> &v, int howmany) {
 	int count = 0;     
 	int rows = v[0].size();
 	while (count < howmany) {
-		int count = 0;
 		for (int k = 0; k < rows; k++) {
 			for (int j = count; j < count+5 && j < howmany; j++) {
 				cout << v[j][k];
