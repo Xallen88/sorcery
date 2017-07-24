@@ -21,6 +21,8 @@ class Ritual : public Card {
  	Ritual(string name);
  	~Ritual();
  	void incrementCharges(int i);
+  int getCharges();
+  int getChargeCost();
   void Play() override;
   void Play(Card* c) override;
   //if the charges are 0 then activate does nothing

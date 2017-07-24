@@ -116,9 +116,25 @@ void Player::printHand(){
                                                                             desc);
                         }
                 } else if (hand[k]->getType() == "Ritual") {
-                        //messsage += display_ritual(name, cost,
-                }
-                //hand(k)
+                        Ritual *r = (Ritual *) hand[k];
+  			int chargeCost = r->getChargeCost();
+			int charges = r->getCharges();
+			message = display_ritual(name, cost, chargeCost, desc, charges); 
+                } else if (hand[k]->getType() == "Spell") {
+			message = display_spell(name, cost, desc);
+		} else {//Enchantment
+			Enchantment *e = (Enchantment *) hand[k];
+			int type = e->getEnchType();
+  			string attack(1,e->getAOp());
+			string hp(1,e->getHOp());
+ 			attack += to_string(e->getAVal());
+			hp += to_string(e->getHVal());
+			if (type == 0) {	
+				message = display_enchantment_attack_defence(name, cost, desc, attack, hp);
+			} else {
+				message = display_enchantment(name, cost, desc);
+			}
+		}
                 for (unsigned int k = 0; k < message.size(); k++) {
                         cout << message[k] << "-" <<endl;;
                 }

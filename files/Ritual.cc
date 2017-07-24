@@ -115,6 +115,9 @@ void Ritual::AuraOfSilence(Card* c){
 	spellPtr->Destroy();
 }
 
+int Ritual::getCharges() { return charges; }
+int Ritual::getChargeCost() { return chargeCost; }
+
 void Ritual::incrementCharges(int i){
 	charges+=i;
 }
