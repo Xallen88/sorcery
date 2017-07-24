@@ -1,13 +1,45 @@
 #include <string>
 #include "Enchantments.h"
+#include "Minion.h"
+#include <sstream>
+#include <fstream>
+
+using namespace std;
 
 vector<string> enchList = {"Giant Strength", "Magic Fatigue", "Silence"};
 
+
 Enchantment::Enchantment(){}
 Enchantment::Enchantment(string name) {
+  type = "Enchantment";
+  stringstream ss;
+  string line;
+  string fileName = name;
+  //Defaulting in the case that it is not a normalEnch
+  atkVal = 0;
+  hpVal = 0;
+  atkOp = '+';
+  hpOp = '+';
 
-}                                           
+  int len = fileName.length();
+  for (int i = 0; i < len; ++i) {
+    if (fileName[i] == ' ') {
+      fileName.erase(i);
+      --i;
+      --len;
+    }
+  }
 
+  fileName = "minions/" + fileName + ".info";
+  ifstream infoFile (fileName);
+  getline(infoFile, line);
+  //Adding cost, atk, hp
+  ss >> cost;
+  ss >> normalEnch;
+  if (normalEnch == 0) ss >> atkVal >> hpVal >> atkOp >> hpOp; 
+  getline(ss, description);	
+  // feed remaining line into description
+}
 Enchantment::~Enchantment() {}
 int Enchantment::getAVal() { return atkVal; }
 int Enchantment::getHVal() { return hpVal; }
@@ -24,11 +56,13 @@ void Enchantment::Activate(Card *c) {
 }
                          
 void Enchantment::Play(){
-
+ //Does nothing -> needs target
 }   
 
 void Enchantment::Play(Card* c){
-
+  if (c->getType() != "Minion") return;
+  Minion *m = (Minion *) c;
+  m->addEnchant(this);
 }    
 
 void Enchantment::Activate(){

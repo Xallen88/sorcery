@@ -13,6 +13,7 @@ class Enchantment : public Card {
   int hpVal;
   char atkOp;
   char hpOp;
+  int normalEnch;
  public:
   Enchantment();
   Enchantment(string name);
