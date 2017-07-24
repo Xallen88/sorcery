@@ -259,7 +259,7 @@ void printBoard(){
  	for (int k = 0; k < 165; k++)  cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
  	cout << EXTERNAL_BORDER_CHAR_TOP_RIGHT << endl;
  	//printing first ine 
- 	for (int k = 0; k < field[0].size(); k++) {
+ 	for (unsigned int k = 0; k < field[0].size(); k++) {
  	 	cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
  	 	for (int j = 0; j < 5; j++) {
  	     		cout  << field[j][k];
@@ -268,7 +268,7 @@ void printBoard(){
  		cout << endl;
   	}
   	//printing minion line 
-  	for (int k = 0; k < minions[0].size(); k++) {
+  	for (unsigned int k = 0; k < minions[0].size(); k++) {
     		cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
     		for (int j = 0; j < 5; j++) {
     	  		cout  << minions[j][k];
@@ -278,10 +278,32 @@ void printBoard(){
   	}
   	//printing sorcery
   	vector<string> sorceryLogo = CENTRE_GRAPHIC;
-  	for (int k = 0; k < sorceryLogo.size(); k++) {
+  	for (unsigned int k = 0; k < sorceryLogo.size(); k++) {
    		cout << sorceryLogo[k] << endl;
   	}
+	//printing minion line 
+  	for (unsigned int k = 0; k < minions[0].size(); k++) {
+   		cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+    		for (int j = 0; j < 5; j++) {
+      			cout  << minions[j][k];
+   		 }
+		cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+   		 cout << endl;
+  	}
+  	//printing first ine 
+  	for (unsigned int k = 0; k < field[0].size(); k++) {
+   		 cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+  		  for (int j = 0; j < 5; j++) {
+  		  	cout  << field[j][k];
+    		  }
 
+   		 cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+  		 cout << endl;
+ 	 }
+	//prints bottom border
+ 	 cout << EXTERNAL_BORDER_CHAR_BOTTOM_LEFT;
+  	for (int k = 0; k < 165; k++)  cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
+ 	 cout << EXTERNAL_BORDER_CHAR_BOTTOM_RIGHT << endl;
 }
 
 void inspectMinion(int m, Player* p){
