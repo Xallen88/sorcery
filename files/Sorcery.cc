@@ -34,6 +34,7 @@ Player *nonActivePlayer = &playerTwo;
 Card* triggerCard=nullptr;
 // this is the card that triggered an event (spell or minion)
 
+
 int main(int argc, char* argv[]){
 	// command line args
 	string deckFile1, deckFile2, name, initFileName;

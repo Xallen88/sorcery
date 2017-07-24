@@ -247,7 +247,6 @@ void Player::minionAttack(int minion, Player* otherPlayer){
 	
  int damage = m->getAtk();
 	otherPlayer->decrementLife(damage);
-	//Check if other player is dead after this function
 }
 
 void Player::minionAttack(int minion, int otherminion, Player* otherPlayer){
