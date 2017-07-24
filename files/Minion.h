@@ -19,7 +19,7 @@ class Minion : public Card {
   vector <Enchantment *> enchantments;
   int numEnch;
   //Trigger ability cost
-  int tCost;
+  int aCost;
   //Actions
   int actions;
   
@@ -50,6 +50,7 @@ class Minion : public Card {
   
   int getAtk();
   int getHp();
+  int getACost();
   
   void resetActions();
   bool hasActionLeft();
