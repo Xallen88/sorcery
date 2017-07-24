@@ -128,8 +128,10 @@ void Player::unsummonMinion(Minion* minion){
 			break;
 		}
 	}
-	// add to front of deck
-	//deck.insert(minions.begin(), minion)
+}
+
+void Player::toBottomDeck(Card *c){
+	// push card to front of deck
 }
 
 void Player::setRitual(Ritual* r){

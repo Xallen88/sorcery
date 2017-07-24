@@ -142,6 +142,7 @@ void Spell::Unsummon(Card *c){
  	playerPtr=&playerTwo;
  }
  playerPtr->unsummonMinion((Minion*) c);
+ playerPtr->toBottomDeck(c);
 }
 
 void Spell::Disenchant(Card *c){
