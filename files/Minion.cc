@@ -164,7 +164,11 @@ void Minion::clearAllEnchants() {
 int Minion::getHp() { return curHp; }
 int Minion::getAtk() { return curAtk; }
 int Minion::getACost() { return aCost; }
-
+int Minion::getEnchNum() { return numEnch; }
+Enchantment* Minion::getEnch(int n) {
+  if (n > numEnch-1) return nullptr;
+  return enchantments[n];
+}
 void Minion::Play(){ activePlayer->summonMinion(this); }
 
 void Minion::Play(Card* c){

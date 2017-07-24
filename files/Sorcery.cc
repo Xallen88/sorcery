@@ -9,7 +9,7 @@
 #include "Spell.h"
 #include "Ritual.h"
 #include "Enchantments.h"
-
+#include "ascii_graphics.h"
 using std::cout;
 using std::cin;
 using std::cerr;
@@ -17,6 +17,8 @@ using std::endl;
 using std::stringstream;
 using std::vector;
 using std::ifstream;
+
+using namespace std;
 
 bool init = false;
 ifstream initFile;
@@ -222,9 +224,61 @@ void printBoard(){
 }
 
 void inspectMinion(int m, Player* p){
-	//TODO
-//	Minion *m = p->getMinion(m);
-	
+	//pulling variables out
+	Minion *min = p->getMinion(m);
+        Card *c = (Card *) min;
+    	string name = c->getName();
+	int cost = c->getCost();
+	string desc = c->getDescription();
+        int atk = min->getAtk();
+	int hp = min->getHp();
+	//variables to use
+	vector<vector<string>> print;
+	vector<string> message;
+	//Printing  minion
+        if (c->getTrigger() == 0)  message = display_minion_no_ability(name, cost, atk, hp);
+	else if (c->getTrigger() == 5) message = display_minion_activated_ability(name,cost,atk,hp,min->getACost(), desc);
+	else message = display_minion_triggered_ability(name, cost, atk, hp, desc);
+        print.emplace_back(message);
+	printSeries(print, 1);
+	print.pop_back();
+	//Printing Enchantments
+	int num = min->getEnchNum();	
+	for (int k = 0; k < num; k++) {
+		vector<string> enchLines;
+		Enchantment *e = min->getEnch(k);
+		c = (Card *) e;
+		name = c->getName();
+		cost = c->getCost();
+		desc = c->getDescription();
+		int type = e->getEnchType();
+		if (type == 0) {
+			string atk(1,e->getAOp());
+			string hp(1,e->getHOp());
+			atk += to_string(e->getAVal());
+			hp += to_string(e->getHVal());
+			enchLines = display_enchantment_attack_defence(name, cost, desc, atk, hp);
+		} else {
+			enchLines = display_enchantment(name, cost, desc);
+		}
+		print.emplace_back(enchLines);
+	}	
+	printSeries(print, num);
+}
+
+extern void printSeries(vector<vector<string>> &v, int howmany) {
+	int count = 0;     
+	int rows = v[0].size();
+	while (count <= howmany) {
+		int count = 0;
+		for (int k = 0; k < rows; k++) {
+			for (int j = count; j < count+5 && j < howmany; j++) {
+				cout << v[j][k];
+			}
+			cout << endl;
+		}
+		count += 5;
+	}
 }
 
 extern void activateTrigger(int triggerType){

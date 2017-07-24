@@ -97,7 +97,7 @@ void Player::discardCard(unsigned int i){
 void Player::printHand(){
 	int size = hand.size();
         vector <vector<string>> handString;
-	int rows;
+	int row;
         for (int k = 0; k < size; k++) {
   		vector<string> message;
                 string name = hand[k]->getName();

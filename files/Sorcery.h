@@ -1,7 +1,7 @@
 #ifndef _SORCERY_H_
 #define _SORCERY_H_
 #include <string>
-
+#include <vector>
 using std::string;
 
 class Player;
@@ -24,6 +24,10 @@ void printHelp();
 
 void inspectMinion(int m, Player* p);
 // inspect minion #m of player p
+
+
+extern void printSeries(std::vector<std::vector<string>> &v, int howmany);
+//prints the graphical interface
 
 extern void activateTrigger(int triggerType);
 //	calls triggers for:

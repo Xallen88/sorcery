@@ -55,6 +55,8 @@ class Minion : public Card {
   int getAtk();
   int getHp();
   int getACost();
+  int getEnchNum();
+  Enchantment* getEnch(int n);
   
   void resetActions();
   bool hasActionLeft();
