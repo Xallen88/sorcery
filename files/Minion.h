@@ -18,6 +18,7 @@ class Minion : public Card {
   //Enchantments;
   vector <Enchantment *> enchantments;
   int numEnch;
+  bool silenced;
   //Trigger ability cost
   int aCost;
   //Actions
