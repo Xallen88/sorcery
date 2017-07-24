@@ -234,30 +234,31 @@ extern void printError(string err){
 }
 
 void printBoard(){
-	// graphical stuff goes here (Steven)
+	
 }
 
 void inspectMinion(int m, Player* p){
 	//pulling variables out
+	cout << p->numMinions() << endl;
 	if(m > p->numMinions()){
 		printError("Invalid minion number.");
 		return;
 	}
 	Minion *min = p->getMinion(m);
- Card *c = (Card *) min;
- string name = c->getName();
+	 Card *c = (Card *) min;
+	 string name = c->getName();
 	int cost = c->getCost();
 	string desc = c->getDescription();
- int atk = min->getAtk();
+	 int atk = min->getAtk();
 	int hp = min->getHp();
 	//variables to use
 	vector<vector<string>> print;
 	vector<string> message;
 	//Printing  minion
- if (c->getTrigger() == 0)  message = display_minion_no_ability(name, cost, atk, hp);
+	 if (c->getTrigger() == 0)  message = display_minion_no_ability(name, cost, atk, hp);
 	else if (c->getTrigger() == 5) message = display_minion_activated_ability(name,cost,atk,hp,min->getACost(), desc);
 	else message = display_minion_triggered_ability(name, cost, atk, hp, desc);
- print.emplace_back(message);
+	print.emplace_back(message);
 	printSeries(print, 1);
 	print.pop_back();
 	//Printing Enchantments
@@ -287,7 +288,7 @@ void inspectMinion(int m, Player* p){
 extern void printSeries(vector<vector<string>> &v, int howmany) {
 	int count = 0;     
 	int rows = v[0].size();
-	while (count <= howmany) {
+	while (count < howmany) {
 		int count = 0;
 		for (int k = 0; k < rows; k++) {
 			for (int j = count; j < count+5 && j < howmany; j++) {
