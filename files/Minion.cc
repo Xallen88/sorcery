@@ -42,7 +42,7 @@ Minion::Minion(string name) {
   ss >> trigger;
   //5 signifying a activateable ability reads the cost of activation
   if (trigger == 5) { 
-    ss >> tCost;  
+    ss >> aCost;  
   }
   if (trigger == 0) return;//no trigger thus no desc
   getline(ss, description);	
@@ -161,6 +161,7 @@ void Minion::clearAllEnchants() {
 
 int Minion::getHp() { return curHp; }
 int Minion::getAtk() { return curAtk; }
+int Minion::getACost() { return aCost; }
 
 void Minion::Play(){ activePlayer->summonMinion(this); }
 
