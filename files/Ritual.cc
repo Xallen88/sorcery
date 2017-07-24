@@ -59,6 +59,7 @@ Ritual::Ritual(string name) : Card(name) {
 
  getline(ss, description);	
  // feed remaining line into description
+ infoFile.close();
 }
 
 void Ritual::Play(){

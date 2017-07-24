@@ -30,7 +30,7 @@ Minion::Minion(string name) : Card (name){
       --len;
     }
   }
-  
+
   if(activePlayer==&playerOne){
     owner=1;
   }else{
@@ -53,8 +53,9 @@ Minion::Minion(string name) : Card (name){
   if (trigger == 5) { 
     ss >> aCost;  
   }
-  if (trigger == 0) return;//no trigger thus no desc
+  //if (trigger == 0) return;//no trigger thus no desc
   getline(ss, description);	
+  infoFile.close();
   // feed remaining line into description
 }
 Minion::~Minion(){}
@@ -206,14 +207,14 @@ void Minion::NovicePyromancer(Card *c) {
 void Minion::ApprenticeSummoner() {
   int num = activePlayer->numMinions();
   if (num == 5) return;
-  Minion *m = new Minion("AirElemental");
+  Minion *m = new Minion("Air Elemental");
   activePlayer->summonMinion(m);
 }
 void Minion::MasterSummoner() {
   int num = activePlayer->numMinions();
   if (num < 5) {
     for (int k = 0; k < 5-num; k++) {
-      Minion *m = new Minion("AirElemental");
+      Minion *m = new Minion("Air Elemental");
       activePlayer->summonMinion(m);
     }
   }

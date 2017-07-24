@@ -48,6 +48,7 @@ Enchantment::Enchantment(string name) : Card(name){
     getline(ss, description);
     // feed remaining line into description
   }
+  infoFile.close();
 }
 Enchantment::~Enchantment() {}
 int Enchantment::getAVal() { return atkVal; }

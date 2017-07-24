@@ -51,6 +51,7 @@ Spell::Spell(string name) : Card(name){
 
  getline(ss, description);	
  // feed remaining line into description
+ infoFile.close();
 }
 
 bool Spell::isDestroyed(){
@@ -110,12 +111,12 @@ void Spell::RaiseDead(){
 
 void Spell::Blizzard(){
 	Minion* currMinion;
-	for(int i=1; i<activePlayer->numMinions(); ++i){
+	for(int i=1; i<=activePlayer->numMinions(); ++i){
 		currMinion=activePlayer->getMinion(i);
 		currMinion->decrementLife(2);
 		// minion will be killed if life <= 0 (handled by decrementLife)
 	}
-	for(int i=1; i<nonActivePlayer->numMinions(); ++i){
+	for(int i=1; i<=nonActivePlayer->numMinions(); ++i){
 		currMinion=nonActivePlayer->getMinion(i);
 		currMinion->decrementLife(2);
 	}

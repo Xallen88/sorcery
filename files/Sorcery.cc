@@ -52,17 +52,27 @@ int main(int argc, char* argv[]){
 		}else if(strArg=="-init"){
 			++i;
 			init=true;
+			strArg=argv[i];
 			initFileName=strArg;
 		}else if(strArg=="-testing"){
 			testing=true;
 		}
 	}
 
+	if(init){initFile.open(initFileName);}
+
 	// player names
-	getline(cin, name);
-	playerOne.setName(name);
-	getline(cin, name);
-	playerTwo.setName(name);
+	if(init){
+		getline(initFile, name);
+		playerOne.setName(name);
+		getline(initFile, name);
+		playerTwo.setName(name);
+	}else{
+		getline(cin, name);
+		playerOne.setName(name);
+		getline(cin, name);
+		playerTwo.setName(name);
+	}
 	// deck construction
 	playerOne.constructDeck(deckFile1);
 	activePlayer=&playerTwo;
@@ -78,7 +88,6 @@ int main(int argc, char* argv[]){
 	}
 
 	// read input or initfile until EOF or quit
-	if(init){initFile.open(initFileName);}
 	string commandLine;	
 	while(!gameover){
 
@@ -86,6 +95,7 @@ int main(int argc, char* argv[]){
 	  getline(initFile, commandLine);
 	  if (!initFile.good()) {
 	   init = false;
+	   getline(cin, commandLine);
 	  }
 	 }
 	 else {
