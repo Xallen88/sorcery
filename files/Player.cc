@@ -201,8 +201,8 @@ void Player::summonMinion(Minion* minion){
 
 void Player::unsummonMinion(Minion* minion){
 	// remove from hand
-	for(unsigned int i=0;i<minions.size();++i){
-		if(minions.at(i)==minion){
+	for(int i=0;i<numMinions();++i){
+		if(minions[i]==minion){
 			minions.erase(minions.begin()+i);
 			break;
 		}
@@ -313,20 +313,19 @@ void Player::playCard(unsigned int i){
 	// triggers
 	triggerCard=hand.at(i-1);	
 	if(cardType=="Minion"){
+		hand.at(i-1)->Play();
 		activateTrigger(2);
+		hand.erase(hand.begin()+i-1);
 	}
 	else if(cardType=="Spell"){
 		activateTrigger(3);
+		hand.at(i-1)->Play();
+		discardCard(i);
+	}else{
+		hand.at(i-1)->Play();
+		hand.erase(hand.begin()+i-1);
 	}
 	triggerCard=nullptr;
-	
-	// play the card
-	hand.at(i-1)->Play(); 
-	if(cardType=="Spell"){
-		discardCard(i);
-	}else{ 
-		hand.erase(hand.begin()+i-1);
-	} 
 }
 
 void Player::playCard(unsigned int i, int targetCard, Player& targetPlayer){
@@ -360,10 +359,7 @@ void Player::playCard(unsigned int i, int targetCard, Player& targetPlayer){
 
 	// triggers
 	triggerCard=hand.at(i-1);	
-	if(cardType=="Minion"){
-		activateTrigger(2);
-	}
-	else if(cardType=="Spell"){
+	if(cardType=="Spell"){
 		activateTrigger(3);
 	}
 	triggerCard=nullptr;

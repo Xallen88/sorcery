@@ -65,7 +65,9 @@ int main(int argc, char* argv[]){
 	playerTwo.setName(name);
 	// deck construction
 	playerOne.constructDeck(deckFile1);
+	activePlayer=&playerTwo;
 	playerTwo.constructDeck(deckFile2);	
+	activePlayer=&playerOne;
 	if(!testing){
 		playerOne.shuffleDeck();
 		playerTwo.shuffleDeck();
@@ -382,9 +384,13 @@ void endTurn(){
 	activateTrigger(4);
 
  // swap active and non-active player pointers
- Player* temp = activePlayer;
- activePlayer = nonActivePlayer;
- nonActivePlayer = temp;
+ if(activePlayer==&playerOne){
+ 	activePlayer=&playerTwo;
+ 	nonActivePlayer=&playerOne;
+ }else{
+ 	activePlayer=&playerOne;
+ 	nonActivePlayer=&playerTwo;
+ }
 
  // active player's turn begins
  activePlayer->incrementMagic();

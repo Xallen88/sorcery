@@ -30,6 +30,12 @@ Minion::Minion(string name) : Card (name){
       --len;
     }
   }
+  
+  if(activePlayer==&playerOne){
+    owner=1;
+  }else{
+    owner=2;
+  }
 
   fileName = "minions/" + fileName + ".info";
   ifstream infoFile (fileName);
@@ -102,7 +108,7 @@ void Minion::decrementLife(int i) {
   if (isDead()) {
     //Check who the minion belongs to and send to respective graveyard
     if (owner == 1) {
-      playerTwo.unsummonMinion(this);
+      playerOne.unsummonMinion(this);
       playerOne.toGraveyard(this);
     } else {//Player2
       playerTwo.unsummonMinion(this);
