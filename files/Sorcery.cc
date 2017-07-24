@@ -533,7 +533,10 @@ void endTurn(){
 
  // active player's turn begins
  activePlayer->incrementMagic();
- activePlayer->drawCard();
+
+ if(activePlayer->handSize()<5){
+ 	activePlayer->drawCard();
+ }
 
  // start of turn trigger
  activateTrigger(1);
