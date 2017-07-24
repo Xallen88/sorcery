@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <cstdlib>
+#include <ctime>
 #include "Player.h"
 #include "Card.h"
 #include "Minion.h"
@@ -195,6 +197,7 @@ Card* Player::topDeck(){
 }
 
 void Player::shuffleDeck(){
+ std::srand(std::time(0));
  std::random_shuffle(deck.begin(), deck.end());
 }
 
@@ -203,7 +206,6 @@ void Player::summonMinion(Minion* minion){
 }
 
 void Player::unsummonMinion(Minion* minion){
-	// remove from hand
 	for(int i=0;i<numMinions();++i){
 		if(minions[i]==minion){
 			minions.erase(minions.begin()+i);
@@ -213,7 +215,21 @@ void Player::unsummonMinion(Minion* minion){
 }
 
 void Player::toBottomDeck(Card *c){
-	// push card to front of deck
+	string cardName = c->getName();
+	delete c;
+	if(find(minionList.begin(), minionList.end(), cardName) != minionList.end()){
+			Minion* minionPtr = new Minion(cardName);
+			deck.insert(deck.begin(),minionPtr);
+		}else if(find(enchList.begin(), enchList.end(), cardName) != enchList.end()){
+			Enchantment* enchPtr = new Enchantment(cardName);
+			deck.insert(deck.begin(),enchPtr);
+		}else if(find(spellList.begin(), spellList.end(), cardName) != spellList.end()){
+			Spell* spellPtr = new Spell(cardName);
+			deck.insert(deck.begin(),spellPtr);
+		}else if(find(ritualList.begin(), ritualList.end(), cardName) != ritualList.end()){
+			Ritual* ritualPtr = new Ritual(cardName);
+			deck.insert(deck.begin(),ritualPtr);
+		}
 }
 
 void Player::setRitual(Ritual* r){
@@ -227,11 +243,12 @@ void Player::toGraveyard(Card* c){
 bool Player::summonFromGraveyard(){
 	for(unsigned int i=0;i<graveyard.size();++i){
 		if(graveyard.at(i)->getType()=="Minion"){
-			summonMinion((Minion*) graveyard.at(i));
+			string cardName = graveyard.at(i)->getName();
+			summonMinion(new Minion(cardName));
+			Card* temp = graveyard[i];
 			graveyard.erase(graveyard.begin()+i);
+			delete temp;
 			triggerCard=getMinion(numMinions());
-			Minion* minionPtr = (Minion*) triggerCard;
-			minionPtr->resetStats();
 			activateTrigger(2);
 			return true;
 		}

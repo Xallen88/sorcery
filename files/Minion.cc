@@ -186,30 +186,6 @@ void Minion::Play(Card* c){
  //Nothing
 }
 
-void Minion::resetStats(){
-  // read in the atk and hp stats again
-  string line;
-  string fileName = name;
-  int len = fileName.length();
-  for (int i = 0; i < len; ++i) {
-    if (fileName[i] == ' ') {
-      fileName.erase(fileName.begin()+i);
-      --i;
-      --len;
-    }
-  }
-  fileName = "minions/" + fileName + ".info";
-  ifstream infoFile (fileName);
-  getline(infoFile, line);
-  stringstream ss(line);
-  ss >> cost;
-  ss >> curAtk;
-  ss >> curHp;
-  maxHp = curHp;
-  maxAtk = curAtk;
-  infoFile.close();
-}
-
 void Minion::resetActions() { actions = 1; }
 bool Minion::hasActionLeft() { return actions == 1; }
 void Minion::useAction() { actions--; }
