@@ -298,6 +298,7 @@ void printBoard(){
         int minNum2 = playerTwo.numMinions();
         vector<vector<string>> minions2;
         vector<string> minion2;
+ 	
         for (int j = 1; j <= minNum2; j++) {
                 Minion *m = playerTwo.getMinion(j);
                 c = (Card *) m;
@@ -306,8 +307,9 @@ void printBoard(){
                 else minion2 = display_minion_triggered_ability(c->getName(), c->getCost(), m->getAtk(), m->getHp(), c->getDescription());
                 minions2.emplace_back(minion2);
         }
+	
         //if there isnt enough minions add the empty card template
-        for (int k = minNum+1; k <= 5; k++) {
+        for (int k = minNum2+1; k <= 5; k++) {
                 minions2.emplace_back(CARD_TEMPLATE_BORDER);
         }
   	//Prints out top of Sorcery
@@ -342,15 +344,13 @@ void printBoard(){
   	
    	for (unsigned int k = 0; k < minions2[0].size(); k++) {
    		cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
-    		/*
 		for (int j = 0; j < 5; j++) {
       			cout  << minions2[j][k];
    		 }
-		*/
+		
 		cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
    		 cout << endl;
   	}
-	
   	//printing first ine 
   	for (unsigned int k = 0; k < field[0].size(); k++) {
    		 cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
