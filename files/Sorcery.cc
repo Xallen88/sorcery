@@ -234,7 +234,54 @@ extern void printError(string err){
 }
 
 void printBoard(){
-	
+	vector <string> text = display_minion_no_ability("Spongebob", 3, 5, 5);
+  	vector <string> text2 = display_minion_activated_ability("Patrick Star", 5, 3, 3, 5, "Burns Spongebob");
+ 	 vector <string> text3 = CENTRE_GRAPHIC;// prints sorcery in middle 
+	  //variable for first line of player
+	  vector <vector<string>> field;
+  	//Check if it has a ritual otherwise use the empty one
+ 	 vector <string> ritual = CARD_TEMPLATE_BORDER;
+ 	 field.emplace_back(ritual);
+ 	 field.emplace_back(CARD_TEMPLATE_EMPTY);
+ 	 field.emplace_back(display_player_card(1, "Sean", 20, 0));
+	  field.emplace_back(CARD_TEMPLATE_EMPTY);
+	  field.emplace_back(text);
+ 	 //prints out minion field
+ 	 vector<vector<string>> minions;
+	  minions.emplace_back(text);
+	  minions.emplace_back(text);
+ 	 //if there isnt enough minions on the field, make an empty template
+ 	 minions.emplace_back(CARD_TEMPLATE_EMPTY);
+ 	 minions.emplace_back(CARD_TEMPLATE_EMPTY);
+ 	 minions.emplace_back(CARD_TEMPLATE_EMPTY);
+  	//Prints out top of Sorcery
+  	cout << EXTERNAL_BORDER_CHAR_TOP_LEFT;
+ 	for (int k = 0; k < 165; k++)  cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
+ 	cout << EXTERNAL_BORDER_CHAR_TOP_RIGHT << endl;
+ 	//printing first ine 
+ 	for (int k = 0; k < field[0].size(); k++) {
+ 	 	cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+ 	 	for (int j = 0; j < 5; j++) {
+ 	     		cout  << field[j][k];
+    		}
+		cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+ 		cout << endl;
+  	}
+  	//printing minion line 
+  	for (int k = 0; k < minions[0].size(); k++) {
+    		cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+    		for (int j = 0; j < 5; j++) {
+    	  		cout  << minions[j][k];
+    		}
+    		cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+    		cout << endl;
+  	}
+  	//printing sorcery
+  	vector<string> sorceryLogo = CENTRE_GRAPHIC;
+  	for (int k = 0; k < sorceryLogo.size(); k++) {
+   		cout << sorceryLogo[k] << endl;
+  	}
+
 }
 
 void inspectMinion(int m, Player* p){
