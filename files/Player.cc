@@ -366,7 +366,13 @@ void Player::playCard(unsigned int i, int targetCard, Player& targetPlayer){
 	if(cardType=="Spell"){
 		triggerCard=hand.at(i-1);	
 		activateTrigger(3);
-		hand.at(i-1)->Play(targetPlayer.getMinion(targetCard));
+		if(targetCard < 6 && targetPlayer.numMinions() >= targetCard){
+			hand.at(i-1)->Play(targetPlayer.getMinion(targetCard));
+		}else if(targetCard==6){
+			hand.at(i-1)->Play(targetPlayer.getRitual());
+		}else{
+			printError("Invalid card target.");
+		}
 		Spell* spellPtr = (Spell*) hand.at(i-1);
 		if(spellPtr->isDestroyed()){
 			discardCard(i);
@@ -375,7 +381,11 @@ void Player::playCard(unsigned int i, int targetCard, Player& targetPlayer){
 	}
 	else{
 		// play enchantment
-		hand.at(i-1)->Play(targetPlayer.getMinion(targetCard)); // handle triggers
-		hand.erase(hand.begin()+i-1);
+		if(targetPlayer.numMinions() >= targetCard){
+			hand.at(i-1)->Play(targetPlayer.getMinion(targetCard)); // handle triggers
+			hand.erase(hand.begin()+i-1);
+		}else{
+			printError("Invalid card target.");
+		}
 	}
 }

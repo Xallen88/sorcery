@@ -138,7 +138,15 @@ int main(int argc, char* argv[]){
 			ss >> card;
 			if(ss.good()){
 				int targetPlayer, targetCard;
-				ss >> targetPlayer >> targetCard;
+				char targetChar;
+				ss >> targetPlayer >> targetChar;
+				if(targetChar=='r'){
+					targetCard=6;
+				}else if(targetChar=='1'||targetChar=='2'||targetChar=='3'||targetChar=='4'||targetChar=='5'){
+					targetCard = (int) targetChar;
+				}else{
+					printError("Invalid target card.");
+				}
 				if(targetPlayer==1){
 					activePlayer->playCard(card, targetCard, playerOne);
 				}
@@ -158,7 +166,15 @@ int main(int argc, char* argv[]){
 			ss >> minion;
 			if(ss.good()){
 				int targetPlayer, targetCard;
-				ss >> targetPlayer >> targetCard;
+				char targetChar;
+				ss >> targetPlayer >> targetChar;
+				if(targetChar=='r'){
+					targetCard=6;
+				}else if(targetChar=='1'||targetChar=='2'||targetChar=='3'||targetChar=='4'||targetChar=='5'){
+					targetCard = (int) targetChar;
+				}else{
+					printError("Invalid target card.");
+				}
 				if(targetPlayer==1){
 					activePlayer->useAbility(minion, targetCard, playerOne);
 				}

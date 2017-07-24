@@ -127,7 +127,7 @@ void Spell::Blizzard(){
 }
 
 void Spell::Banish(Card *c){
- if(c->getType()=="ritual"){
+ if(c->getType()=="Ritual"){
  	Player* playerPtr;
 		if(c->getOwner()==1){
 	 	playerPtr=&playerOne;
