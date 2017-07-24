@@ -15,6 +15,7 @@ vector<string> minionList={"Air Elemental", "Earth Elemental", "Fire Elemental",
 Minion::Minion(){}
 Minion::Minion(string name) : Card (name){
   type = "Minion";
+  numEnch=0;
   stringstream ss;
   string line;
   string fileName = name;

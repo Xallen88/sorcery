@@ -43,9 +43,11 @@ int main(int argc, char* argv[]){
 		string strArg = argv[i];
 		if(strArg=="-deck1"){
 			++i;
+			strArg=argv[i];
 			deckFile1=strArg;
 		}else if(strArg=="-deck2"){
 			++i;
+			strArg=argv[i];
 			deckFile2=strArg;
 		}else if(strArg=="-init"){
 			++i;
@@ -100,7 +102,7 @@ int main(int argc, char* argv[]){
 		}
 
 		else if(commandArg=="end"){
-			endTurn(activePlayer, nonActivePlayer);
+			endTurn();
 		}
 
 		else if(commandArg=="quit"){
@@ -225,21 +227,25 @@ void printBoard(){
 
 void inspectMinion(int m, Player* p){
 	//pulling variables out
+	if(m > p->numMinions()){
+		printError("Invalid minion number.");
+		return;
+	}
 	Minion *min = p->getMinion(m);
-        Card *c = (Card *) min;
-    	string name = c->getName();
+ Card *c = (Card *) min;
+ string name = c->getName();
 	int cost = c->getCost();
 	string desc = c->getDescription();
-        int atk = min->getAtk();
+ int atk = min->getAtk();
 	int hp = min->getHp();
 	//variables to use
 	vector<vector<string>> print;
 	vector<string> message;
 	//Printing  minion
-        if (c->getTrigger() == 0)  message = display_minion_no_ability(name, cost, atk, hp);
+ if (c->getTrigger() == 0)  message = display_minion_no_ability(name, cost, atk, hp);
 	else if (c->getTrigger() == 5) message = display_minion_activated_ability(name,cost,atk,hp,min->getACost(), desc);
 	else message = display_minion_triggered_ability(name, cost, atk, hp, desc);
-        print.emplace_back(message);
+ print.emplace_back(message);
 	printSeries(print, 1);
 	print.pop_back();
 	//Printing Enchantments
@@ -371,14 +377,14 @@ extern void activateTrigger(int triggerType){
 	}
 }
 
-void endTurn(Player* active, Player* nonactive){
+void endTurn(){
 	// end of turn trigger
 	activateTrigger(4);
 
  // swap active and non-active player pointers
- Player* temp = active;
- active = nonactive;
- nonactive = temp;
+ Player* temp = activePlayer;
+ activePlayer = nonActivePlayer;
+ nonActivePlayer = temp;
 
  // active player's turn begins
  activePlayer->incrementMagic();

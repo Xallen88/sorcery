@@ -2,6 +2,7 @@
 #define _SORCERY_H_
 #include <string>
 #include <vector>
+
 using std::string;
 
 class Player;
@@ -36,7 +37,7 @@ extern void activateTrigger(int triggerType);
 //  3: spell use
 //  4: end of turn
 
-void endTurn(Player *activePlayer, Player *nonActivePlayer);
+void endTurn();
 // performs the following:
 //  activates end of turn trigger
 //  switches active and non-active player
