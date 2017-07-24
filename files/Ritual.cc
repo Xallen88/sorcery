@@ -16,6 +16,8 @@ using std::ifstream;
 
 class Player;
 
+vector<string> ritualList = {"Dark Ritual", "Aura of Power", "Standstill", "Aura of Silence"};
+
 Ritual::Ritual(){
 	// catchall
 }

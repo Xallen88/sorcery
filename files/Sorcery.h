@@ -40,5 +40,8 @@ void endTurn(Player *activePlayer, Player *nonActivePlayer);
 //  active player draws a card
 //  activates start of turn trigger
 
+extern void endGame(string name);
+extern void endGame();
+
 
 #endif

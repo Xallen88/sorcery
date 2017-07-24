@@ -22,6 +22,7 @@ bool init = false;
 ifstream initFile;
 
 bool testing = false;
+bool gameover = false;
 
 int turn = 0;
 Player playerOne;
@@ -32,35 +33,44 @@ Card* triggerCard=nullptr;
 // this is the card that triggered an event (spell or minion)
 
 int main(int argc, char* argv[]){
-	// take in command line args
-	string deckFile1, deckFile2;
-	deckFile1=deckFile2="";
+	// command line args
+	string deckFile1, deckFile2, name, initFileName;
+	deckFile1=deckFile2="default.deck";
 
 	for(int i=1; i<argc; ++i){			// needs serious error handling
 		string strArg = argv[i];
 		if(strArg=="-deck1"){
 			++i;
-			deckFile1=argv[i];
+			deckFile1=strArg;
 		}else if(strArg=="-deck2"){
 			++i;
-			deckFile2=argv[i];
+			deckFile2=strArg;
 		}else if(strArg=="-init"){
 			++i;
 			init=true;
-			initFile.open(strArg);
+			initFileName=strArg;
 		}else if(strArg=="-testing"){
 			testing=true;
 		}
 	}
 
+	// player names
+	getline(cin, name);
+	playerOne.setName(name);
+	getline(cin, name);
+	playerTwo.setName(name);
+	// deck construction
 	playerOne.constructDeck(deckFile1);
-	playerTwo.constructDeck(deckFile2);
-	playerOne.shuffleDeck();
-	playerTwo.shuffleDeck();
+	playerTwo.constructDeck(deckFile2);	
+	if(!testing){
+		playerOne.shuffleDeck();
+		playerTwo.shuffleDeck();
+	}
 
 	// read input or initfile until EOF or quit
+	if(init){initFile.open(initFileName);}
 	string commandLine;	
-	while(true){
+	while(!gameover){
 
 	 if (init){
 	  getline(initFile, commandLine);
@@ -68,7 +78,7 @@ int main(int argc, char* argv[]){
 	   init = false;
 	  }
 	 }
-	 if (!init){
+	 else {
 	 	getline(cin, commandLine);
 	 	if(!cin.good()){
 	 		break;
@@ -180,7 +190,7 @@ int main(int argc, char* argv[]){
 
 	// cleanup, delete ptrs, etc
  
- // end game
+ // end game - print winner, etc
 
  return 0;
 }
@@ -318,3 +328,12 @@ void endTurn(Player* active, Player* nonactive){
  activateTrigger(1);
 }
 
+extern void endGame(string name){
+	cout << name << " is the winner!" << endl;
+	gameover=true;
+}
+
+extern void endGame(){
+	cout << "A game-breaking error has occured." << endl;
+	gameover=true;
+}

@@ -42,6 +42,8 @@ class Player
   Ritual* getRitual() const;
   int numMinions() const;
 
+  void setName(string name);
+
   void constructDeck(string deckFile);
   void shuffleDeck();
 

@@ -13,6 +13,8 @@ using std::string;
 using std::ifstream;
 using std::stringstream;
 
+vector<string> spellList = {"Recharge", "Raise Dead", "Blizzard", "Banish", "Unsummon", "Disenchant"};
+
 Spell::Spell(){
 	// nothing here, just a safety net
 }

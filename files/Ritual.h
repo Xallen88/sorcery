@@ -1,7 +1,13 @@
 #ifndef _RITUAL_H_
 #define _RITUAL_H_
 
+#include <vector>
+#include <string>
 #include "Card.h"
+
+using std::vector;
+
+extern vector<string> ritualList;
 
 class Ritual : public Card {
   int charges;

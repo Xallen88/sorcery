@@ -5,6 +5,8 @@
 #include "Card.h"
 #include "Enchantments.h"
 
+extern vector<string> minionList;
+
 class Player;
 
 class Minion : public Card {

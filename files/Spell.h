@@ -2,7 +2,12 @@
 #define _SPELL_H_
 
 #include <string>
+#include <vector>
 #include "Card.h"
+
+using std::vector;
+
+extern vector<string> spellList;
 
 class Spell : public Card {
   bool destroyed;

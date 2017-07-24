@@ -8,8 +8,11 @@
 #include "Minion.h"
 #include "Enchantments.h"
 #include "Ritual.h"
+#include "Spell.h"
 #include "Sorcery.h"
 
+using std::find;
+using std::ifstream;
 
 Player::Player(){
 
@@ -33,6 +36,9 @@ Player::~Player(){
 	delete ritual;
 }
 
+void Player::setName(string name){
+	this->name=name;
+}
 
 void Player::incrementMagic(int i)
 {
@@ -58,7 +64,7 @@ void Player::decrementLife(int i)
   life -= i;
  else{
  	life=0;
-  //end game
+  endGame(activePlayer->getName());
  }
 }
 
@@ -109,7 +115,27 @@ int Player::numMinions() const {
 }
 
 void Player::constructDeck(string deckFile){
-	// code this shit
+	ifstream fs("deckFile");
+	string cardName;
+	while(fs.good()){
+		getline(fs, cardName);
+		if(find(minionList.begin(), minionList.end(), cardName) != minionList.end()){
+			Minion* minionPtr = new Minion(cardName);
+			deck.emplace_back(minionPtr);
+		}else if(find(enchList.begin(), enchList.end(), cardName) != enchList.end()){
+			Enchantment* enchPtr = new Enchantment(cardName);
+			deck.emplace_back(enchPtr);
+		}else if(find(spellList.begin(), spellList.end(), cardName) != spellList.end()){
+			Spell* spellPtr = new Spell(cardName);
+			deck.emplace_back(spellPtr);
+		}else if(find(ritualList.begin(), ritualList.end(), cardName) != ritualList.end()){
+			Ritual* ritualPtr = new Ritual(cardName);
+			deck.emplace_back(ritualPtr);
+		}else{
+			printError("Invalid card name encountered: " + cardName);
+			endGame();
+		}
+	}
 }
 
 void Player::shuffleDeck(){
@@ -157,7 +183,7 @@ bool Player::summonFromGraveyard(){
 
 void Player::minionAttack(int minion, Player* otherPlayer){
 	if (minion > numMinions()) {
-		//give error message
+		printError("Not a valid minion number.");
 		return;
 	}
 	//Get minion and check if it has actions left
@@ -165,7 +191,7 @@ void Player::minionAttack(int minion, Player* otherPlayer){
 	if (!m->hasActionLeft()) return;
 	m->useAction();
 	
-  	int damage = m->getAtk();
+ int damage = m->getAtk();
 	otherPlayer->decrementLife(damage);
 	//Check if other player is dead after this function
 }
@@ -173,33 +199,31 @@ void Player::minionAttack(int minion, Player* otherPlayer){
 void Player::minionAttack(int minion, int otherminion, Player* otherPlayer){
 	//Checks if both minion index's exist
 	if (minion > numMinions() || otherminion > numMinions()) {
-		//Give error message
+		printError("Not a valid minion number.");
 		return;
 	}
 	//Pulling minion cards
 	Minion *attacker = getMinion(minion);
-	Minion *victim = getMinion(otherminion);
+	Minion *victim = otherPlayer->getMinion(otherminion);
 	//Checking if attacker has any actions left
 	if (!attacker->hasActionLeft()) return;
 	attacker->useAction();
 	//pulling attack values of both minions
 	int aDmg = attacker->getAtk();
 	int vDmg = victim->getAtk();
-	//decrement both minions
+	//decrement both minions (and check for death)
 	attacker->decrementLife(vDmg);
 	victim->decrementLife(aDmg);
-	//Checking if any of the minions are dead
-	if (attacker->isDead()) toGraveyard(attacker);
-	if (victim->isDead()) otherPlayer->toGraveyard(victim);	
 }
 
 void Player::useAbility(int minion){
 	Minion *m = getMinion(minion);
-	
+	m->Activate();
 }
 
 void Player::useAbility(int minion, int targetCard, Player& targetPlayer){
-	// Steven code
+	Minion *m = getMinion(minion);
+	m->Activate(targetPlayer.getMinion(targetCard));
 }
 
 void Player::playCard(unsigned int i){

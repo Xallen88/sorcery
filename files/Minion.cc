@@ -10,6 +10,8 @@
 
 using namespace std;
 
+vector<string> minionList={"Air Elemental", "Earth Elemental", "Fire Elemental", "Potion Seller", "Novice Pyromancer", "Apprentice Summoner", "Master Summoner"};;
+
 Minion::Minion(){}
 Minion::Minion(string name) {
   type = "Minion";

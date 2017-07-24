@@ -1,15 +1,12 @@
 #include <string>
 #include "Enchantments.h"
 
-using std::string;
+vector<string> enchList = {"Giant Strength", "Magic Fatigue", "Silence"};
 
-Enchantment::Enchantment(string name, int atkVal, int hpVal, char atkOp, char hpOp): 
-                                                                            Card(name), 
-                                                                            atkVal(atkVal),
-                                                                            hpVal(hpVal),
-                                                                            atkOp(atkOp),
-                                                                            hpOp(hpOp) {}
-                                           
+Enchantment::Enchantment(){}
+Enchantment::Enchantment(string name) {
+
+}                                           
 
 Enchantment::~Enchantment() {}
 int Enchantment::getAVal() { return atkVal; }

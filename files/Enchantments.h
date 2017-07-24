@@ -2,8 +2,11 @@
 #define _ENCHANTMENTS_H_
 #include "Card.h"
 #include <string>
+#include <vector>
 
-using namespace std;
+using std::vector;
+
+extern vector<string> enchList;
 
 class Enchantment : public Card {
   int atkVal;  
@@ -11,7 +14,8 @@ class Enchantment : public Card {
   char atkOp;
   char hpOp;
  public:
-  Enchantment(string name, int atkVal, int hpVal, char atkOp, char hpOp);
+  Enchantment();
+  Enchantment(string name);
   ~Enchantment();
   void Play() override;
   void Play(Card *c) override;
