@@ -24,9 +24,9 @@ ifstream initFile;
 bool testing = false;
 
 int turn = 0;
-activePlayer = &playerOne;
-nonActivePlayer = &playerTwo;
-triggerCard=nullptr;
+Player *activePlayer = &playerOne;
+Player *nonActivePlayer = &playerTwo;
+Card* triggerCard=nullptr;
 // this is the card that triggered an event (spell or minion)
 
 int main(int argc, char* argv[]){
@@ -212,7 +212,7 @@ void inspectMinion(int m, Player* p){
 extern void activateTrigger(int triggerType){
 	// APNAP: Active minion's (l to r), active ritual, non-active minions, non-active ritual
 	// Active Player
-	Minion* minionPtr, minionPtrTwo;
+	Minion *minionPtr, *minionPtrTwo;
 	Ritual* ritualPtr;
 	Spell* spellPtr;
 	if(triggerType==2){

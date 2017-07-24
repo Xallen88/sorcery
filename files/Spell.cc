@@ -19,7 +19,9 @@ Spell::Spell(){
 Spell::~Spell(){
 	// no ptrs
 }
-Spell::Spell(string name) : Card(name), type("Spell"), trigger(0) {
+Spell::Spell(string name) : Card(name){
+	type="Spell";
+	trigger=0;
 	destroyed=false;
 	stringstream ss;
 	string line;
@@ -117,7 +119,7 @@ void Spell::Blizzard(){
 }
 
 void Spell::Banish(Card *c){
- if(c->getType=="ritual"){
+ if(c->getType()=="ritual"){
  	Player* playerPtr;
 		if(c->getOwner()==1){
 	 	playerPtr=&playerOne;
@@ -140,6 +142,7 @@ void Spell::Unsummon(Card *c){
  	playerPtr=&playerTwo;
  }
  playerPtr->unsummonMinion((Minion*) c);
+ playerPtr->toBottomDeck(c);
 }
 
 void Spell::Disenchant(Card *c){

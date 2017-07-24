@@ -49,6 +49,7 @@ class Player
   void unsummonMinion(Minion* minion);
   void setRitual(Ritual* r);
   void toGraveyard(Card* c);
+  void toBottomDeck(Card* c);
   bool summonFromGraveyard();
 
   void minionAttack(int minion, Player* otherPlayer);

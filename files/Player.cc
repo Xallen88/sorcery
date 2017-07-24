@@ -124,12 +124,14 @@ void Player::unsummonMinion(Minion* minion){
 	// remove from hand
 	for(unsigned int i=0;i<minions.size();++i){
 		if(minions.at(i)==minion){
-			minions.erase(i);
+			minions.erase(minions.begin()+i);
 			break;
 		}
 	}
-	// add to front of deck
-	deck.insert(minions.begin(), minion)
+}
+
+void Player::toBottomDeck(Card *c){
+	// push card to front of deck
 }
 
 void Player::setRitual(Ritual* r){

@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Minion.h"
 #include "Sorcery.h"
+#include "Spell.h"
 
 using std::stringstream;
 using std::ifstream;
@@ -22,7 +23,8 @@ Ritual::~Ritual(){
 	// no ptrs
 }
 
-Ritual::Ritual(string name) : Card(name), type("Ritual") {
+Ritual::Ritual(string name) : Card(name) {
+ type="ritual";
  stringstream ss;
 	string line;
 	string fileName=name;
