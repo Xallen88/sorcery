@@ -19,6 +19,7 @@ Minion::Minion(string name) : Card (name){
   string line;
   string fileName = name;
   actions = 1;
+  silenced = false;
 
   int len = fileName.length();
   for (int i = 0; i < len; ++i) {
@@ -206,13 +207,17 @@ void Minion::MasterSummoner() {
     }
   }
 }
+void Minion::Silence() { silenced = true; }
+void Minion::UnSilence() { silenced = false; }
 void Minion::Activate(){
+  if (silenced) return;
   if (name == "Potion Seller") PotionSeller();
   else if (name == "Apprentice Summoner") ApprenticeSummoner();
   else if (name == "Master Summoner") MasterSummoner();
 }
 
 void Minion::Activate(Card* c){
+  if (silenced) return;
   if (name == "Novice Pyromancer") NovicePyromancer(c);
   else if (name == "Fire Elemental") FireElemental(c);
 }
