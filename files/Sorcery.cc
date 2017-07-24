@@ -24,6 +24,8 @@ ifstream initFile;
 bool testing = false;
 
 int turn = 0;
+Player playerOne;
+Player playerTwo;
 Player *activePlayer = &playerOne;
 Player *nonActivePlayer = &playerTwo;
 Card* triggerCard=nullptr;

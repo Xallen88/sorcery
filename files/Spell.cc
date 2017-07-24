@@ -147,5 +147,5 @@ void Spell::Unsummon(Card *c){
 
 void Spell::Disenchant(Card *c){
  Minion* minionPtr = (Minion*) c;
- minionPtr->removeTopEnchant();
+ minionPtr->removeTopEnch();
 }
