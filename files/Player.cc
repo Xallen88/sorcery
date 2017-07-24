@@ -92,7 +92,34 @@ void Player::discardCard(unsigned int i){
 }
 
 void Player::printHand(){
-	// Steven code here
+	int size = hand.size();
+        cout << size << endl;
+        vector <string> message;
+        for (int k = 0; k < size; k++) {
+                string name = hand[k]->getName();
+                int cost = hand[k]->getCost();
+                string desc = hand[k]->getDescription();
+                if (hand[k]->getType() == "Minion") {
+                        Minion *m = (Minion *) hand[k];
+                        int atk = m->getAtk();
+                        int hp = m->getHp();
+                        if (hand[k]->getTrigger() == 0) {
+                                message = display_minion_no_ability(name, cost, atk, hp);
+                        } else if (hand[k]->getTrigger() == 5) {
+                                message = display_minion_triggered_ability(name, cost, atk, hp, desc);
+                        } else {//Case of 1-4 triggers
+                                int aCost = m->getACost();
+                                message = display_minion_activated_ability(name, cost, atk, hp, aCost,
+                                                                            desc);
+                        }
+                } else if (hand[k]->getType() == "Ritual") {
+                        //messsage += display_ritual(name, cost,
+                }
+                //hand(k)
+                for (unsigned int k = 0; k < message.size(); k++) {
+                        cout << message[k] << "-" <<endl;;
+                }
+        }
 }
 
 string Player::getName() const {
