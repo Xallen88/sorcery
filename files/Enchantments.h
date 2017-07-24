@@ -11,9 +11,11 @@ extern vector<string> enchList;
 class Enchantment : public Card {
   int atkVal;  
   int hpVal;
+  int costVal;
   char atkOp;
   char hpOp;
-  int normalEnch;
+  char costOp;
+  int enchType;
  public:
   Enchantment();
   Enchantment(string name);
@@ -24,8 +26,10 @@ class Enchantment : public Card {
   void Activate(Card *c) override;
   int getAVal();
   int getHVal();
+  int getCVal();
   char getAOp();
   char getHOp();
+  char getCOp();
 };
 
 #endif
