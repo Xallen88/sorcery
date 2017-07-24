@@ -274,7 +274,7 @@ void printBoard(){
 	else ritual2 = display_ritual(c->getName(), c->getCost(), r->getChargeCost(), c->getDescription(), r->getCharges());
         field2.emplace_back(ritual2);
         field2.emplace_back(CARD_TEMPLATE_EMPTY);
-        field2.emplace_back(display_player_card(1, playerOne.getName(), playerOne.getLife(), playerOne.getMagic()));
+        field2.emplace_back(display_player_card(1, playerTwo.getName(), playerTwo.getLife(), playerTwo.getMagic()));
         field2.emplace_back(CARD_TEMPLATE_EMPTY);
         field2.emplace_back(text);//TODO PRINT TOP OF GRAVEYARD INSTEAD OF THIS.
  	//determines what to print for minion field FOR PLAYERONE
@@ -354,7 +354,7 @@ void printBoard(){
   	for (unsigned int k = 0; k < field[0].size(); k++) {
    		 cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
   		  for (int j = 0; j < 5; j++) {
-  		  	cout  << field[j][k];
+  		  	cout  << field2[j][k];
     		  }
 
    		 cout << EXTERNAL_BORDER_CHAR_UP_DOWN;

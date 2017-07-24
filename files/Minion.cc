@@ -243,7 +243,7 @@ void Minion::ApprenticeSummoner() {
 void Minion::MasterSummoner() {
   int num = activePlayer->numMinions();
   if (num < 5) {
-    for (int k = 0; k < 5-num; k++) {
+    for (int k = num; k < num+3 && k < 5; k++) {
       Minion *m = new Minion("Air Elemental");
       activePlayer->summonMinion(m);
     }
@@ -253,13 +253,24 @@ void Minion::Silence() { silenced = true; }
 void Minion::UnSilence() { silenced = false; }
 void Minion::Activate(){
   if (silenced) return;
+  //Check if active player has enough to activate
+  if (activePlayer->getMagic() < aCost) return;
   if (name == "Potion Seller") PotionSeller();
   else if (name == "Apprentice Summoner") ApprenticeSummoner();
   else if (name == "Master Summoner") MasterSummoner();
+  else return;
+  //Now charge for activation
+  activePlayer->decrementMagic(aCost);
 }
 
 void Minion::Activate(Card* c){
   if (silenced) return;
+  //Check if active player has enough to activate
+  if (activePlayer->getMagic() < aCost) return;
   if (name == "Novice Pyromancer") NovicePyromancer(c);
   else if (name == "Fire Elemental") FireElemental(c);
+  else return;
+  //Now charge for activation
+  activePlayer->decrementMagic(aCost);
 }
+
