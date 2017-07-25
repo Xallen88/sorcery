@@ -252,12 +252,12 @@ void Player::setRitual(Ritual* r){
 }
 
 void Player::toGraveyard(Card* c){
-	if(c->getType()=="Minion"){
+	if(c->getType()!="Minion"){
+		graveyard.push_back(c);
+	}else{
 		string cardName=c->getName();
 		delete c;
 		graveyard.push_back(new Minion(cardName));
-	}else{
-		graveyard.push_back(c);
 	}
 }
 

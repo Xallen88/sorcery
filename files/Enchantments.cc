@@ -27,6 +27,12 @@ Enchantment::Enchantment(string name) : Card(name){
   hpOp = '+';
   costOp = '+';
 
+  if(activePlayer==&playerOne){
+    owner=1;
+  }else{
+    owner=2;
+  }
+
   int len = fileName.length();
   for (int i = 0; i < len; ++i) {
     if (fileName[i] == ' ') {
