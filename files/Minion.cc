@@ -158,8 +158,6 @@ void Minion::addEnchant(Enchantment *e) {//Supports * and + on attack and *, +, 
   
 }
 void Minion::removeTopEnch() {
-  int aOp = enchantments.back()->getAOp();
-  int hOp = enchantments.back()->getHOp();
   Enchantment *e = enchantments.back();
   numEnch -= 1;
 
@@ -172,6 +170,8 @@ void Minion::removeTopEnch() {
   else{
     //Take away stats from enchantment
     // for atk stats
+    int aOp = e->getAOp();
+    int hOp = e->getHOp();
     if (aOp == '*') {
       applyChange('/', 'a', e->getAVal());
     } else if (aOp == '/') {
