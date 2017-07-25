@@ -195,6 +195,9 @@ int Player::handSize(){
 Card* Player::topDeck(){
 	return deck.back();
 }
+Card* Player::topGraveyard(){
+	return graveyard.back();
+}
 
 void Player::shuffleDeck(){
  std::srand(std::time(0));
@@ -327,31 +330,31 @@ void Player::useAbility(int minion, int targetCard, Player& targetPlayer){
 }
 
 void Player::playCard(unsigned int i){
- // errors and shit
- if(hand.size()<i){
- 	printError("Invalid card number.");
- 	return;
- }
+ 	// errors and shit
+	 if(hand.size()<i){
+	 	printError("Invalid card number.");
+	 	return;
+ 	}
 
- string cardType = hand.at(i-1)->getType();
- if(cardType=="Minion"){
- 	if(numMinions()==5){
- 		printError("Cannot summon another minion, there is no room on the field.");
+	 string cardType = hand.at(i-1)->getType();
+ 	if(cardType=="Minion"){
+ 		if(numMinions()==5){
+ 			printError("Cannot summon another minion, there is no room on the field.");
+ 			return;
+ 		}
+	 }
+ 	else if(cardType=="Enchantment"){
+ 		printError("You must specify a target when playing an enchantment.");
  		return;
  	}
- }
- else if(cardType=="Enchantment"){
- 	printError("You must specify a target when playing an enchantment.");
- 	return;
- }
- else if(cardType=="Spell"){
- 	if(hand.at(i-1)->requiresTarget()){ // might not compile
- 		printError("This spell requires a target.");
- 		return;
- 	}
- }
+	 else if(cardType=="Spell"){
+ 		if(hand.at(i-1)->requiresTarget()){ // might not compile
+ 			printError("This spell requires a target.");
+ 			return;
+	 	}
+	 }
 
- // magic cost
+ 	// magic cost
 	if(!activePlayer->decrementMagic(hand.at(i-1)->getCost())){
 		printError("Insuffienct magic to cast spell.");
 		return;
@@ -381,28 +384,28 @@ void Player::playCard(unsigned int i){
 void Player::playCard(unsigned int i, int targetCard, Player& targetPlayer){
 	// errors and shit
 	if(hand.size()<i){
- 	printError("Invalid card number.");
- 	return;
- }
+ 		printError("Invalid card number.");
+ 		return;
+	 }
 
- string cardType = hand.at(i-1)->getType();
- if(cardType=="Minion"){
- 	printError("Minions do not have targets.");
- 	return;
- }
- else if(cardType=="Spell"){
- 	if(!hand.at(i-1)->requiresTarget()){ // might not compile
- 		printError("This spell does not require a target.");
+	 string cardType = hand.at(i-1)->getType();
+	 if(cardType=="Minion"){
+ 		printError("Minions do not have targets.");
+ 		return;
+	 }
+	 else if(cardType=="Spell"){
+ 		if(!hand.at(i-1)->requiresTarget()){ // might not compile
+ 			printError("This spell does not require a target.");
+ 			return;
+ 		}
+	 }
+	 else if(cardType=="Ritual"){
+ 		printError("Rituals do not have targets");
  		return;
  	}
- }
- else if(cardType=="Ritual"){
- 	printError("Rituals do not have targets");
- 	return;
- }
 
- // magic cost
- if(!activePlayer->decrementMagic(hand.at(i-1)->getCost())){
+ 	// magic cost
+	 if(!activePlayer->decrementMagic(hand.at(i-1)->getCost())){
 		printError("Insuffienct magic to cast spell.");
 		return;
 	}
@@ -433,4 +436,12 @@ void Player::playCard(unsigned int i, int targetCard, Player& targetPlayer){
 			printError("Invalid card target.");
 		}
 	}
+}
+
+void Player::restoreActions() {
+        int n = numMinions();
+        for (int k = 1; k <= n; k++) {
+                Minion *m = getMinion(k);
+                m->resetActions();
+        }
 }

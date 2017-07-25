@@ -48,6 +48,8 @@ class Player
   void shuffleDeck();
   int handSize();
   Card* topDeck();
+  Card* topGraveyard();  
+  void restoreActions(); 
 
   void summonMinion(Minion* minion);
   void unsummonMinion(Minion* minion);

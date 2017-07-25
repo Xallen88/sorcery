@@ -64,13 +64,17 @@ int main(int argc, char* argv[]){
 
 	// player names
 	if(init){
+		cout << "Please enter a name for the first Player: ";
 		getline(initFile, name);
 		playerOne.setName(name);
+		cout << "Please enter a name for the second Player: ";
 		getline(initFile, name);
 		playerTwo.setName(name);
 	}else{
+		cout << "Please enter a name for the first Player: ";
 		getline(cin, name);
 		playerOne.setName(name);
+		cout << "Please enter a name for the second Player: ";
 		getline(cin, name);
 		playerTwo.setName(name);
 	}
@@ -87,7 +91,7 @@ int main(int argc, char* argv[]){
 		playerOne.drawCard();
 		playerTwo.drawCard();
 	}
-
+	printBoard();
 	// read input or initfile until EOF or quit
 	string commandLine;	
 	while(!gameover){
@@ -265,6 +269,11 @@ void printHelp(){
 extern void printError(string err){
 	cout << err << endl;
 }
+/*
+vector<string> &cardPrint(Card *c) {
+	
+} 
+*/
 
 void printBoard(){
 	vector <string> text = display_minion_no_ability("Spongebob", 3, 5, 5);
@@ -280,6 +289,7 @@ void printBoard(){
  	field.emplace_back(CARD_TEMPLATE_EMPTY);
  	field.emplace_back(display_player_card(1, playerOne.getName(), playerOne.getLife(), playerOne.getMagic()));
 	field.emplace_back(CARD_TEMPLATE_EMPTY);
+	//Card *c = playerOne.topGraveyard();
 	field.emplace_back(text);//TODO PRINT TOP OF GRAVEYARD INSTEAD OF THIS.
 	//DOING FIRST LINE OF PLAYER TWO
 	vector <vector<string>> field2;
@@ -537,25 +547,27 @@ extern void activateTrigger(int triggerType){
 void endTurn(){
 	// end of turn trigger
 	activateTrigger(4);
+	//Return actions for players
+	activePlayer->restoreActions();
+  	nonActivePlayer->restoreActions();
+ 	// swap active and non-active player pointers
+ 	if(activePlayer==&playerOne){
+ 		activePlayer=&playerTwo;
+ 		nonActivePlayer=&playerOne;
+ 	}else{
+ 		activePlayer=&playerOne;
+ 		nonActivePlayer=&playerTwo;
+	 }	
 
- // swap active and non-active player pointers
- if(activePlayer==&playerOne){
- 	activePlayer=&playerTwo;
- 	nonActivePlayer=&playerOne;
- }else{
- 	activePlayer=&playerOne;
- 	nonActivePlayer=&playerTwo;
- }
+	 // active player's turn begins
+	 activePlayer->incrementMagic();
 
- // active player's turn begins
- activePlayer->incrementMagic();
+	if(activePlayer->handSize()<5){
+ 		activePlayer->drawCard();
+ 	}
 
- if(activePlayer->handSize()<5){
- 	activePlayer->drawCard();
- }
-
- // start of turn trigger
- activateTrigger(1);
+	// start of turn trigger
+	activateTrigger(1);
 }
 
 extern void endGame(string name){

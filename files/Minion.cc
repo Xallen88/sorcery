@@ -93,8 +93,18 @@ void Minion::applyChange(char op, char c, int val) {
     }
   }
 }
-void Minion::Attack(Player *p) { /*Check if can attack then */ p->decrementLife(curAtk); }
-void Minion::Attack(Minion *m) { /*Check if can attack then */ m->decrementLife(curAtk); }
+void Minion::Attack(Player *p) {
+  if (hasActionLeft()) {
+    useAction();
+    p->decrementLife(curAtk);
+  } else printError("Minion has already used an action for this turn");
+}
+void Minion::Attack(Minion *m) {
+  if (hasActionLeft()) {
+    useAction();
+    m->decrementLife(curAtk); 
+  } else printError("Minion has already used an action for this turn");
+}
 void Minion::incrementAtk(int i) {
   curAtk += i;
   maxAtk += i;
