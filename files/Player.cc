@@ -213,7 +213,6 @@ Minion* Player::topGraveyard(){
 }
 
 void Player::shuffleDeck(){
- std::srand(std::time(0));
  std::random_shuffle(deck.begin(), deck.end());
 }
 
@@ -253,17 +252,20 @@ void Player::setRitual(Ritual* r){
 }
 
 void Player::toGraveyard(Card* c){
-	graveyard.push_back(c);
+	if(c->getType()=="Minion"){
+		string cardName=c->getName();
+		delete c;
+		graveyard.push_back(new Minion(cardName));
+	}else{
+		graveyard.push_back(c);
+	}
 }
 
 bool Player::summonFromGraveyard(){
-	for(unsigned int i=0;i<graveyard.size();++i){
+	for(unsigned int i=graveyard.size()-1;i>=0;--i){
 		if(graveyard.at(i)->getType()=="Minion"){
-			string cardName = graveyard.at(i)->getName();
-			summonMinion(new Minion(cardName));
-			Card* temp = graveyard[i];
+			summonMinion((Minion*)graveyard[i]);
 			graveyard.erase(graveyard.begin()+i);
-			delete temp;
 			triggerCard=getMinion(numMinions());
 			activateTrigger(2);
 			return true;
@@ -274,8 +276,8 @@ bool Player::summonFromGraveyard(){
 
 void Player::damageAllMinions(int i){
 	Minion* currMinion;
-	for(int i=numMinions(); i>=1; --i){
-		currMinion=getMinion(i);
+	for(int j=numMinions(); j>=1; --j){
+		currMinion=getMinion(j);
 		currMinion->decrementLife(i);
 	}
 }

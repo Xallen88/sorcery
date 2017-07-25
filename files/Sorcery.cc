@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <ctime>
+#include <cstdlib>
 #include "Sorcery.h"
 #include "Player.h"
 #include "Card.h"
@@ -84,7 +86,9 @@ int main(int argc, char* argv[]){
 	playerTwo.constructDeck(deckFile2);	
 	activePlayer=&playerOne;
 	if(!testing){
+		srand(time(0));
 		playerOne.shuffleDeck();
+		srand(time(0)+1);
 		playerTwo.shuffleDeck();
 	}
 	for(int i=0;i<4;++i){
