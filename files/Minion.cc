@@ -242,6 +242,12 @@ void Minion::Activate(){
     printError("Minion is silenced, cannot use ability");
     return;
   }
+  //Check if player has enough actions
+  if (!hasActionLeft()) {
+    printError("Minion has already used an action for this turn");
+    return;
+  }
+  useAction();
   //Check if active player has enough to activate
   if (activePlayer->getMagic() < aCost) {
     printError("Insufficient magic to cast ability");
@@ -265,6 +271,12 @@ void Minion::Activate(Card* c){
     printError("Insufficient magic to cast ability");
     return;
   }
+  //Check if player has enough actions
+  if (!hasActionLeft()) {
+    printError("Minion has already used an action for this turn");
+    return;
+  }
+  useAction();
   if (name == "Novice Pyromancer") NovicePyromancer(c);
   else if (name == "Fire Elemental") FireElemental(c);
   else return;
