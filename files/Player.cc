@@ -299,13 +299,31 @@ void Player::minionAttack(int minion, int otherminion, Player* otherPlayer){
 }
 
 void Player::useAbility(int minion){
-	Minion *m = getMinion(minion);
-	m->Activate();
+        if (minion > numMinions()) {
+                printError("Invalid minion");
+                return;
+        }
+        Minion *m = getMinion(minion);
+        Card *c = (Card *) m;
+        if (c->getTrigger() != 5) {
+                printError("This minion does not have an active");
+                return;
+        }
+        m->Activate();
 }
 
 void Player::useAbility(int minion, int targetCard, Player& targetPlayer){
-	Minion *m = getMinion(minion);
-	m->Activate(targetPlayer.getMinion(targetCard));
+        if (minion > numMinions()) {
+                printError("Invalid minion");
+                return;
+        }
+        Minion *m = getMinion(minion);
+        Card *c = (Card *) m;
+        if (c->getTrigger() != 5) {
+                printError("This minion does not have an active");
+                return;
+        }
+        m->Activate(targetPlayer.getMinion(targetCard));
 }
 
 void Player::playCard(unsigned int i){
