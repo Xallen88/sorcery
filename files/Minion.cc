@@ -228,9 +228,15 @@ void Minion::MasterSummoner() {
 void Minion::Silence() { silenced = true; }
 void Minion::UnSilence() { silenced = false; }
 void Minion::Activate(){
-  if (silenced) return;
+  if (silenced) {
+    printError("Minion is silenced, cannot use ability");
+    return;
+  }
   //Check if active player has enough to activate
-  if (activePlayer->getMagic() < aCost) return;
+  if (activePlayer->getMagic() < aCost) {
+    printError("Insufficient magic to cast ability");
+    return;
+  }
   if (name == "Potion Seller") PotionSeller();
   else if (name == "Apprentice Summoner") ApprenticeSummoner();
   else if (name == "Master Summoner") MasterSummoner();
@@ -240,9 +246,15 @@ void Minion::Activate(){
 }
 
 void Minion::Activate(Card* c){
-  if (silenced) return;
+  if (silenced) {
+    printError("Minion is silenced, cannot use ability");
+    return;
+  }
   //Check if active player has enough to activate
-  if (activePlayer->getMagic() < aCost) return;
+  if (activePlayer->getMagic() < aCost) {
+    printError("Insufficient magic to cast ability");
+    return
+  }
   if (name == "Novice Pyromancer") NovicePyromancer(c);
   else if (name == "Fire Elemental") FireElemental(c);
   else return;
