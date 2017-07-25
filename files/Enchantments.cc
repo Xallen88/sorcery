@@ -98,8 +98,11 @@ void Enchantment::Play(){
 }   
 
 void Enchantment::Play(Card* c){
-  if (c->getType() != "Minion") return;//Checking if minion
-  if (name == "Silence") SilenceEnchantment(c);
+  if (c->getType() != "Minion"){
+    printError("You cannot attach an enchatment to a ritual.");
+    activePlayer->incrementMagic(getCost());
+    return;//Checking if minion
+  } 
   Minion *m = (Minion *) c;
   m->addEnchant(this);
 }    

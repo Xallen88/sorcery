@@ -148,10 +148,13 @@ void Minion::addEnchant(Enchantment *e) {//Supports * and + on attack and *, +, 
   if(e->getEnchType()==3){
     activeEnch=e;
     trigger = 5;
+  }else if(e->getEnchType()==2){
+    Silence();
+  }else{
+    //Add the stats in from enchantments
+    applyChange(e->getAOp(), 'a', e->getAVal());
+    applyChange(e->getHOp(), 'h', e->getHVal());
   }
-  //Add the stats in from enchantments
-  applyChange(e->getAOp(), 'a', e->getAVal());
-  applyChange(e->getHOp(), 'h', e->getHVal());
   
 }
 void Minion::removeTopEnch() {
@@ -160,36 +163,37 @@ void Minion::removeTopEnch() {
   Enchantment *e = enchantments.back();
   numEnch -= 1;
 
-  if(e->getEnchType()==3){
+  if(e->getEnchType()==3){ //activated abilities
     activeEnch = nullptr;
-    trigger = triggerType;;
-    return;
+    trigger = triggerType;
+  }else if(e->getEnchType()==2){ //silence
+    UnSilence();
   }
-
-  //Take away stats from enchantment
-  // for atk stats
-  if (aOp == '*') {
-    applyChange('/', 'a', e->getAVal());
-  } else if (aOp == '/') {
-    applyChange('*', 'a', e->getAVal());
-  } else if (aOp == '+') {
-    applyChange('-', 'a', e->getAVal());
-  } else {//the subtract case
-    applyChange('+', 'a', e->getAVal());
+  else{
+    //Take away stats from enchantment
+    // for atk stats
+    if (aOp == '*') {
+      applyChange('/', 'a', e->getAVal());
+    } else if (aOp == '/') {
+      applyChange('*', 'a', e->getAVal());
+    } else if (aOp == '+') {
+      applyChange('-', 'a', e->getAVal());
+    } else {//the subtract case
+      applyChange('+', 'a', e->getAVal());
+    }
+    //For hp stats
+    if (hOp == '*') {
+      applyChange('/', 'h', e->getHVal());
+    } else if (hOp == '/') {
+      applyChange('*', 'h', e->getHVal());
+    } else if (hOp == '+') {
+      applyChange('-', 'h', e->getHVal());
+    } else {//the subtract case
+      applyChange('+', 'h', e->getHVal());
+    }
   }
-  //For hp stats
-  if (hOp == '*') {
-    applyChange('/', 'h', e->getHVal());
-  } else if (hOp == '/') {
-    applyChange('*', 'h', e->getHVal());
-  } else if (hOp == '+') {
-    applyChange('-', 'h', e->getHVal());
-  } else {//the subtract case
-    applyChange('+', 'h', e->getHVal());
-  }
-  if(owner==1) playerOne.toGraveyard(e);
+  if(e->getOwner()==1) playerOne.toGraveyard(e);
   else playerTwo.toGraveyard(e);
-
   enchantments.pop_back();
   decrementLife(0);//Checking for deaths
 }
