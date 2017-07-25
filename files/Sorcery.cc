@@ -269,11 +269,29 @@ void printHelp(){
 extern void printError(string err){
 	cout << err << endl;
 }
-/*
-vector<string> &cardPrint(Card *c) {
-	
-} 
-*/
+
+vector<string> minionPrint(Card *c) {
+	vector<string> retVal;
+        int aCost;
+	string name = c->getName();
+	int cost = c->getCost();
+	int trigger = c->getTrigger();
+	string desc = c->getDescription();
+	string type = c->getType();
+	if (type != "Minion") return retVal;;
+	Minion *m = (Minion *) c;
+	int atk = m->getAtk();
+	int hp = m->getHp();
+	if (trigger == 5) {
+		aCost = m->getACost(); 
+		return display_minion_activated_ability(name, cost, atk, hp, aCost, desc);
+ 	} else if (trigger == 0) {
+		return display_minion_no_ability(name, cost, atk, hp);
+	} else {
+		return display_minion_triggered_ability(name, cost, atk, hp, desc);
+	}
+}
+
 
 void printBoard(){
 	vector <string> text = display_minion_no_ability("Spongebob", 3, 5, 5);
@@ -289,8 +307,14 @@ void printBoard(){
  	field.emplace_back(CARD_TEMPLATE_EMPTY);
  	field.emplace_back(display_player_card(1, playerOne.getName(), playerOne.getLife(), playerOne.getMagic()));
 	field.emplace_back(CARD_TEMPLATE_EMPTY);
-	//Card *c = playerOne.topGraveyard();
-	field.emplace_back(text);//TODO PRINT TOP OF GRAVEYARD INSTEAD OF THIS.
+	//	field.emplace_back(text);
+	c = (Card *) playerOne.topGraveyard();
+	if (c == nullptr) field.emplace_back(CARD_TEMPLATE_BORDER);
+	else {
+		vector <string> add = minionPrint(c);
+		field.emplace_back(add);
+	}
+	//TODO PRINT TOP OF GRAVEYARD INSTEAD OF THIS.
 	//DOING FIRST LINE OF PLAYER TWO
 	vector <vector<string>> field2;
 	c = (Card *) playerTwo.getRitual();
@@ -302,7 +326,14 @@ void printBoard(){
         field2.emplace_back(CARD_TEMPLATE_EMPTY);
         field2.emplace_back(display_player_card(1, playerTwo.getName(), playerTwo.getLife(), playerTwo.getMagic()));
         field2.emplace_back(CARD_TEMPLATE_EMPTY);
-        field2.emplace_back(text);//TODO PRINT TOP OF GRAVEYARD INSTEAD OF THIS.
+        //field2.emplace_back(text);
+	c = (Card *)playerTwo.topGraveyard();
+ 	if (c == nullptr) field2.emplace_back(CARD_TEMPLATE_BORDER);
+        else {
+		vector <string> add2 = minionPrint(c);
+		field2.emplace_back(add2);
+	}
+	//TODO PRINT TOP OF GRAVEYARD INSTEAD OF THIS.
  	//determines what to print for minion field FOR PLAYERONE
 	int minNum = playerOne.numMinions();
 	vector<vector<string>> minions;

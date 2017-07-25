@@ -195,8 +195,15 @@ int Player::handSize(){
 Card* Player::topDeck(){
 	return deck.back();
 }
-Card* Player::topGraveyard(){
-	return graveyard.back();
+Minion* Player::topGraveyard(){
+	int num = graveyard.size();
+	Card *c = nullptr;
+	Minion *m = nullptr;
+   	for (int k = 0; k < num; k++) {
+		c = graveyard[k];
+		if (c->getType() == "Minion") m = (Minion *) c;
+   	}
+	return m;
 }
 
 void Player::shuffleDeck(){
