@@ -50,6 +50,7 @@ Minion::Minion(string name) : Card (name){
   maxAtk = curAtk;
   //Determining if any active/triggered ability
   ss >> trigger;
+  triggerType = trigger;
   //5 signifying a activateable ability reads the cost of activation
   if (trigger == 5) { 
     ss >> aCost;  
@@ -146,6 +147,7 @@ void Minion::addEnchant(Enchantment *e) {//Supports * and + on attack and *, +, 
   numEnch++;
   if(e->getEnchType()==3){
     activeEnch=e;
+    trigger = 5;
   }
   //Add the stats in from enchantments
   applyChange(e->getAOp(), 'a', e->getAVal());
@@ -159,7 +161,9 @@ void Minion::removeTopEnch() {
   numEnch -= 1;
 
   if(e->getEnchType()==3){
-    // code to remove activated abilities
+    activeEnch = nullptr;
+    trigger = triggerType;;
+    return;
   }
 
   //Take away stats from enchantment
@@ -187,6 +191,7 @@ void Minion::removeTopEnch() {
   else playerTwo.toGraveyard(e);
 
   enchantments.pop_back();
+  decrementLife(0);//Checking for deaths
 }
 bool Minion::hasActiveEnch(){
   if(activeEnch){

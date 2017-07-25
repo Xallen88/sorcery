@@ -21,6 +21,7 @@ class Minion : public Card {
   int numEnch;
   bool silenced;
   //Trigger ability cost
+  int triggerType;
   int aCost;
   //Actions
   int actions;
