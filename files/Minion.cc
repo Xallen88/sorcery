@@ -58,7 +58,11 @@ Minion::Minion(string name) : Card (name){
   infoFile.close();
   // feed remaining line into description
 }
-Minion::~Minion(){}
+Minion::~Minion(){
+  for(unsigned int i = 0; i < enchantments.size(); ++i){
+    delete enchantments[i];
+  }
+}
 
 void Minion::applyChange(char op, char c, int val) {
   if (c == 'a') {
