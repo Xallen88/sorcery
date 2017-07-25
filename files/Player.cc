@@ -285,13 +285,11 @@ void Player::minionAttack(int minion, Player* otherPlayer){
 		printError("Not a valid minion number.");
 		return;
 	}
-	//Get minion and check if it has actions left
+	//Get minion
 	Minion *m = getMinion(minion);
-	if (!m->hasActionLeft()) return;
-	m->useAction();
-	
- int damage = m->getAtk();
-	otherPlayer->decrementLife(damage);
+	m->Attack(otherPlayer);;	//should handle actions
+	//int damage = m->getAtk();
+	//otherPlayer->decrementLife(damage);
 }
 
 void Player::minionAttack(int minion, int otherminion, Player* otherPlayer){
@@ -303,15 +301,16 @@ void Player::minionAttack(int minion, int otherminion, Player* otherPlayer){
 	//Pulling minion cards
 	Minion *attacker = getMinion(minion);
 	Minion *victim = otherPlayer->getMinion(otherminion);
+	attacker->Attack(victim);
 	//Checking if attacker has any actions left
-	if (!attacker->hasActionLeft()) return;
-	attacker->useAction();
+	//if (!attacker->hasActionLeft()) return;
+	//attacker->useAction();
 	//pulling attack values of both minions
-	int aDmg = attacker->getAtk();
-	int vDmg = victim->getAtk();
+	//int aDmg = attacker->getAtk();
+	//int vDmg = victim->getAtk();
 	//decrement both minions (and check for death)
-	attacker->decrementLife(vDmg);
-	victim->decrementLife(aDmg);
+	//attacker->decrementLife(vDmg);
+	//victim->decrementLife(aDmg);
 }
 
 void Player::useAbility(int minion){
@@ -367,7 +366,7 @@ void Player::playCard(unsigned int i){
 
  	// magic cost
 	if(!activePlayer->decrementMagic(hand.at(i-1)->getCost())){
-		printError("Insuffienct magic to cast spell.");
+		printError("Insufficient magic to cast spell.");
 		return;
 	}
 
@@ -415,12 +414,6 @@ void Player::playCard(unsigned int i, int targetCard, Player& targetPlayer){
  		return;
  	}
 
- 	// magic cost
-	 if(!activePlayer->decrementMagic(hand.at(i-1)->getCost())){
-		printError("Insuffienct magic to cast spell.");
-		return;
-	}
-
 	// spells
 	if(cardType=="Spell"){
 		triggerCard=hand.at(i-1);	
@@ -447,6 +440,11 @@ void Player::playCard(unsigned int i, int targetCard, Player& targetPlayer){
 			printError("Invalid card target.");
 		}
 	}
+	// magic cost
+         if(!activePlayer->decrementMagic(hand.at(i-1)->getCost())){
+                printError("Insufficient magic to cast spell.");
+                return;
+        }
 }
 
 void Player::restoreActions() {

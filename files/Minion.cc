@@ -108,6 +108,7 @@ void Minion::Attack(Minion *m) {
   if (hasActionLeft()) {
     useAction();
     m->decrementLife(curAtk); 
+    decrementLife(m->getAtk());
   } else printError("Minion has already used an action for this turn");
 }
 void Minion::incrementAtk(int i) {
@@ -216,7 +217,6 @@ void Minion::Play(Card* c){
 void Minion::resetActions() { actions = 1; }
 bool Minion::hasActionLeft() { return actions == 1; }
 void Minion::useAction() { actions--; }
-
 void Minion::FireElemental(Card *c) {
 	if(c->getOwner() != owner){
         	Minion* minionPtr = (Minion*) c;
@@ -309,7 +309,7 @@ void Minion::Activate(Card* c){
     return;
   }
 
-  if(name=="Novie Pyromancer"){
+  if(name=="Novice Pyromancer"){
     //Check if active player has enough to activate (if non-trigger ability)
     if (activePlayer->getMagic() < aCost) {
       printError("Insufficient magic to cast ability");
