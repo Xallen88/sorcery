@@ -413,7 +413,10 @@ void Player::playCard(unsigned int i, int targetCard, Player& targetPlayer){
  		printError("Rituals do not have targets");
  		return;
  	}
-
+	if (activePlayer->getMagic() < hand.at(i-1)->getCost()) {
+		printError("Insufficient magic to cast");
+ 		return;
+	}
 	// spells
 	if(cardType=="Spell"){
 		triggerCard=hand.at(i-1);	
@@ -424,6 +427,7 @@ void Player::playCard(unsigned int i, int targetCard, Player& targetPlayer){
 			hand.at(i-1)->Play(targetPlayer.getRitual());
 		}else{
 			printError("Invalid card target.");
+			return;
 		}
 		Spell* spellPtr = (Spell*) hand.at(i-1);
 		if(spellPtr->isDestroyed()){
@@ -438,13 +442,12 @@ void Player::playCard(unsigned int i, int targetCard, Player& targetPlayer){
 			hand.erase(hand.begin()+i-1);
 		}else{
 			printError("Invalid card target.");
+			return;
 		}
 	}
 	// magic cost
-         if(!activePlayer->decrementMagic(hand.at(i-1)->getCost())){
-                printError("Insufficient magic to cast spell.");
-                return;
-        }
+        activePlayer->decrementMagic(hand.at(i-1)->getCost());
+             
 }
 
 void Player::restoreActions() {
