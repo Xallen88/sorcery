@@ -253,7 +253,7 @@ void Minion::Activate(Card* c){
   //Check if active player has enough to activate
   if (activePlayer->getMagic() < aCost) {
     printError("Insufficient magic to cast ability");
-    return
+    return;
   }
   if (name == "Novice Pyromancer") NovicePyromancer(c);
   else if (name == "Fire Elemental") FireElemental(c);
