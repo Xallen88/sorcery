@@ -17,6 +17,7 @@ class Minion : public Card {
   int maxAtk;
   //Enchantments;
   vector <Enchantment *> enchantments;
+  Enchantment* activeEnch;
   int numEnch;
   bool silenced;
   //Trigger ability cost
@@ -31,6 +32,7 @@ class Minion : public Card {
   void NovicePyromancer(Card *c);
   void ApprenticeSummoner();
   void MasterSummoner();
+  void WildPyromancer();
   
  public:
   Minion();
@@ -56,6 +58,7 @@ class Minion : public Card {
   int getHp();
   int getACost();
   int getEnchNum();
+  bool hasActiveEnch();
   Enchantment* getEnch(int n);
   
   void resetActions();

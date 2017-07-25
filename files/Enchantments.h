@@ -17,6 +17,7 @@ class Enchantment : public Card {
   char costOp;
   int enchType;
   void SilenceEnchantment(Card *c);
+  void MadBomber();
  public:
   Enchantment();
   Enchantment(string name);

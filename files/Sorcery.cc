@@ -226,7 +226,11 @@ int main(int argc, char* argv[]){
 		
 		else if(commandArg=="draw"){
 			if(testing){
-				activePlayer->drawCard();
+				if(activePlayer->handSize()<5){
+					activePlayer->drawCard();
+				}else{
+					printError("Your hand is full.");
+				}
 			}
 			else{
 				printError("This command can only be used in testing mode");
@@ -244,10 +248,6 @@ int main(int argc, char* argv[]){
 			printError("Not a valid command. Type help for a list of commands.");
 		}
 	}
-
-	// cleanup, delete ptrs, etc
- 
- // end game - print winner, etc
 
  return 0;
 }

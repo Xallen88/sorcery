@@ -10,7 +10,7 @@
 
 using namespace std;
 
-vector<string> minionList={"Air Elemental", "Earth Elemental", "Fire Elemental", "Potion Seller", "Novice Pyromancer", "Apprentice Summoner", "Master Summoner"};;
+vector<string> minionList={"Air Elemental", "Earth Elemental", "Fire Elemental", "Potion Seller", "Novice Pyromancer", "Apprentice Summoner", "Master Summoner", "Wild Pyromancer"};
 
 Minion::Minion(){}
 Minion::Minion(string name) : Card (name){
@@ -21,6 +21,7 @@ Minion::Minion(string name) : Card (name){
   string fileName = name;
   actions = 1;
   silenced = false;
+  activeEnch=nullptr;
 
   int len = fileName.length();
   for (int i = 0; i < len; ++i) {
@@ -142,6 +143,9 @@ void Minion::addEnchant(Enchantment *e) {//Supports * and + on attack and *, +, 
   //remove from vector
   enchantments.emplace_back(e);
   numEnch++;
+  if(e->getEnchType()==3){
+    activeEnch=e;
+  }
   //Add the stats in from enchantments
   applyChange(e->getAOp(), 'a', e->getAVal());
   applyChange(e->getHOp(), 'h', e->getHVal());
@@ -152,6 +156,11 @@ void Minion::removeTopEnch() {
   int hOp = enchantments.back()->getHOp();
   Enchantment *e = enchantments.back();
   numEnch -= 1;
+
+  if(e->getEnchType()==3){
+    // code to remove activated abilities
+  }
+
   //Take away stats from enchantment
   // for atk stats
   if (aOp == '*') {
@@ -178,7 +187,11 @@ void Minion::removeTopEnch() {
 
   enchantments.pop_back();
 }
-
+bool Minion::hasActiveEnch(){
+  if(activeEnch){
+    return true;
+  }return false;
+}
 void Minion::clearAllEnchants() {
  //popping enchantment
   for (int k = numEnch; k > 0; --k){
@@ -239,6 +252,10 @@ void Minion::MasterSummoner() {
     }
   }
 }
+void Minion::WildPyromancer(){
+  activePlayer->damageAllMinions(1);
+  nonActivePlayer->damageAllMinions(1);
+}
 void Minion::Silence() { silenced = true; }
 void Minion::UnSilence() { silenced = false; }
 void Minion::Activate(){
@@ -246,23 +263,35 @@ void Minion::Activate(){
     printError("Minion is silenced, cannot use ability");
     return;
   }
-  //Check if player has enough actions
-  if (!hasActionLeft()) {
-    printError("Minion has already used an action for this turn");
+
+  if(activeEnch){
+    if(!activeEnch->requiresTarget()) {
+      activeEnch->Activate();
+      useAction();
+    }
+    else printError("This ability requires a target");
     return;
   }
-  useAction();
-  //Check if active player has enough to activate
-  if (activePlayer->getMagic() < aCost) {
-    printError("Insufficient magic to cast ability");
-    return;
+
+  if(name=="Apprentice Summoner"||name=="Master Summoner"){
+    //Check if player has enough actions (not relevant for triggered abilities)
+    if (!hasActionLeft()) {
+      printError("Minion has already used an action for this turn");
+      return;
+    }
+    //Check if active player has enough to activate
+    if (activePlayer->getMagic() < aCost) {
+      printError("Insufficient magic to cast ability");
+      return;
+    }    
+    //Now charge for activation
+    useAction();
+    activePlayer->decrementMagic(aCost);
   }
   if (name == "Potion Seller") PotionSeller();
   else if (name == "Apprentice Summoner") ApprenticeSummoner();
   else if (name == "Master Summoner") MasterSummoner();
-  else return;
-  //Now charge for activation
-  activePlayer->decrementMagic(aCost);
+  else return;  
 }
 
 void Minion::Activate(Card* c){
@@ -270,21 +299,34 @@ void Minion::Activate(Card* c){
     printError("Minion is silenced, cannot use ability");
     return;
   }
-  //Check if active player has enough to activate
-  if (activePlayer->getMagic() < aCost) {
-    printError("Insufficient magic to cast ability");
+
+  if(activeEnch){
+    if(activeEnch->requiresTarget()) {
+      activeEnch->Activate();
+      useAction();
+    }
+    else printError("This ability does not require a target");
     return;
   }
-  //Check if player has enough actions
-  if (!hasActionLeft()) {
-    printError("Minion has already used an action for this turn");
-    return;
-  }
-  useAction();
+
+  if(name=="Novie Pyromancer"){
+    //Check if active player has enough to activate (if non-trigger ability)
+    if (activePlayer->getMagic() < aCost) {
+      printError("Insufficient magic to cast ability");
+      return;
+    }
+    //Check if player has enough actions
+    if (!hasActionLeft()) {
+      printError("Minion has already used an action for this turn");
+      return;
+    }
+    //Now charge for activation
+    useAction();
+    activePlayer->decrementMagic(aCost);
+  }  
   if (name == "Novice Pyromancer") NovicePyromancer(c);
   else if (name == "Fire Elemental") FireElemental(c);
-  else return;
-  //Now charge for activation
-  activePlayer->decrementMagic(aCost);
+  else if (name == "Wild Pyromancer") WildPyromancer();
+  else return;  
 }
 

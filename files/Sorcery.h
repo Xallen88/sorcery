@@ -13,6 +13,7 @@ extern Player playerTwo;
 extern Player* activePlayer;
 extern Player* nonActivePlayer;
 extern Card* triggerCard;
+extern bool testing;
 
 extern void printError(string err);
 // prints an error message and handles any other error related issues

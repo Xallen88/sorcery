@@ -52,10 +52,16 @@ void Player::incrementMagic(int i)
 
 bool Player::decrementMagic(int i)
 {
- if (magic < i) {
-  return false;}
+	if (magic < i) {
+		if(!testing){
+  	return false;
+  }else{
+  	magic=0;
+  	return true;
+  }
+ }
  magic -= i;
- return true;
+ return true;	
 }
 
 void Player::incrementLife(int i)
@@ -270,7 +276,7 @@ void Player::damageAllMinions(int i){
 	Minion* currMinion;
 	for(int i=numMinions(); i>=1; --i){
 		currMinion=getMinion(i);
-		currMinion->decrementLife(2);
+		currMinion->decrementLife(i);
 	}
 }
 
@@ -314,8 +320,7 @@ void Player::useAbility(int minion){
                 return;
         }
         Minion *m = getMinion(minion);
-        Card *c = (Card *) m;
-        if (c->getTrigger() != 5) {
+        if (m->getTrigger() != 5 && !m->hasActiveEnch()) {
                 printError("This minion does not have an active");
                 return;
         }
@@ -328,8 +333,7 @@ void Player::useAbility(int minion, int targetCard, Player& targetPlayer){
                 return;
         }
         Minion *m = getMinion(minion);
-        Card *c = (Card *) m;
-        if (c->getTrigger() != 5) {
+        if (m->getTrigger() != 5 && !m->hasActiveEnch()) {
                 printError("This minion does not have an active");
                 return;
         }
