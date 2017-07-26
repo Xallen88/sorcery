@@ -195,7 +195,6 @@ void Minion::removeTopEnch() {
   if(e->getOwner()==1) playerOne.toGraveyard(e);
   else playerTwo.toGraveyard(e);
   enchantments.pop_back();
-  decrementLife(0);//Checking for deaths
 }
 bool Minion::hasActiveEnch(){
   if(activeEnch){
