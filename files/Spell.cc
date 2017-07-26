@@ -75,7 +75,7 @@ void Spell::Play(){
 		}else	if(name=="Blizzard"){
 			Blizzard(); Destroy();
 		}else if(name=="Find Minions"){
-			FindMinions(); Destroy();
+			FindMinions(); 
 		}
 	}
 }
@@ -121,13 +121,22 @@ void Spell::Blizzard(){
 }
 
 void Spell::FindMinions(){
+	if(!activePlayer->topDeck()){
+		printError("Your deck is empty.");
+		return;
+	}
+	Destroy();
 	for(int i=0; i<3; ++i){
 		if(activePlayer->handSize()<6){
-			if(activePlayer->topDeck()->getType()!="Minion"){
-				activePlayer->drawCard();
-				activePlayer->discardCard(activePlayer->handSize());
+			if(activePlayer->topDeck()){
+				if(activePlayer->topDeck()->getType()!="Minion"){
+					activePlayer->drawCard();
+					activePlayer->discardCard(activePlayer->handSize());
+				}else{
+					activePlayer->drawCard();
+				}
 			}else{
-				activePlayer->drawCard();
+				printError("You ran out of cards.");
 			}
 		}
 	}

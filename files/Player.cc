@@ -200,7 +200,8 @@ int Player::handSize(){
 }
 
 Card* Player::topDeck(){
-	return deck.back();
+	if(deck.size()>0) return deck.back();
+	else return nullptr;
 }
 Minion* Player::topGraveyard(){
 	int num = graveyard.size();
