@@ -147,7 +147,7 @@ void Minion::addEnchant(Enchantment *e) {//Supports * and + on attack and *, +, 
   numEnch++;
   if(e->getEnchType()==3){
     activeEnch=e;
-    trigger = 5;
+    return;
   }else if(e->getEnchType()==2){
     Silence();
   }else{
@@ -163,7 +163,7 @@ void Minion::removeTopEnch() {
 
   if(e->getEnchType()==3){ //activated abilities
     activeEnch = nullptr;
-    trigger = triggerType;
+    return;
   }else if(e->getEnchType()==2){ //silence
     UnSilence();
   }
