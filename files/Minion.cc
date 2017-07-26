@@ -166,6 +166,10 @@ void Minion::removeTopEnch() {
     return;
   }else if(e->getEnchType()==2){ //silence
     UnSilence();
+    for (int k = 0; k < numEnch; k++) {
+      Card *crd = (Card *) enchantments[k];
+      if (crd->getName() == "Silence") Silence();
+    }
   }
   else{
     //Take away stats from enchantment
