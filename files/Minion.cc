@@ -271,32 +271,29 @@ void Minion::Activate(){
     printError("Minion is silenced, cannot use ability");
     return;
   }
-  if (!hasActionLeft()) {
-      printError("Minion has already used an action for this turn");
+  if(!triggerCard){
+    if (!hasActionLeft()) {
+        printError("Minion has already used an action for this turn");
+        return;
+    }
+    if(activeEnch){
+      if(!activeEnch->requiresTarget()) {
+        activeEnch->Activate();
+        useAction();
+      }
+      else printError("This ability requires a target");
       return;
-  }
-  if(activeEnch){
-    if(!activeEnch->requiresTarget()) {
-      activeEnch->Activate();
+    }
+
+    if(name=="Apprentice Summoner"||name=="Master Summoner"){
+      //Check if active player has enough to activate
+      if (!activePlayer->decrementMagic(aCost)) {
+        printError("Insufficient magic to cast ability");
+        return;
+      }    
+      //Now charge for activation
       useAction();
     }
-    else printError("This ability requires a target");
-    return;
-  }
-
-  if(name=="Apprentice Summoner"||name=="Master Summoner"){
-    //Check if player has enough actions (not relevant for triggered abilities)
-    if (!hasActionLeft()) {
-      printError("Minion has already used an action for this turn");
-      return;
-    }
-    //Check if active player has enough to activate
-    if (!activePlayer->decrementMagic(aCost)) {
-      printError("Insufficient magic to cast ability");
-      return;
-    }    
-    //Now charge for activation
-    useAction();
   }
   if (name == "Potion Seller") PotionSeller();
   else if (name == "Apprentice Summoner") ApprenticeSummoner();
@@ -309,33 +306,32 @@ void Minion::Activate(Card* c){
     printError("Minion is silenced, cannot use ability");
     return;
   }
-  if (!hasActionLeft()) {
-      printError("Minion has already used an action for this turn");
-      return;
-  }
-  if(activeEnch){
-    if(activeEnch->requiresTarget()) {
-      activeEnch->Activate();
-      useAction();
+
+  if(!triggerCard){
+    if (!hasActionLeft()) {
+        printError("Minion has already used an action for this turn");
+        return;
     }
-    else printError("This ability does not require a target");
-    return;
+    if(activeEnch){
+      if(activeEnch->requiresTarget()) {
+        activeEnch->Activate();
+        useAction();
+      }
+      else printError("This ability does not require a target");
+      return;
+    }
+
+    if(name=="Novice Pyromancer"){
+      //Check if active player has enough to activate (if non-trigger ability)
+      if (!activePlayer->decrementMagic()) {
+        printError("Insufficient magic to cast ability");
+        return;
+      }    
+      //Now charge for activation
+      useAction();
+    }  
   }
 
-  if(name=="Novice Pyromancer"){
-    //Check if player has enough actions
-    if (!hasActionLeft()) {
-      printError("Minion has already used an action for this turn");
-      return;
-    }
-    //Check if active player has enough to activate (if non-trigger ability)
-    if (!activePlayer->decrementMagic()) {
-      printError("Insufficient magic to cast ability");
-      return;
-    }    
-    //Now charge for activation
-    useAction();
-  }  
   if (name == "Novice Pyromancer") NovicePyromancer(c);
   else if (name == "Fire Elemental") FireElemental(c);
   else if (name == "Wild Pyromancer") WildPyromancer();
