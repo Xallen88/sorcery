@@ -386,6 +386,8 @@ void Player::playCard(unsigned int i){
 		Spell* spellPtr = (Spell*) hand.at(i-1);
 		if(spellPtr->isDestroyed()){
 			discardCard(i);
+		}else{
+			activePlayer->incrementMagic(hand.at(i-1)->getCost());
 		}
 	}else{
 		hand.at(i-1)->Play();
@@ -436,7 +438,9 @@ void Player::playCard(unsigned int i, int targetCard, Player& targetPlayer){
 		Spell* spellPtr = (Spell*) hand.at(i-1);
 		if(spellPtr->isDestroyed()){
 			discardCard(i);
-		}		
+		}	else{
+			activePlayer->incrementMagic(hand.at(i-1)->getCost());
+		}	
 		triggerCard=nullptr;
 	}
 	else{

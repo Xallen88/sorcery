@@ -99,20 +99,17 @@ void Spell::Recharge(){
 	}
 	else{
 		printError("You don't have a ritual.");
-		activePlayer->incrementMagic(cost);
 	}
 }
 
 void Spell::RaiseDead(){
 	if(activePlayer->numMinions()==5){
 		printError("There are already 5 minions on the field.");
-		activePlayer->incrementMagic(cost);
 		return;
 	}
 
 	if(!activePlayer->summonFromGraveyard()){
 		printError("There are no minions in your graveyard");
-		activePlayer->incrementMagic(cost);
 		return;
 	}
 	Destroy();
@@ -167,7 +164,6 @@ void Spell::Disenchant(Card *c){
  Minion* minionPtr = (Minion*) c;
  if(minionPtr->getEnchNum()==0){
  	printError("No enchantments on target minion");
-		activePlayer->incrementMagic(cost);
  }else{
  	minionPtr->removeTopEnch();
 	 minionPtr->decrementLife(0);
