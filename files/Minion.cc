@@ -291,13 +291,12 @@ void Minion::Activate(){
       return;
     }
     //Check if active player has enough to activate
-    if (activePlayer->getMagic() < aCost) {
+    if (!activePlayer->decrementMagic(aCost)) {
       printError("Insufficient magic to cast ability");
       return;
     }    
     //Now charge for activation
     useAction();
-    activePlayer->decrementMagic(aCost);
   }
   if (name == "Potion Seller") PotionSeller();
   else if (name == "Apprentice Summoner") ApprenticeSummoner();
@@ -324,19 +323,18 @@ void Minion::Activate(Card* c){
   }
 
   if(name=="Novice Pyromancer"){
-    //Check if active player has enough to activate (if non-trigger ability)
-    if (activePlayer->getMagic() < aCost) {
-      printError("Insufficient magic to cast ability");
-      return;
-    }
     //Check if player has enough actions
     if (!hasActionLeft()) {
       printError("Minion has already used an action for this turn");
       return;
     }
+    //Check if active player has enough to activate (if non-trigger ability)
+    if (!activePlayer->decrementMagic()) {
+      printError("Insufficient magic to cast ability");
+      return;
+    }    
     //Now charge for activation
     useAction();
-    activePlayer->decrementMagic(aCost);
   }  
   if (name == "Novice Pyromancer") NovicePyromancer(c);
   else if (name == "Fire Elemental") FireElemental(c);

@@ -66,10 +66,8 @@ int main(int argc, char* argv[]){
 
 	// player names
 	if(init){
-		cout << "Please enter a name for the first Player: ";
 		getline(initFile, name);
 		playerOne.setName(name);
-		cout << "Please enter a name for the second Player: ";
 		getline(initFile, name);
 		playerTwo.setName(name);
 	}else{

@@ -192,6 +192,7 @@ void Player::constructDeck(string deckFile){
 			endGame();
 		}
 	}
+	reverse(deck.begin(), deck.end());
 }
 
 int Player::handSize(){

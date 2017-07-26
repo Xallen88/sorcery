@@ -170,7 +170,7 @@ void Spell::Disenchant(Card *c){
 		activePlayer->incrementMagic(cost);
  }else{
  	minionPtr->removeTopEnch();
-	minionPtr->decrementLife();
+	 minionPtr->decrementLife(0);
  	Destroy();
  }
 }
