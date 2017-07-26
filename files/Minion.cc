@@ -272,7 +272,10 @@ void Minion::Activate(){
     printError("Minion is silenced, cannot use ability");
     return;
   }
-
+  if (!hasActionLeft()) {
+      printError("Minion has already used an action for this turn");
+      return;
+  }
   if(activeEnch){
     if(!activeEnch->requiresTarget()) {
       activeEnch->Activate();
@@ -308,7 +311,10 @@ void Minion::Activate(Card* c){
     printError("Minion is silenced, cannot use ability");
     return;
   }
-
+  if (!hasActionLeft()) {
+      printError("Minion has already used an action for this turn");
+      return;
+  }
   if(activeEnch){
     if(activeEnch->requiresTarget()) {
       activeEnch->Activate();
