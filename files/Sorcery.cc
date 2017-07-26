@@ -429,7 +429,6 @@ void printBoard(){
 
 void inspectMinion(int m, Player* p){
 	//pulling variables out
-	cout << p->numMinions() << endl;
 	if(m > p->numMinions()){
 		printError("Invalid minion number.");
 		return;
